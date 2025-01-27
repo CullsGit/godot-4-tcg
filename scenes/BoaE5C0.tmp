@@ -1,0 +1,113 @@
+[gd_scene load_steps=3 format=3 uid="uid://cqngvfquqpm87"]
+
+[ext_resource type="Script" path="res://scenes/Board.gd" id="1_mj0ke"]
+[ext_resource type="Script" path="res://scenes/Deck.gd" id="2_j7tks"]
+
+[node name="Board" type="Node2D"]
+script = ExtResource("1_mj0ke")
+metadata/_edit_lock_ = true
+
+[node name="PlayerBoard" type="GridContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+columns = 3
+
+[node name="Panel" type="Panel" parent="PlayerBoard"]
+layout_mode = 2
+
+[node name="Panel2" type="Panel" parent="PlayerBoard"]
+layout_mode = 2
+
+[node name="Panel3" type="Panel" parent="PlayerBoard"]
+layout_mode = 2
+
+[node name="Panel4" type="Panel" parent="PlayerBoard"]
+layout_mode = 2
+
+[node name="Panel5" type="Panel" parent="PlayerBoard"]
+layout_mode = 2
+
+[node name="Panel6" type="Panel" parent="PlayerBoard"]
+layout_mode = 2
+
+[node name="Panel7" type="Panel" parent="PlayerBoard"]
+layout_mode = 2
+
+[node name="Panel8" type="Panel" parent="PlayerBoard"]
+layout_mode = 2
+
+[node name="Panel9" type="Panel" parent="PlayerBoard"]
+layout_mode = 2
+
+[node name="OpponentBoard" type="GridContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+columns = 3
+
+[node name="Panel" type="Panel" parent="OpponentBoard"]
+layout_mode = 2
+
+[node name="Panel2" type="Panel" parent="OpponentBoard"]
+layout_mode = 2
+
+[node name="Panel3" type="Panel" parent="OpponentBoard"]
+layout_mode = 2
+
+[node name="Panel4" type="Panel" parent="OpponentBoard"]
+layout_mode = 2
+
+[node name="Panel5" type="Panel" parent="OpponentBoard"]
+layout_mode = 2
+
+[node name="Panel6" type="Panel" parent="OpponentBoard"]
+layout_mode = 2
+
+[node name="Panel7" type="Panel" parent="OpponentBoard"]
+layout_mode = 2
+
+[node name="Panel8" type="Panel" parent="OpponentBoard"]
+layout_mode = 2
+
+[node name="Panel9" type="Panel" parent="OpponentBoard"]
+layout_mode = 2
+
+[node name="PlayerHand" type="HBoxContainer" parent="."]
+offset_top = 12.0
+offset_bottom = 12.0
+
+[node name="Panel" type="Panel" parent="PlayerHand"]
+layout_mode = 2
+
+[node name="Panel2" type="Panel" parent="PlayerHand"]
+layout_mode = 2
+
+[node name="Panel3" type="Panel" parent="PlayerHand"]
+layout_mode = 2
+
+[node name="Panel4" type="Panel" parent="PlayerHand"]
+layout_mode = 2
+
+[node name="Panel5" type="Panel" parent="PlayerHand"]
+layout_mode = 2
+
+[node name="OpponentHand" type="HBoxContainer" parent="."]
+offset_top = 12.0
+offset_bottom = 12.0
+
+[node name="Panel" type="Panel" parent="OpponentHand"]
+layout_mode = 2
+
+[node name="Panel2" type="Panel" parent="OpponentHand"]
+layout_mode = 2
+
+[node name="Panel3" type="Panel" parent="OpponentHand"]
+layout_mode = 2
+
+[node name="Panel4" type="Panel" parent="OpponentHand"]
+layout_mode = 2
+
+[node name="Panel5" type="Panel" parent="OpponentHand"]
+layout_mode = 2
+
+[node name="Deck" type="Node" parent="."]
+script = ExtResource("2_j7tks")
