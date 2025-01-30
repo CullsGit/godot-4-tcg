@@ -1,142 +1,50 @@
-[gd_scene load_steps=3 format=3 uid="uid://cqngvfquqpm87"]
+[gd_scene load_steps=3 format=3 uid="uid://cjnww261m6pw"]
 
 [ext_resource type="Script" path="res://scenes/Board.gd" id="1_mj0ke"]
-[ext_resource type="Script" path="res://scenes/Deck.gd" id="2_j7tks"]
+[ext_resource type="PackedScene" uid="uid://bc8ob71spb8ro" path="res://scenes/Slot.tscn" id="2_qs5qd"]
 
-[node name="Board" type="Node2D"]
+[node name="Board" type="Control"]
+custom_minimum_size = Vector2(300, 300)
+layout_mode = 3
+anchors_preset = 0
+offset_left = 548.0
+offset_top = 72.0
+offset_right = 848.0
+offset_bottom = 372.0
 script = ExtResource("1_mj0ke")
 
-[node name="PlayerBoard" type="GridContainer" parent="."]
-offset_left = 629.0
-offset_top = 616.0
-offset_right = 937.0
-offset_bottom = 999.0
-size_flags_vertical = 4
+[node name="Grid" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 columns = 3
 
-[node name="Panel" type="Panel" parent="PlayerBoard"]
-custom_minimum_size = Vector2(100, 125)
+[node name="Slot_0_0" parent="Grid" instance=ExtResource("2_qs5qd")]
 layout_mode = 2
 
-[node name="Panel2" type="Panel" parent="PlayerBoard"]
-custom_minimum_size = Vector2(100, 125)
+[node name="Slot_0_1" parent="Grid" instance=ExtResource("2_qs5qd")]
 layout_mode = 2
 
-[node name="Panel3" type="Panel" parent="PlayerBoard"]
-custom_minimum_size = Vector2(100, 125)
+[node name="Slot_0_2" parent="Grid" instance=ExtResource("2_qs5qd")]
 layout_mode = 2
 
-[node name="Panel4" type="Panel" parent="PlayerBoard"]
-custom_minimum_size = Vector2(100, 125)
+[node name="Slot_1_0" parent="Grid" instance=ExtResource("2_qs5qd")]
 layout_mode = 2
 
-[node name="Panel5" type="Panel" parent="PlayerBoard"]
-custom_minimum_size = Vector2(100, 125)
+[node name="Slot_1_1" parent="Grid" instance=ExtResource("2_qs5qd")]
 layout_mode = 2
 
-[node name="Panel6" type="Panel" parent="PlayerBoard"]
-custom_minimum_size = Vector2(100, 125)
+[node name="Slot_1_2" parent="Grid" instance=ExtResource("2_qs5qd")]
 layout_mode = 2
 
-[node name="Panel7" type="Panel" parent="PlayerBoard"]
-custom_minimum_size = Vector2(100, 125)
+[node name="Slot_2_0" parent="Grid" instance=ExtResource("2_qs5qd")]
 layout_mode = 2
 
-[node name="Panel8" type="Panel" parent="PlayerBoard"]
-custom_minimum_size = Vector2(100, 125)
+[node name="Slot_2_1" parent="Grid" instance=ExtResource("2_qs5qd")]
 layout_mode = 2
 
-[node name="Panel9" type="Panel" parent="PlayerBoard"]
-custom_minimum_size = Vector2(100, 125)
+[node name="Slot_2_2" parent="Grid" instance=ExtResource("2_qs5qd")]
 layout_mode = 2
-
-[node name="OpponentBoard" type="GridContainer" parent="."]
-offset_left = 629.0
-offset_top = 206.0
-offset_right = 937.0
-offset_bottom = 589.0
-columns = 3
-
-[node name="Panel" type="Panel" parent="OpponentBoard"]
-custom_minimum_size = Vector2(100, 125)
-layout_mode = 2
-
-[node name="Panel2" type="Panel" parent="OpponentBoard"]
-custom_minimum_size = Vector2(100, 125)
-layout_mode = 2
-
-[node name="Panel3" type="Panel" parent="OpponentBoard"]
-custom_minimum_size = Vector2(100, 125)
-layout_mode = 2
-
-[node name="Panel4" type="Panel" parent="OpponentBoard"]
-custom_minimum_size = Vector2(100, 125)
-layout_mode = 2
-
-[node name="Panel5" type="Panel" parent="OpponentBoard"]
-custom_minimum_size = Vector2(100, 125)
-layout_mode = 2
-
-[node name="Panel6" type="Panel" parent="OpponentBoard"]
-custom_minimum_size = Vector2(100, 125)
-layout_mode = 2
-
-[node name="Panel7" type="Panel" parent="OpponentBoard"]
-custom_minimum_size = Vector2(100, 125)
-layout_mode = 2
-
-[node name="Panel8" type="Panel" parent="OpponentBoard"]
-custom_minimum_size = Vector2(100, 125)
-layout_mode = 2
-
-[node name="Panel9" type="Panel" parent="OpponentBoard"]
-custom_minimum_size = Vector2(100, 125)
-layout_mode = 2
-
-[node name="PlayerHand" type="HBoxContainer" parent="."]
-offset_left = 508.0
-offset_top = 1024.0
-offset_right = 524.0
-offset_bottom = 1024.0
-
-[node name="Panel" type="Panel" parent="PlayerHand"]
-layout_mode = 2
-
-[node name="Panel2" type="Panel" parent="PlayerHand"]
-layout_mode = 2
-
-[node name="Panel3" type="Panel" parent="PlayerHand"]
-layout_mode = 2
-
-[node name="Panel4" type="Panel" parent="PlayerHand"]
-layout_mode = 2
-
-[node name="Panel5" type="Panel" parent="PlayerHand"]
-layout_mode = 2
-
-[node name="OpponentHand" type="HBoxContainer" parent="."]
-offset_left = 508.0
-offset_top = 64.0
-offset_right = 524.0
-offset_bottom = 64.0
-
-[node name="Panel" type="Panel" parent="OpponentHand"]
-layout_mode = 2
-
-[node name="Panel2" type="Panel" parent="OpponentHand"]
-layout_mode = 2
-
-[node name="Panel3" type="Panel" parent="OpponentHand"]
-layout_mode = 2
-
-[node name="Panel4" type="Panel" parent="OpponentHand"]
-layout_mode = 2
-
-[node name="Panel5" type="Panel" parent="OpponentHand"]
-layout_mode = 2
-
-[node name="PlayerDeck" type="Node" parent="."]
-script = ExtResource("2_j7tks")
-
-[node name="OpponentDeck" type="Node" parent="."]
-script = ExtResource("2_j7tks")

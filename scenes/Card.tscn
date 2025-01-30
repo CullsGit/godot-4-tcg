@@ -1,13 +1,48 @@
-[gd_scene load_steps=2 format=3 uid="uid://3jjd3ct2ts8d"]
+[gd_scene load_steps=2 format=3 uid="uid://bc8drppvhe6bq"]
 
-[ext_resource type="Script" path="res://scenes/Card.gd" id="1_0g3nt"]
+[sub_resource type="GDScript" id="GDScript_sgr8p"]
+script/source = "extends Panel
+
+enum CardType { RED, BLUE, GREEN, PURPLE }
+
+var type: CardType
+var selected: bool = false
+
+func set_type(new_type: CardType):
+	type = new_type
+	match type:
+		CardType.RED: $ColorRect.color = Color(1, 0, 0)
+		CardType.BLUE: $ColorRect.color = Color(0, 0, 1)
+		CardType.GREEN: $ColorRect.color = Color(0, 1, 0)
+		CardType.PURPLE: $ColorRect.color = Color(0.5, 0, 0.5)
+
+func _on_card_pressed():
+	selected = !selected
+	update_visual_state()
+
+func update_visual_state():
+	if selected:
+		modulate = modulate.lightened(0.3)
+	else:
+		modulate = modulate.darkened(0.3)
+
+
+func reset_selection():
+	selected = false
+	update_visual_state()
+
+func _on_card_gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		print(\"Card detected a click!\")
+		_on_card_pressed()
+"
 
 [node name="Card" type="Panel"]
 custom_minimum_size = Vector2(100, 125)
 offset_right = 40.0
 offset_bottom = 40.0
 mouse_default_cursor_shape = 2
-script = ExtResource("1_0g3nt")
+script = SubResource("GDScript_sgr8p")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(100, 125)
