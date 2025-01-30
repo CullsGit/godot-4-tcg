@@ -31,7 +31,7 @@ func _ready():
 		slot.add_child(empty_card)
 
 func _on_card_gui_input(event, card):
-	if event is InputEventMouseButton and event.pressed:
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		print("Card clicked:", card)
 		if selected_card and selected_card != card:
 			selected_card.reset_selection()

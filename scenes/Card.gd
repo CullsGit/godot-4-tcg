@@ -29,6 +29,6 @@ func reset_selection():
 	update_visual_state()
 
 func _on_card_gui_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.is_pressed:
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		print("Card detected a click!")
 		_on_card_pressed()
