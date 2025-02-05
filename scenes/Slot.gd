@@ -18,5 +18,4 @@ func place_card(card):
 # Function to remove a card from this slot
 func remove_card():
 	if placed_card:
-		placed_card.queue_free()  # Remove card from scene
-		placed_card = null
+		placed_card = null  # Only clear the slot, don't delete the card
