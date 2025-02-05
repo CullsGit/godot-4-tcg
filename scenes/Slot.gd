@@ -11,6 +11,7 @@ func place_card(card):
 	if is_empty():
 		placed_card = card
 		add_child(card)  # Add card as a child of the slot
+		card.position = Vector2.ZERO
 		return true
 	return false
 
