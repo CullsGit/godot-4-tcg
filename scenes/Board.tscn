@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://cjnww261m6pw"]
+[gd_scene load_steps=5 format=3 uid="uid://cjnww261m6pw"]
 
 [ext_resource type="Script" path="res://scenes/Board.gd" id="1_mj0ke"]
 [ext_resource type="PackedScene" uid="uid://bc8ob71spb8ro" path="res://scenes/Slot.tscn" id="2_qs5qd"]
 [ext_resource type="PackedScene" uid="uid://dgoplkvhg560w" path="res://scenes/Card.tscn" id="3_u4nkn"]
+[ext_resource type="Script" path="res://scenes/Deck.gd" id="4_2npvf"]
 
 [node name="Board" type="Control"]
 custom_minimum_size = Vector2(300, 300)
@@ -51,3 +52,6 @@ layout_mode = 2
 
 [node name="Slot_2_2" parent="Grid" instance=ExtResource("2_qs5qd")]
 layout_mode = 2
+
+[node name="Deck" type="Node" parent="."]
+script = ExtResource("4_2npvf")
