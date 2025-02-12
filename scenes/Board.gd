@@ -13,8 +13,6 @@ func _ready():
 		if child is Control:
 			slots.append(child)
 	
-	# Manually place cards for testing
-	place_test_cards()
 
 func move_card(current_slot, direction):
 	var slot_index = slots.find(current_slot)
@@ -62,14 +60,3 @@ func get_target_index(slot_index, direction):
 				return slot_index + 3
 	
 	return -1  # Invalid move
-
-func place_test_cards():
-	var test_card1 = card_scene.instantiate()
-	test_card1.card_type = "Tank"
-	grid.get_child(0).place_card(test_card1)  # Blue for Tank
-	
-	slots[0].place_card(test_card1)  # Top-left slot
-
-	# Move the card to the right after 2 seconds
-	await get_tree().create_timer(2.0).timeout
-	move_card(slots[0], "right")
