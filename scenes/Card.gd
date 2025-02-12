@@ -1,9 +1,9 @@
-extends Panel  # Use Panel or ColorRect to allow background color changes
+extends Panel  # Card is a Panel
 
-@export var card_type: String = ""  # Card type (Tank, Damage, Magic, Healer)
+@export var card_type: String = ""  # Card type
+var is_selected = false  # Track selection state
 
-
-# Color mapping for each card type
+# Color mapping
 const CARD_COLORS = {
 	"Tank": Color.BLUE,
 	"Damage": Color.RED,
@@ -12,7 +12,27 @@ const CARD_COLORS = {
 }
 
 func _ready():
-	if card_type in CARD_COLORS:
-		var new_style = StyleBoxFlat.new()  # Create a new style box
-		new_style.bg_color = CARD_COLORS[card_type]  # Assign background color
-		set("theme_override_styles/panel", new_style)  # Apply the color to the panel
+	# Set initial card color
+	update_highlight()
+
+func toggle_selection():
+	is_selected = !is_selected  # Toggle selection state
+	update_highlight()  # Apply highlight immediately
+
+func update_highlight():
+	var new_style = StyleBoxFlat.new()
+	new_style.bg_color = CARD_COLORS[card_type]
+
+	if is_selected:
+		new_style.border_color = Color.YELLOW  # Highlight with yellow border
+		new_style.border_width_top = 4
+		new_style.border_width_bottom = 4
+		new_style.border_width_left = 4
+		new_style.border_width_right = 4
+	else:
+		new_style.border_width_top = 0
+		new_style.border_width_bottom = 0
+		new_style.border_width_left = 0
+		new_style.border_width_right = 0
+
+	set("theme_override_styles/panel", new_style)  # Apply highlight
