@@ -66,7 +66,7 @@ func get_target_index(slot_index, direction):
 func place_test_cards():
 	var test_card1 = card_scene.instantiate()
 	test_card1.card_type = "Tank"
-	test_card1.card_color = Color.BLUE  # Blue for Tank
+	grid.get_child(0).place_card(test_card1)  # Blue for Tank
 	
 	slots[0].place_card(test_card1)  # Top-left slot
 

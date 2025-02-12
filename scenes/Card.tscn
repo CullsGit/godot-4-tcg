@@ -2,15 +2,8 @@
 
 [ext_resource type="Script" path="res://scenes/Card.gd" id="1_ev0x0"]
 
-[node name="Card" type="Control"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-script = ExtResource("1_ev0x0")
-
-[node name="Panel" type="Panel" parent="."]
+[node name="Card" type="Panel"]
 custom_minimum_size = Vector2(100, 100)
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 100.0
+offset_bottom = 100.0
+script = ExtResource("1_ev0x0")
