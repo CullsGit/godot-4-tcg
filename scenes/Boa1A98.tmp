@@ -55,16 +55,12 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="Hand" type="HBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 3.35333
-anchor_right = 0.5
-anchor_bottom = 3.35333
-grow_horizontal = 2
-grow_vertical = 0
+layout_mode = 2
+offset_left = -108.0
+offset_top = 970.0
+offset_right = -8.0
+offset_bottom = 970.0
 script = ExtResource("5_digxp")
-metadata/_edit_use_anchors_ = true
 
 [node name="Deck" type="Node" parent="." node_paths=PackedStringArray("hand_node")]
 script = ExtResource("4_2npvf")

@@ -23,3 +23,9 @@ func _on_card_clicked(event, card):
 
 			selected_card = card  # Select new card
 			card.toggle_selection()  # Highlight new selection
+
+func remove_card(card):
+	if card in hand_cards:
+		print("Removing card from hand:", card.card_type)
+		hand_cards.erase(card)  # Remove from the list
+		remove_child(card)  # Remove from UI

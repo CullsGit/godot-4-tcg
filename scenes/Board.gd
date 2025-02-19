@@ -28,18 +28,17 @@ func move_card(current_slot, direction):
 	var target_slot = slots[target_index]
 
 	if target_slot.is_empty():
-		# Move the card correctly
 		var moving_card = current_slot.placed_card
 		if moving_card == null:
 			return  # No card to move
 			
-		current_slot.remove_card()
-		
+		current_slot.placed_card = null  # Clear the old slot's reference
 		if moving_card.get_parent():
-			moving_card.get_parent().remove_child(moving_card)
-		# Reparent the card to the new slot
-		target_slot.add_child(moving_card)
-		target_slot.placed_card = moving_card
+			moving_card.get_parent().remove_child(moving_card)  # Remove card from old slot
+
+		target_slot.add_child(moving_card)  # Move to new slot
+		target_slot.placed_card = moving_card  # Update new slot reference
+		moving_card.position = Vector2.ZERO  # Reset position after moving
 
 func get_target_index(slot_index, direction):
 	var row = slot_index / 3  # Get row index
