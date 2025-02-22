@@ -15,6 +15,7 @@ func _ready():
 	
 
 func move_card(current_slot, direction):
+	print("moving")
 	var slot_index = slots.find(current_slot)
 
 	if slot_index == -1:

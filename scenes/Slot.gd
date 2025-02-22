@@ -7,20 +7,19 @@ func is_empty():
 
 func _on_gui_input(event):
 	if event is InputEventMouseButton and event.pressed:
+		
 		var hand = get_tree().get_root().find_child("Hand", true, false)  # Find Hand globally
 		if is_empty() and hand and hand.selected_card:
 			var card_to_place = hand.selected_card
-			hand.selected_card = null  # Deselect first
-			place_card(card_to_place)
-			hand.remove_card(card_to_place)
+			if card_to_place.get_parent() == hand:
+				hand.selected_card = null  # Deselect first
+				place_card(card_to_place)
+				hand.remove_card(card_to_place)
+			else:
+				print("This card is not in hand and can't be placed.")
 
 func place_card(card):
 	placed_card = card  # Store the placed card
-	var hand = get_tree().get_root().find_child("Hand", true, false)  # Find Hand globally
-
-	if hand:
-		hand.selected_card = null  # Deselect after placing
-		hand.remove_card(card)  # Remove the card from the hand list
 
 	# Remove card from previous parent safely
 	if card.get_parent():
