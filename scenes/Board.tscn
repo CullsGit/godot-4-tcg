@@ -9,14 +9,15 @@
 [node name="Board" type="Control"]
 custom_minimum_size = Vector2(300, 300)
 layout_mode = 3
-anchors_preset = 0
-offset_left = 548.0
-offset_top = 72.0
-offset_right = 848.0
-offset_bottom = 372.0
+anchor_left = 0.3425
+anchor_top = 0.06
+anchor_right = 0.53
+anchor_bottom = 0.31
+offset_right = 6.10352e-05
 script = ExtResource("1_mj0ke")
 slot_scene = ExtResource("2_qs5qd")
 card_scene = ExtResource("3_u4nkn")
+metadata/_edit_use_anchors_ = true
 
 [node name="Grid" type="GridContainer" parent="."]
 layout_mode = 1

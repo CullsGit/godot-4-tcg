@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/Slot.gd" id="1_ful1a"]
 
-[node name="Slot" type="Control"]
+[node name="Slot" type="Control" groups=["BoardSlot"]]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 3
 anchor_right = 0.062
