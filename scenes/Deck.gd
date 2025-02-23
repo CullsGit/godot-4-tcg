@@ -1,7 +1,7 @@
-extends Node
+extends Control
 
-@export var card_scene: PackedScene  # Assign "Card.tscn"
-@export var hand_node: Node  # Assign "Hand"
+@export var card_scene: PackedScene  # Card scene
+@export var hand_node: Node  # Hand reference
 
 var deck = []  # Store 20 shuffled cards
 const CARD_TYPES = ["Tank", "Damage", "Magic", "Healer"]
@@ -9,28 +9,38 @@ const CARD_TYPES = ["Tank", "Damage", "Magic", "Healer"]
 func _ready():
 	generate_deck()
 	shuffle_deck()
-	draw_starting_hand()  # Start with 5 visible cards
+	draw_starting_hand()
+	update_deck_counter()
 
-# 🔹 Generates 5 cards of each type
+# 🔹 Generate 5 cards of each type
 func generate_deck():
 	deck.clear()
 	for type in CARD_TYPES:
 		for i in range(5):
 			var card = card_scene.instantiate()
-			card.card_type = type  # Assign type
+			card.card_type = type
 			deck.append(card)
 
-# 🔹 Shuffle the deck
+# 🔹 Shuffle deck
 func shuffle_deck():
 	deck.shuffle()
 
-# 🔹 Draw a card if the hand isn't full
+# 🔹 Draw starting hand (5 cards)
+func draw_starting_hand():
+	for i in range(5):
+		draw_card()
+
+# 🔹 Draw a card
 func draw_card():
 	if deck.size() > 0 and hand_node.hand_cards.size() < 5:
 		var drawn_card = deck.pop_front()
-		hand_node.add_card(drawn_card)  # Add the card to the hand
+		hand_node.add_card(drawn_card)
+		update_deck_counter()
 
-# 🔹 Draw 5 cards at the start of the game
-func draw_starting_hand():
-	for i in range(5):
+# 🔹 Update deck counter
+func update_deck_counter():
+	$DeckCounter.text = str(deck.size())
+
+func _on_deck_visual_gui_input(event):
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		draw_card()

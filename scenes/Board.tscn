@@ -24,6 +24,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = 548.0
+offset_right = 11.0
+offset_bottom = 556.0
 grow_horizontal = 2
 grow_vertical = 2
 columns = 3
@@ -67,7 +71,43 @@ grow_vertical = 0
 script = ExtResource("5_digxp")
 metadata/_edit_use_anchors_ = true
 
-[node name="Deck" type="Node" parent="." node_paths=PackedStringArray("hand_node")]
+[node name="Deck" type="Control" parent="." node_paths=PackedStringArray("hand_node")]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchor_left = 2.09
+anchor_top = 2.62333
+anchor_right = 2.42333
+anchor_bottom = 2.95667
+offset_right = -100.0
+offset_bottom = -100.0
 script = ExtResource("4_2npvf")
 card_scene = ExtResource("3_u4nkn")
 hand_node = NodePath("../Hand")
+metadata/_edit_use_anchors_ = true
+
+[node name="DeckVisual" type="ColorRect" parent="Deck"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.711638, 0.467023, 7.70092e-07, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="DeckCounter" type="Label" parent="Deck"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_type_variation = &"HeaderLarge"
+theme_override_colors/font_color = Color(0.671493, 0.929723, 0.888258, 1)
+theme_override_colors/font_outline_color = Color(0, 0.752941, 0, 1)
+theme_override_font_sizes/font_size = 68
+text = "15"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[connection signal="gui_input" from="Deck/DeckVisual" to="Deck" method="_on_deck_visual_gui_input"]
