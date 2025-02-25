@@ -34,6 +34,10 @@ func place_card(card):
 	add_child(card)  # Add to the slot
 	card.position = Vector2.ZERO  # Align properly
 
+	var action_manager = get_tree().get_root().find_child("ActionManager", true, false)
+	action_manager.use_action()
+
+
 	# 🔹 Ensure it is not highlighted anymore
 	if card.has_method("toggle_selection"):
 		card.toggle_selection()  # Deselect if highlighting is handled in `toggle_selection()`

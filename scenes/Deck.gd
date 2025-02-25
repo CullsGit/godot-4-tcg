@@ -3,6 +3,7 @@ extends Control
 @export var card_scene: PackedScene  # Card scene
 @export var hand_node: Node  # Hand reference
 
+
 var deck = []  # Store 20 shuffled cards
 const CARD_TYPES = ["Tank", "Damage", "Magic", "Healer"]
 
@@ -28,14 +29,18 @@ func shuffle_deck():
 # 🔹 Draw starting hand (5 cards)
 func draw_starting_hand():
 	for i in range(5):
-		draw_card()
+		draw_card(false)
 
 # 🔹 Draw a card
-func draw_card():
+func draw_card(consume_action := true):
 	if deck.size() > 0 and hand_node.hand_cards.size() < 5:
 		var drawn_card = deck.pop_front()
 		hand_node.add_card(drawn_card)
 		update_deck_counter()
+
+	if consume_action:
+		var action_manager = get_tree().get_root().find_child("ActionManager", true, false)
+		action_manager.use_action()
 
 # 🔹 Update deck counter
 func update_deck_counter():

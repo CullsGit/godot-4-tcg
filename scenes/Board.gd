@@ -7,12 +7,14 @@ extends Control
 
 var slots = []  # List of all slots on the board
 
+
+
 func _ready():
 	# Store slot references
 	for child in grid.get_children():
 		if child is Control:
 			slots.append(child)
-	
+
 
 func move_card(current_slot, direction):
 
@@ -40,6 +42,9 @@ func move_card(current_slot, direction):
 		target_slot.add_child(moving_card)  # Move to new slot
 		target_slot.placed_card = moving_card  # Update new slot reference
 		moving_card.position = Vector2.ZERO  # Reset position after moving
+
+		var action_manager = get_tree().get_root().find_child("ActionManager", true, false)
+		action_manager.use_action()
 
 func get_target_index(slot_index, direction):
 	var row = slot_index / 3  # Get row index

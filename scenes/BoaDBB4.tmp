@@ -1,11 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://cjnww261m6pw"]
+[gd_scene load_steps=6 format=3 uid="uid://cjnww261m6pw"]
 
 [ext_resource type="Script" path="res://scenes/Board.gd" id="1_mj0ke"]
 [ext_resource type="PackedScene" uid="uid://bc8ob71spb8ro" path="res://scenes/Slot.tscn" id="2_qs5qd"]
 [ext_resource type="PackedScene" uid="uid://dgoplkvhg560w" path="res://scenes/Card.tscn" id="3_u4nkn"]
 [ext_resource type="Script" path="res://scenes/Deck.gd" id="4_2npvf"]
 [ext_resource type="Script" path="res://scenes/Hand.gd" id="5_digxp"]
-[ext_resource type="Script" path="res://scenes/ActionManager.gd" id="6_kne61"]
 
 [node name="Board" type="Control"]
 custom_minimum_size = Vector2(300, 300)
@@ -112,16 +111,11 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="ActionManager" type="Node" parent="."]
-script = ExtResource("6_kne61")
-
 [node name="ActionLabel" type="Label" parent="."]
 layout_mode = 0
-offset_left = 506.0
-offset_top = 204.0
-offset_right = 546.0
-offset_bottom = 227.0
-theme_override_colors/font_color = Color(0.891281, 8.43973e-05, 4.81308e-05, 1)
-theme_override_font_sizes/font_size = 50
+offset_left = 587.0
+offset_top = 164.0
+offset_right = 627.0
+offset_bottom = 187.0
 
 [connection signal="gui_input" from="Deck/DeckVisual" to="Deck" method="_on_deck_visual_gui_input"]
