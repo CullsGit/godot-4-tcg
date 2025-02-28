@@ -7,8 +7,19 @@ func is_empty():
 
 func _on_gui_input(event):
 	if event is InputEventMouseButton and event.pressed:
-		
+		var game_manager = get_tree().get_root().find_child("GameManager", true, false)
+		var current_board = game_manager.get_current_board()
 		var hand = get_tree().get_root().find_child("Hand", true, false)  # Find Hand globally
+		
+		var board = self.get_parent().get_parent()  # Assuming slot is inside a board container
+
+
+		# Ensure the slot belongs to the current board
+		if board.get_instance_id() != current_board.get_instance_id():
+			print("❌ Invalid move: You cannot place cards on the opponent's board!")
+			return
+		print("✅ Correct board detected, proceeding...")
+
 		if is_empty() and hand and hand.selected_card:
 			var card_to_place = hand.selected_card
 			if card_to_place.get_parent() == hand:
@@ -17,35 +28,41 @@ func _on_gui_input(event):
 				place_card(card_to_place)
 			elif card_to_place.get_parent().is_in_group("BoardSlot"):
 				var current_slot = card_to_place.get_parent()
-				var board = get_tree().get_root().find_child("Board", true, false)
 				if board:
 					board.move_card(current_slot, get_slot_direction(current_slot, self))
-			else:
-				print("This card can't be placed or moved.")
-
 
 func place_card(card):
-	placed_card = card  # Store the placed card
+	var game_manager = get_tree().get_root().find_child("GameManager", true, false)
+	if not game_manager:
+		print("Error: GameManager not found.")
+		return
 
-	# Remove card from previous parent safely
+	# Remove the card from the previous parent safely
+
 	if card.get_parent():
 		card.get_parent().remove_child(card)
+
 
 	add_child(card)  # Add to the slot
 	card.position = Vector2.ZERO  # Align properly
 
+	# Use an action
 	var action_manager = get_tree().get_root().find_child("ActionManager", true, false)
-	action_manager.use_action()
+	if action_manager:
+		action_manager.use_action()
+	else:
+		print("Error: ActionManager not found.")
 
-
-	# 🔹 Ensure it is not highlighted anymore
+	# Ensure card is deselected after placement
 	if card.has_method("toggle_selection"):
 		card.toggle_selection()  # Deselect if highlighting is handled in `toggle_selection()`
+	
+	# Store the placed card reference
+	placed_card = card
 
 func remove_card():
 	if placed_card:
-		if placed_card.get_parent():  # Ensure it has a parent before removing
-			placed_card.get_parent().remove_child(placed_card)  # Properly remove from scene
+		placed_card.get_parent().remove_child(placed_card)  # Properly remove from scene
 		placed_card = null  # Clear reference
 
 func get_slot_direction(from_slot, to_slot):
@@ -55,13 +72,8 @@ func get_slot_direction(from_slot, to_slot):
 	var diff = to_index - from_index
 
 	match diff:
-		-1:
-			return "left"
-		1:
-			return "right"
-		-3:
-			return "up"
-		3:
-			return "down"
-		_:
-			return ""  # Invalid move
+		-1: return "left"
+		1: return "right"
+		-3: return "up"
+		3: return "down"
+		_: return ""  # Invalid move

@@ -1,10 +1,8 @@
 extends Node
 
 @export var max_actions := 3
-@onready var action_label = $"../ActionLabel"
 
 var current_actions := max_actions
-var current_player := 1  # 1 for Player 1, 2 for Player 2
 
 signal actions_updated(current_actions)
 

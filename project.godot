@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="godot-tcg"
-run/main_scene="res://scenes/Board.tscn"
+run/main_scene="res://scenes/MainScene.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 
 [display]
