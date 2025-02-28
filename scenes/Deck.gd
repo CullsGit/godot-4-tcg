@@ -29,20 +29,32 @@ func shuffle_deck():
 # 🔹 Draw starting hand (5 cards)
 func draw_starting_hand():
 	for i in range(5):
-		draw_card(false)
+		draw_card(true)
 
 # 🔹 Draw a card
-func draw_card(consume_action := true):
-	if deck.size() > 0 and hand_node.hand_cards.size() < 5:
+func draw_card(starting_hand := false):
+	var game_manager = get_tree().get_root().find_child("GameManager", true, false)
+	if not game_manager:
+		print("Error: GameManager not found.")
+		return
+	
+	var current_hand = game_manager.get_current_hand()  # Get the hand of the current player
+
+	# Allow drawing if it's the current player's turn OR if drawing the starting hand
+	if deck.size() > 0 and (starting_hand or current_hand == hand_node) and hand_node.hand_cards.size() < 5:
 		var drawn_card = deck.pop_front()
 		hand_node.add_card(drawn_card)
 		update_deck_counter()
 
-	if consume_action:
-		var action_manager = get_tree().get_root().find_child("ActionManager", true, false)
-		action_manager.use_action()
+		# Only consume an action if NOT drawing starting hand
+		if not starting_hand:
+			var action_manager = get_tree().get_root().find_child("ActionManager", true, false)
+			action_manager.use_action()
+	else:
+		print("❌ Cannot draw a card: Either the deck is empty, hand is full, or it's not your turn.")
 
-# 🔹 Update deck counter
+
+
 func update_deck_counter():
 	$DeckCounter.text = str(deck.size())
 
