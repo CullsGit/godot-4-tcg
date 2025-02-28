@@ -9,7 +9,7 @@ func _on_gui_input(event):
 	if event is InputEventMouseButton and event.pressed:
 		var game_manager = get_tree().get_root().find_child("GameManager", true, false)
 		var current_board = game_manager.get_current_board()
-		var hand = get_tree().get_root().find_child("Hand", true, false)  # Find Hand globally
+		var current_hand = game_manager.get_current_hand()  # Find Hand globally
 		
 		var board = self.get_parent().get_parent()  # Assuming slot is inside a board container
 
@@ -20,11 +20,11 @@ func _on_gui_input(event):
 			return
 		print("✅ Correct board detected, proceeding...")
 
-		if is_empty() and hand and hand.selected_card:
-			var card_to_place = hand.selected_card
-			if card_to_place.get_parent() == hand:
-				hand.remove_card(card_to_place)
-				hand.selected_card = null  # Deselect first
+		if is_empty() and current_hand and current_hand.selected_card:
+			var card_to_place = current_hand.selected_card
+			if card_to_place.get_parent() == current_hand:
+				current_hand.remove_card(card_to_place)
+				current_hand.selected_card = null  # Deselect first
 				place_card(card_to_place)
 			elif card_to_place.get_parent().is_in_group("BoardSlot"):
 				var current_slot = card_to_place.get_parent()
