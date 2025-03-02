@@ -2,6 +2,12 @@ extends Control
 
 var placed_card = null  # Stores the card placed in this slot
 
+@export var slot_index: int  # Set this in the editor
+@export var is_player1: bool  # True for P1 slots, False for P2 slots
+
+func _ready():
+	print("Slot ", slot_index, " initialized. Player 1:", is_player1)
+
 func is_empty():
 	return placed_card == null  # Returns true if no card is placed
 
@@ -10,9 +16,8 @@ func _on_gui_input(event):
 		var game_manager = get_tree().get_root().find_child("GameManager", true, false)
 		var current_board = game_manager.get_current_board()
 		var current_hand = game_manager.get_current_hand()  # Find Hand globally
-		
-		var board = self.get_parent().get_parent()  # Assuming slot is inside a board container
 
+		var board = self.get_parent().get_parent()  # Assuming slot is inside a board container
 
 		# Ensure the slot belongs to the current board
 		if board.get_instance_id() != current_board.get_instance_id():
@@ -38,13 +43,15 @@ func place_card(card):
 		return
 
 	# Remove the card from the previous parent safely
-
 	if card.get_parent():
 		card.get_parent().remove_child(card)
 
-
 	add_child(card)  # Add to the slot
 	card.position = Vector2.ZERO  # Align properly
+
+	# Get opponent's lane
+	var opponent_lane = get_opponent_lane(slot_index, is_player1)
+	print("Opponent’s matching lane for slot", slot_index, ":", opponent_lane)
 
 	# Use an action
 	var action_manager = get_tree().get_root().find_child("ActionManager", true, false)
@@ -66,8 +73,8 @@ func remove_card():
 		placed_card = null  # Clear reference
 
 func get_slot_direction(from_slot, to_slot):
-	var from_index = from_slot.get_index()
-	var to_index = to_slot.get_index()
+	var from_index = from_slot.slot_index
+	var to_index = to_slot.slot_index
 
 	var diff = to_index - from_index
 
@@ -77,3 +84,29 @@ func get_slot_direction(from_slot, to_slot):
 		-3: return "up"
 		3: return "down"
 		_: return ""  # Invalid move
+
+# Corrected Lanes for Player 1 and Player 2
+var player1_lanes = [
+	[0, 3, 6],  # Lane 1: P1 (1, 4, 7) -> P2 (2, 5, 8)
+	[1, 4, 7],  # Lane 2: P1 (2, 5, 8) -> P2 (1, 4, 7)
+	[2, 5, 8]   # Lane 3: P1 (3, 6, 9) -> P2 (0, 3, 6)
+]
+
+var player2_lanes = [
+	[2, 5, 8],  # Lane 1: P2 (3, 6, 9) -> P1 (0, 3, 6)
+	[1, 4, 7],  # Lane 2: P2 (2, 5, 8) -> P1 (1, 4, 7)
+	[0, 3, 6]   # Lane 3: P2 (1, 4, 7) -> P1 (2, 5, 8)
+]
+
+func get_opponent_lane(slot_idx, player1_flag):
+	# Determine which set of lanes to use
+	var player_lanes = player1_lanes if player1_flag else player2_lanes
+	var opponent_lanes = player2_lanes if player1_flag else player1_lanes
+
+	for i in range(3):  # Loop through each lane
+		if slot_idx in player_lanes[i]:
+			print("Opponent's lane: ", opponent_lanes[i])
+			return opponent_lanes[i]
+
+	print("Error: Slot not found in any lane.")
+	return []
