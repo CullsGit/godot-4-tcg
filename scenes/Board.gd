@@ -8,7 +8,6 @@ extends Control
 var slots = []  # List of all slots on the board
 
 
-
 func _ready():
 	# Store slot references
 	for child in grid.get_children():
@@ -67,6 +66,42 @@ func get_target_index(slot_index, direction):
 	
 	return -1  # Invalid move
 
+# Corrected Lanes for Player 1 and Player 2
+var player1_lanes = [
+	[0, 3, 6],  # Lane 1
+	[1, 4, 7],  # Lane 2
+	[2, 5, 8]   # Lane 3
+]
+
+var player2_lanes = [
+	[2, 5, 8],  # Lane 1
+	[1, 4, 7],  # Lane 2
+	[0, 3, 6]   # Lane 3
+]
+
+func get_opponent_lane(slot_idx, player1_flag):
+	# Determine which set of lanes to use
+	var player_lanes = player1_lanes if player1_flag else player2_lanes
+	var opponent_lanes = player2_lanes if player1_flag else player1_lanes
+
+	for i in range(3):  # Loop through each lane
+		if slot_idx in player_lanes[i]:
+			var index_in_lane = player_lanes[i].find(slot_idx)
+			match index_in_lane:
+				0: return opponent_lanes[i].slice(0, 3)  # Target indexes 0-2
+				1: return opponent_lanes[i].slice(0, 2)  # Target indexes 0-1
+				2: return [opponent_lanes[i][0]]  # Target only index 0
+	print("Error: Slot not found in any lane.")
+	return []
+
+
+func get_lane_position(slot_idx):
+	for lane in player1_lanes + player2_lanes:  # Loop through all lanes
+		if slot_idx in lane:
+			return lane.find(slot_idx)  # Return the index within the lane
+	print("Error: Slot not found in any lane.")
+	return -1  # Invalid
+
 func check_opponent_cards_in_range(slot):
 	# Find GameManager
 	var game_manager = get_tree().get_root().find_child("GameManager", true, false)
@@ -81,7 +116,7 @@ func check_opponent_cards_in_range(slot):
 		return
 	
 	# Get the opponent's lane corresponding to this slot
-	var opponent_lane = slot.get_opponent_lane(slot.slot_index, slot.is_player1)
+	var opponent_lane = get_opponent_lane(slot.slot_index, slot.is_player1)
 	print("Checking opponent cards in lane:", opponent_lane)
 
 	var cards_in_range = []
