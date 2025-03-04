@@ -32,33 +32,14 @@ func _on_gui_input(event):
 					board.move_card(current_slot, get_slot_direction(current_slot, self))
 
 func place_card(card):
-	var game_manager = get_tree().get_root().find_child("GameManager", true, false)
-	if not game_manager:
-		print("Error: GameManager not found.")
-		return
-
+	var board = get_parent().get_parent()  # Get Board node
 	# Remove the card from the previous parent safely
 	if card.get_parent():
 		card.get_parent().remove_child(card)
 
 	add_child(card)  # Add to the slot
 	card.position = Vector2.ZERO  # Align properly
-
-	# Get opponent's lane
-	var opponent_lane = get_opponent_lane(slot_index, is_player1)
-	print("Opponent’s matching lane for slot ", slot_index, ": ", opponent_lane)
-
-	var lane_index = get_lane_position(slot_index)  # Get the relative position in the lane
-
-	if lane_index == 0:  # Front row (can attack 0 → 2)
-		for i in range(3):  
-			print("Opponent slot ", opponent_lane[i], " is in range.")
-	elif lane_index == 1:  # Middle row (can attack 0 → 1)
-		for i in range(2):  
-			print("Opponent slot ", opponent_lane[i], " is in range.")
-	elif lane_index == 2:  # Back row (can attack 0 only)
-		print("Opponent slot ", opponent_lane[0], " is in range.")
-
+	board.check_opponent_cards_in_range(self)
 	# Use an action
 	var action_manager = get_tree().get_root().find_child("ActionManager", true, false)
 	if action_manager:
@@ -111,8 +92,11 @@ func get_opponent_lane(slot_idx, player1_flag):
 
 	for i in range(3):  # Loop through each lane
 		if slot_idx in player_lanes[i]:
-			return opponent_lanes[i]
-
+			var index_in_lane = player_lanes[i].find(slot_idx)
+			match index_in_lane:
+				0: return opponent_lanes[i].slice(0, 3)  # Target indexes 0-2
+				1: return opponent_lanes[i].slice(0, 2)  # Target indexes 0-1
+				2: return [opponent_lanes[i][0]]  # Target only index 0
 	print("Error: Slot not found in any lane.")
 	return []
 

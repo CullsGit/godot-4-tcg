@@ -45,3 +45,10 @@ func get_current_board():
 
 func get_current_hand():
 	return hand1 if current_player == 1 else hand2
+
+
+func get_opponent_board():
+	if current_player == 1:
+		return $Board2
+	else:
+		return $Board1
