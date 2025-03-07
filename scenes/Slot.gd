@@ -1,9 +1,19 @@
 extends Control
 
-var placed_card = null  # Stores the card placed in this slot
+var placed_card: Card = null  # The card inside the slot
+var selected_card: Card = null 
 
 @export var slot_index: int  # Set this in the editor
 @export var is_player1: bool  # True for P1 slots, False for P2 slots
+
+
+func set_card(card: Card):
+	placed_card = card
+	placed_card.connect("card_selected", _on_card_selected)
+
+func _on_card_selected(card: Card):
+	selected_card = card
+	print("Selected card:", selected_card.card_type)  # ✅ Prints when a card is selected
 
 func is_empty():
 	return placed_card == null  # Returns true if no card is placed
@@ -52,7 +62,7 @@ func place_card(card):
 		card.toggle_selection()  # Deselect if highlighting is handled in `toggle_selection()`
 	
 	# Store the placed card reference
-	placed_card = card
+	set_card(card)
 
 func remove_card():
 	if placed_card:

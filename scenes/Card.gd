@@ -1,9 +1,18 @@
 extends Panel  # Card is a Panel
+class_name Card
 
 @export var card_type: String = ""  # Card type
 var is_selected = false  # Track selection state
 
-# Color mapping
+
+signal card_selected(card)  # Signal when card is selected
+
+
+func _input_event(event):
+	if event is InputEventMouseButton and event.pressed:
+		emit_signal("card_selected", self)  # ✅ Emit signal to Slot
+
+
 const CARD_COLORS = {
 	"Tank": Color.BLUE,
 	"Damage": Color.RED,
@@ -18,6 +27,9 @@ func _ready():
 func toggle_selection():
 	is_selected = !is_selected  # Toggle selection state
 	update_highlight()  # Apply highlight immediately
+
+	if is_selected:
+		emit_signal("card_selected", self)  # Emit the card itself when selected
 
 func update_highlight():
 	var new_style = StyleBoxFlat.new()
