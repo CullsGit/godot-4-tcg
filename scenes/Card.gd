@@ -10,7 +10,7 @@ signal card_selected(card)  # Signal when card is selected
 
 func _input_event(event):
 	if event is InputEventMouseButton and event.pressed:
-		emit_signal("card_selected", self)  # ✅ Emit signal to Slot
+		card_selected.emit(self)
 
 
 const CARD_COLORS = {
@@ -29,7 +29,7 @@ func toggle_selection():
 	update_highlight()  # Apply highlight immediately
 
 	if is_selected:
-		emit_signal("card_selected", self)  # Emit the card itself when selected
+		card_selected.emit(self)
 
 func update_highlight():
 	var new_style = StyleBoxFlat.new()
