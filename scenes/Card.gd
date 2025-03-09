@@ -8,11 +8,6 @@ var is_selected = false  # Track selection state
 signal card_selected(card)  # Signal when card is selected
 
 
-func _input_event(event):
-	if event is InputEventMouseButton and event.pressed:
-		card_selected.emit(self)
-
-
 const CARD_COLORS = {
 	"Tank": Color.BLUE,
 	"Damage": Color.RED,
