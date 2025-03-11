@@ -18,13 +18,14 @@ const CARD_COLORS = {
 func _ready():
 	# Set initial card color
 	update_highlight()
+	
+func _gui_input(event):
+	if event is InputEventMouseButton and event.pressed:
+		card_selected.emit(self)  # Notify Hand.gd that this card was clicked
 
 func toggle_selection():
 	is_selected = !is_selected  # Toggle selection state
 	update_highlight()  # Apply highlight immediately
-
-	if is_selected:
-		card_selected.emit(self)
 
 func update_highlight():
 	var new_style = StyleBoxFlat.new()
