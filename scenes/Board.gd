@@ -42,7 +42,7 @@ func move_card(current_slot, direction):
 		target_slot.placed_card = moving_card  # Update new slot reference
 		moving_card.position = Vector2.ZERO  # Reset position after moving
 
-		var action_manager = get_tree().get_root().find_child("ActionManager", true, false)
+		var action_manager = %ActionManager
 		check_opponent_cards_in_range(target_slot)
 		action_manager.use_action()
 
@@ -104,7 +104,7 @@ func get_lane_position(slot_idx):
 
 func check_opponent_cards_in_range(slot):
 	# Find GameManager
-	var game_manager = get_tree().get_root().find_child("GameManager", true, false)
+	var game_manager = %GameManager
 	if not game_manager:
 		print("Error: GameManager not found.")
 		return

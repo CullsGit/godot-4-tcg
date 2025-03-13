@@ -12,6 +12,7 @@
 [node name="MainScene" type="Node2D"]
 
 [node name="ActionManager" type="Node" parent="."]
+unique_name_in_owner = true
 script = ExtResource("1_xsjp7")
 
 [node name="ActionLabel" type="Label" parent="ActionManager"]
@@ -24,6 +25,7 @@ theme_override_font_sizes/font_size = 50
 script = ExtResource("2_s7chb")
 
 [node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("action_manager")]
+unique_name_in_owner = true
 script = ExtResource("3_wec0a")
 action_manager = NodePath("../ActionManager")
 

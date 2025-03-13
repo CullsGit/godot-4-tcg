@@ -20,7 +20,7 @@ func is_empty():
 
 func _on_gui_input(event):
 	if event is InputEventMouseButton and event.pressed:
-		var game_manager = get_tree().get_root().find_child("GameManager", true, false)
+		var game_manager = %GameManager
 		var current_board = game_manager.get_current_board()
 		var current_hand = game_manager.get_current_hand()  # Find Hand globally
 
@@ -51,7 +51,7 @@ func place_card(card):
 	card.position = Vector2.ZERO  # Align properly
 	board.check_opponent_cards_in_range(self)
 	# Use an action
-	var action_manager = get_tree().get_root().find_child("ActionManager", true, false)
+	var action_manager = %ActionManager
 	if action_manager:
 		action_manager.use_action()
 	else:

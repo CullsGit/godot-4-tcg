@@ -33,7 +33,7 @@ func draw_starting_hand():
 
 # 🔹 Draw a card
 func draw_card(starting_hand := false):
-	var game_manager = get_tree().get_root().find_child("GameManager", true, false)
+	var game_manager = %GameManager
 	if not game_manager:
 		print("Error: GameManager not found.")
 		return
@@ -48,7 +48,7 @@ func draw_card(starting_hand := false):
 
 		# Only consume an action if NOT drawing starting hand
 		if not starting_hand:
-			var action_manager = get_tree().get_root().find_child("ActionManager", true, false)
+			var action_manager = %ActionManager
 			action_manager.use_action()
 	else:
 		print("❌ Cannot draw a card: Either the deck is empty, hand is full, or it's not your turn.")
