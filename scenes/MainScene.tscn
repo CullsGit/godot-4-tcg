@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://btxsmm5hfyv5e"]
+[gd_scene load_steps=10 format=3 uid="uid://btxsmm5hfyv5e"]
 
 [ext_resource type="Script" path="res://scenes/ActionManager.gd" id="1_xsjp7"]
 [ext_resource type="Script" path="res://scenes/ActionLabel.gd" id="2_s7chb"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dgoplkvhg560w" path="res://scenes/Card.tscn" id="6_0bg1w"]
 [ext_resource type="Script" path="res://scenes/Hand.gd" id="7_jx55p"]
 [ext_resource type="Script" path="res://scenes/Deck.gd" id="8_m4jgh"]
+[ext_resource type="Texture2D" uid="uid://8xb66gaptowg" path="res://assets/wooden-floor-background.jpg" id="9_kkbyt"]
 
 [node name="MainScene" type="Node2D"]
 
@@ -255,6 +256,11 @@ text = "15"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(800, 600)
+scale = Vector2(0.300526, 0.338028)
+texture = ExtResource("9_kkbyt")
 
 [connection signal="actions_updated" from="ActionManager" to="ActionManager/ActionLabel" method="_on_action_manager_actions_updated"]
 [connection signal="gui_input" from="GameManager/Board1/Deck/DeckVisual" to="GameManager/Board1/Deck" method="_on_deck_visual_gui_input"]
