@@ -111,7 +111,7 @@ script = ExtResource("7_jx55p")
 metadata/_edit_use_anchors_ = true
 
 [node name="Deck" type="Control" parent="GameManager/Board1" node_paths=PackedStringArray("hand_node")]
-custom_minimum_size = Vector2(100, 100)
+custom_minimum_size = Vector2(100, 150)
 layout_mode = 1
 anchor_left = 1.95667
 anchor_top = 1.16667
@@ -123,14 +123,14 @@ hand_node = NodePath("../Hand")
 metadata/_edit_use_anchors_ = true
 
 [node name="DeckVisual" type="ColorRect" parent="GameManager/Board1/Deck"]
-custom_minimum_size = Vector2(100, 100)
+custom_minimum_size = Vector2(100, 150)
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.711638, 0.467023, 7.70092e-07, 1)
+color = Color(6.44952e-06, 0.565282, 0.803601, 1)
 metadata/_edit_use_anchors_ = true
 
 [node name="DeckCounter" type="Label" parent="GameManager/Board1/Deck"]
@@ -221,7 +221,7 @@ script = ExtResource("7_jx55p")
 metadata/_edit_use_anchors_ = true
 
 [node name="Deck" type="Control" parent="GameManager/Board2" node_paths=PackedStringArray("hand_node")]
-custom_minimum_size = Vector2(100, 100)
+custom_minimum_size = Vector2(100, 150)
 layout_mode = 1
 anchor_left = 1.95667
 anchor_top = 1.16667
@@ -233,14 +233,14 @@ hand_node = NodePath("../Hand")
 metadata/_edit_use_anchors_ = true
 
 [node name="DeckVisual" type="ColorRect" parent="GameManager/Board2/Deck"]
-custom_minimum_size = Vector2(100, 100)
+custom_minimum_size = Vector2(100, 150)
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.711638, 0.467023, 7.70092e-07, 1)
+color = Color(0.971866, 0, 0.274449, 1)
 metadata/_edit_use_anchors_ = true
 
 [node name="DeckCounter" type="Label" parent="GameManager/Board2/Deck"]
