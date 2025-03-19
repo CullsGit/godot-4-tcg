@@ -13,15 +13,8 @@ func add_card(card: Card):
 		card.card_selected.connect(_on_card_selected)
 
 func _on_card_selected(card: Card):
-	if selected_card == card:
-		card.toggle_selection()  # Unhighlight
-		selected_card = null
-	else:
-		if selected_card:
-			selected_card.toggle_selection()  # Unhighlight previous selection
-
-		selected_card = card
-		card.toggle_selection()  # Highlight new selection
+	var game_manager = %GameManager
+	game_manager.select_card(card)  # Only selects hand card
 
 
 func remove_card(card):

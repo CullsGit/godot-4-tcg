@@ -1,0 +1,264 @@
+[gd_scene load_steps=10 format=3 uid="uid://btxsmm5hfyv5e"]
+
+[ext_resource type="Script" path="res://scenes/ActionManager.gd" id="1_xsjp7"]
+[ext_resource type="Script" path="res://scenes/ActionLabel.gd" id="2_s7chb"]
+[ext_resource type="Script" path="res://scenes/GameManager.gd" id="3_wec0a"]
+[ext_resource type="Script" path="res://scenes/Board.gd" id="4_ysr74"]
+[ext_resource type="PackedScene" uid="uid://bc8ob71spb8ro" path="res://scenes/Slot.tscn" id="5_jv4da"]
+[ext_resource type="PackedScene" uid="uid://dgoplkvhg560w" path="res://scenes/Card.tscn" id="6_0bg1w"]
+[ext_resource type="Script" path="res://scenes/Hand.gd" id="7_jx55p"]
+[ext_resource type="Script" path="res://scenes/Deck.gd" id="8_m4jgh"]
+[ext_resource type="Texture2D" uid="uid://8xb66gaptowg" path="res://assets/wooden-floor-background.jpg" id="9_kkbyt"]
+
+[node name="MainScene" type="Node2D"]
+
+[node name="ActionManager" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("1_xsjp7")
+
+[node name="ActionLabel" type="Label" parent="ActionManager"]
+offset_left = 1174.0
+offset_top = 560.0
+offset_right = 1214.0
+offset_bottom = 629.0
+theme_override_colors/font_color = Color(0.891281, 8.43973e-05, 4.81308e-05, 1)
+theme_override_font_sizes/font_size = 50
+script = ExtResource("2_s7chb")
+
+[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("action_manager")]
+unique_name_in_owner = true
+script = ExtResource("3_wec0a")
+action_manager = NodePath("../ActionManager")
+
+[node name="Board1" type="Control" parent="GameManager"]
+custom_minimum_size = Vector2(300, 458)
+layout_mode = 3
+anchor_left = 0.358125
+anchor_top = 0.55
+anchor_right = 0.550625
+anchor_bottom = 0.806667
+offset_top = -68.0
+offset_right = -6.10352e-05
+offset_bottom = 81.9996
+script = ExtResource("4_ysr74")
+slot_scene = ExtResource("5_jv4da")
+card_scene = ExtResource("6_0bg1w")
+metadata/_edit_use_anchors_ = true
+
+[node name="Grid" type="GridContainer" parent="GameManager/Board1"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.999999
+grow_horizontal = 2
+grow_vertical = 2
+columns = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="Slot_0_0" parent="GameManager/Board1/Grid" instance=ExtResource("5_jv4da")]
+layout_mode = 2
+is_player1 = true
+
+[node name="Slot_0_1" parent="GameManager/Board1/Grid" instance=ExtResource("5_jv4da")]
+layout_mode = 2
+slot_index = 1
+is_player1 = true
+
+[node name="Slot_0_2" parent="GameManager/Board1/Grid" instance=ExtResource("5_jv4da")]
+layout_mode = 2
+slot_index = 2
+is_player1 = true
+
+[node name="Slot_1_0" parent="GameManager/Board1/Grid" instance=ExtResource("5_jv4da")]
+layout_mode = 2
+slot_index = 3
+is_player1 = true
+
+[node name="Slot_1_1" parent="GameManager/Board1/Grid" instance=ExtResource("5_jv4da")]
+layout_mode = 2
+slot_index = 4
+is_player1 = true
+
+[node name="Slot_1_2" parent="GameManager/Board1/Grid" instance=ExtResource("5_jv4da")]
+layout_mode = 2
+slot_index = 5
+is_player1 = true
+
+[node name="Slot_2_0" parent="GameManager/Board1/Grid" instance=ExtResource("5_jv4da")]
+layout_mode = 2
+slot_index = 6
+is_player1 = true
+
+[node name="Slot_2_1" parent="GameManager/Board1/Grid" instance=ExtResource("5_jv4da")]
+layout_mode = 2
+slot_index = 7
+is_player1 = true
+
+[node name="Slot_2_2" parent="GameManager/Board1/Grid" instance=ExtResource("5_jv4da")]
+layout_mode = 2
+slot_index = 8
+is_player1 = true
+
+[node name="Hand" type="HBoxContainer" parent="GameManager/Board1"]
+layout_mode = 1
+offset_left = 395.0
+offset_top = 168.0
+offset_right = 395.0
+offset_bottom = 168.0
+script = ExtResource("7_jx55p")
+
+[node name="Deck" type="Control" parent="GameManager/Board1" node_paths=PackedStringArray("hand_node")]
+custom_minimum_size = Vector2(100, 150)
+layout_mode = 1
+anchor_left = 1.59416
+anchor_top = 0.69869
+anchor_right = 1.93614
+anchor_bottom = 1.04067
+script = ExtResource("8_m4jgh")
+card_scene = ExtResource("6_0bg1w")
+hand_node = NodePath("../Hand")
+metadata/_edit_use_anchors_ = true
+
+[node name="DeckVisual" type="ColorRect" parent="GameManager/Board1/Deck"]
+custom_minimum_size = Vector2(100, 150)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(6.44952e-06, 0.565282, 0.803601, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="DeckCounter" type="Label" parent="GameManager/Board1/Deck"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_type_variation = &"HeaderLarge"
+theme_override_colors/font_color = Color(0.671493, 0.929723, 0.888258, 1)
+theme_override_colors/font_outline_color = Color(0, 0.752941, 0, 1)
+theme_override_font_sizes/font_size = 68
+text = "15"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Board2" type="Control" parent="GameManager"]
+custom_minimum_size = Vector2(300, 458)
+layout_mode = 3
+anchor_left = 0.358124
+anchor_top = 0.192501
+anchor_right = 0.551
+anchor_bottom = 0.449
+offset_left = 308.002
+offset_top = 344.999
+offset_right = 307.401
+offset_bottom = 495.2
+rotation = 3.14159
+script = ExtResource("4_ysr74")
+slot_scene = ExtResource("5_jv4da")
+card_scene = ExtResource("6_0bg1w")
+metadata/_edit_use_anchors_ = true
+
+[node name="Grid" type="GridContainer" parent="GameManager/Board2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 3
+
+[node name="Slot_0_0" parent="GameManager/Board2/Grid" instance=ExtResource("5_jv4da")]
+layout_mode = 2
+
+[node name="Slot_0_1" parent="GameManager/Board2/Grid" instance=ExtResource("5_jv4da")]
+layout_mode = 2
+slot_index = 1
+
+[node name="Slot_0_2" parent="GameManager/Board2/Grid" instance=ExtResource("5_jv4da")]
+layout_mode = 2
+slot_index = 2
+
+[node name="Slot_1_0" parent="GameManager/Board2/Grid" instance=ExtResource("5_jv4da")]
+layout_mode = 2
+slot_index = 3
+
+[node name="Slot_1_1" parent="GameManager/Board2/Grid" instance=ExtResource("5_jv4da")]
+layout_mode = 2
+slot_index = 4
+
+[node name="Slot_1_2" parent="GameManager/Board2/Grid" instance=ExtResource("5_jv4da")]
+layout_mode = 2
+slot_index = 5
+
+[node name="Slot_2_0" parent="GameManager/Board2/Grid" instance=ExtResource("5_jv4da")]
+layout_mode = 2
+slot_index = 6
+
+[node name="Slot_2_1" parent="GameManager/Board2/Grid" instance=ExtResource("5_jv4da")]
+layout_mode = 2
+slot_index = 7
+
+[node name="Slot_2_2" parent="GameManager/Board2/Grid" instance=ExtResource("5_jv4da")]
+layout_mode = 2
+slot_index = 8
+
+[node name="Hand" type="HBoxContainer" parent="GameManager/Board2"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 548.999
+offset_top = 208.002
+offset_right = 548.999
+offset_bottom = 208.002
+grow_horizontal = 0
+script = ExtResource("7_jx55p")
+
+[node name="Deck" type="Control" parent="GameManager/Board2" node_paths=PackedStringArray("hand_node")]
+custom_minimum_size = Vector2(100, 150)
+layout_mode = 1
+anchor_left = 1.58766
+anchor_top = 0.803496
+anchor_right = 1.92964
+anchor_bottom = 1.14548
+script = ExtResource("8_m4jgh")
+card_scene = ExtResource("6_0bg1w")
+hand_node = NodePath("../Hand")
+metadata/_edit_use_anchors_ = true
+
+[node name="DeckVisual" type="ColorRect" parent="GameManager/Board2/Deck"]
+custom_minimum_size = Vector2(100, 150)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.971866, 0, 0.274449, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="DeckCounter" type="Label" parent="GameManager/Board2/Deck"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_type_variation = &"HeaderLarge"
+theme_override_colors/font_color = Color(0.671493, 0.929723, 0.888258, 1)
+theme_override_colors/font_outline_color = Color(0, 0.752941, 0, 1)
+theme_override_font_sizes/font_size = 68
+text = "15"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(800, 600)
+scale = Vector2(0.300526, 0.338028)
+texture = ExtResource("9_kkbyt")
+
+[connection signal="actions_updated" from="ActionManager" to="ActionManager/ActionLabel" method="_on_action_manager_actions_updated"]
+[connection signal="gui_input" from="GameManager/Board1/Deck/DeckVisual" to="GameManager/Board1/Deck" method="_on_deck_visual_gui_input"]
+[connection signal="gui_input" from="GameManager/Board2/Deck/DeckVisual" to="GameManager/Board2/Deck" method="_on_deck_visual_gui_input"]
