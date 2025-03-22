@@ -8,7 +8,7 @@ extends Node
 
 var selected_hand_card: Card = null
 var selected_board_card: Card = null
-var current_player = 1  # 1 = Board1, 2 = Board2
+var current_player = 1
 
 func _ready():
 	action_manager.actions_updated.connect(_on_actions_updated)
@@ -21,8 +21,6 @@ func select_card(card: Card):
 
 	# Handle selecting a card from the hand
 	if parent == hand:
-		print('Card is in the hand.')
-		
 		# Deselect any board card when selecting from the hand
 		if selected_board_card:
 			selected_board_card.toggle_selection()
@@ -40,8 +38,6 @@ func select_card(card: Card):
 
 	# Handle selecting a card from the board
 	elif parent.is_in_group("BoardSlot"):
-		print('ok we are in board territory.')
-
 		# Deselect any hand card when selecting from the board
 		if selected_hand_card:
 			selected_hand_card.toggle_selection()

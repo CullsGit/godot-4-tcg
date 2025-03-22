@@ -1,10 +1,10 @@
 extends Control
 
-@export var card_scene: PackedScene  # Card scene
-@export var hand_node: Node  # Hand reference
+@export var card_scene: PackedScene 
+@export var hand_node: Node  
 
 
-var deck = []  # Store 20 shuffled cards
+var deck = []
 const CARD_TYPES = ["Tank", "Damage", "Magic", "Healer"]
 
 func _ready():
@@ -13,7 +13,6 @@ func _ready():
 	draw_starting_hand()
 	update_deck_counter()
 
-# 🔹 Generate 5 cards of each type
 func generate_deck():
 	deck.clear()
 	for type in CARD_TYPES:
@@ -22,23 +21,16 @@ func generate_deck():
 			card.card_type = type
 			deck.append(card)
 
-# 🔹 Shuffle deck
 func shuffle_deck():
 	deck.shuffle()
 
-# 🔹 Draw starting hand (5 cards)
 func draw_starting_hand():
 	for i in range(5):
 		draw_card(true)
 
-# 🔹 Draw a card
 func draw_card(starting_hand := false):
 	var game_manager = %GameManager
-	if not game_manager:
-		print("Error: GameManager not found.")
-		return
-	
-	var current_hand = game_manager.get_current_hand()  # Get the hand of the current player
+	var current_hand = game_manager.get_current_hand()
 
 	# Allow drawing if it's the current player's turn OR if drawing the starting hand
 	if deck.size() > 0 and (starting_hand or current_hand == hand_node) and hand_node.hand_cards.size() < 5:
@@ -52,8 +44,6 @@ func draw_card(starting_hand := false):
 			action_manager.use_action()
 	else:
 		print("❌ Cannot draw a card: Either the deck is empty, hand is full, or it's not your turn.")
-
-
 
 func update_deck_counter():
 	$DeckCounter.text = str(deck.size())

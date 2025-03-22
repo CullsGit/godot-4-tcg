@@ -103,17 +103,8 @@ func get_lane_position(slot_idx):
 	return -1  # Invalid
 
 func check_opponent_cards_in_range(slot):
-	# Find GameManager
 	var game_manager = %GameManager
-	if not game_manager:
-		print("Error: GameManager not found.")
-		return
-
-	# Get opponent's board
 	var opponent_board = game_manager.get_opponent_board()
-	if not opponent_board:
-		print("Error: Opponent Board not found.")
-		return
 	
 	# Get the opponent's lane corresponding to this slot
 	var opponent_lane = get_opponent_lane(slot.slot_index, slot.is_player1)

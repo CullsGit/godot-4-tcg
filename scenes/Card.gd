@@ -32,7 +32,7 @@ func update_highlight():
 	new_style.bg_color = CARD_COLORS[card_type]
 
 	if is_selected:
-		new_style.border_color = Color.YELLOW  # Highlight with yellow border
+		new_style.border_color = Color.SNOW
 		new_style.border_width_top = 4
 		new_style.border_width_bottom = 4
 		new_style.border_width_left = 4
