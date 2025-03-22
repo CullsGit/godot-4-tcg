@@ -12,6 +12,16 @@ var current_player = 1
 
 func _ready():
 	action_manager.actions_updated.connect(_on_actions_updated)
+	
+	for card in hand1.get_children():
+		if card is Card:
+			card.card_selected.connect(select_card)
+
+	for card in hand2.get_children():
+		if card is Card:
+			card.card_selected.connect(select_card)
+
+
 	update_board_interactivity()
 	update_hand_interactivity()  # Ensure correct hand is active
 
