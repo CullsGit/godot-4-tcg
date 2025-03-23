@@ -11,8 +11,7 @@ signal card_selected(card)  # Signal when card is selected
 const CARD_COLORS = {
 	"Tank": Color.BLUE,
 	"Damage": Color.RED,
-	"Magic": Color.GREEN,
-	"Healer": Color.PURPLE
+	"Magic": Color.GREEN
 }
 
 func _ready():

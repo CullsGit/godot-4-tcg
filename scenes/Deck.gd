@@ -5,7 +5,7 @@ extends Control
 
 
 var deck = []
-const CARD_TYPES = ["Tank", "Damage", "Magic", "Healer"]
+const CARD_TYPES = ["Tank", "Damage", "Magic"]
 
 func _ready():
 	generate_deck()
