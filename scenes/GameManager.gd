@@ -12,22 +12,13 @@ var current_player = 1
 
 func _ready():
 	action_manager.actions_updated.connect(_on_actions_updated)
-	
-	for card in hand1.get_children():
-		if card is Card:
-			card.card_selected.connect(select_card)
-
-	for card in hand2.get_children():
-		if card is Card:
-			card.card_selected.connect(select_card)
-
-
 	update_board_interactivity()
 	update_hand_interactivity()  # Ensure correct hand is active
 
 func select_card(card: Card):
 	var hand = get_current_hand()
 	var parent = card.get_parent()
+	var current_board = get_current_board()
 
 	# Handle selecting a card from the hand
 	if parent == hand:
@@ -45,9 +36,22 @@ func select_card(card: Card):
 
 			selected_hand_card = card
 			card.toggle_selection()
+		return
 
 	# Handle selecting a card from the board
-	elif parent.is_in_group("BoardSlot"):
+	if parent.is_in_group("BoardSlot"):
+		
+		var card_board = parent.get_parent().get_parent()
+		
+		var is_opponent_card = (card_board != current_board)
+		# If an attacking card is already selected, attack the clicked card
+		if selected_board_card and is_opponent_card:
+			if can_attack(selected_board_card, card):
+				attack_card(selected_board_card, card)
+			else:
+				print("Target is not in range or invalid attack")
+			return  # Exit early to avoid selecting the opponent's card
+
 		# Deselect any hand card when selecting from the board
 		if selected_hand_card:
 			selected_hand_card.toggle_selection()
@@ -62,6 +66,43 @@ func select_card(card: Card):
 
 			selected_board_card = card
 			card.toggle_selection()
+
+func can_attack(attacker: Card, target: Card) -> bool:
+	# Check if the target is in range of the attacker
+	var attacker_slot = attacker.get_parent()
+	var target_slot = target.get_parent()
+	
+	if not attacker_slot or not target_slot:
+		return false
+	
+	var board = get_current_board()
+	
+	# Check if the target is in range of the attacker
+	var in_range = board.check_opponent_cards_in_range(attacker_slot)
+	return target in in_range
+
+func attack_card(attacker: Card, target: Card):
+	if can_attack(attacker, target):
+		# Defeat the opponent's card
+		print("Defeating opponent's card: ", target.card_type)
+		
+		# Remove the target card from the board
+		var target_slot = target.get_parent()
+		if target_slot:
+			target_slot.remove_card()  # Remove the card from the slot
+		
+		# Use an action
+		action_manager.use_action()
+		
+		# Deselect cards after attack
+		if selected_hand_card:
+			selected_hand_card.toggle_selection()
+			selected_hand_card = null
+		if selected_board_card:
+			selected_board_card.toggle_selection()
+			selected_board_card = null
+	else:
+		print("Target is not in range or invalid attack")
 
 func _on_actions_updated(actions_left):
 	if actions_left == 0:

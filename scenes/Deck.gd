@@ -19,6 +19,7 @@ func generate_deck():
 		for i in range(5):
 			var card = card_scene.instantiate()
 			card.card_type = type
+			card.card_selected.connect(%GameManager.select_card)
 			deck.append(card)
 
 func shuffle_deck():

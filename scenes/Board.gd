@@ -116,10 +116,12 @@ func check_opponent_cards_in_range(slot):
 	for opp_index in opponent_lane:
 		var opp_slot = opponent_board.slots[opp_index]
 		if opp_slot and opp_slot.placed_card:
-			cards_in_range.append(opp_slot.placed_card.card_type)
+			cards_in_range.append(opp_slot.placed_card)
 
 	# Print results
 	if cards_in_range.size() > 0:
 		print("Opponent cards in range:", cards_in_range)
 	else:
 		print("No opponent cards in range.")
+	
+	return cards_in_range

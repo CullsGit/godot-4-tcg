@@ -1,6 +1,6 @@
 extends Node
 
-@export var max_actions := 5
+@export var max_actions := 3
 
 var current_actions := max_actions
 
