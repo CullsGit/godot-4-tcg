@@ -109,6 +109,13 @@ func _on_actions_updated(actions_left):
 		switch_turns()
 
 func switch_turns():
+	if selected_hand_card:
+		selected_hand_card.toggle_selection()
+		selected_hand_card = null
+	if selected_board_card:
+		selected_board_card.toggle_selection()
+		selected_board_card = null
+
 	current_player = 2 if current_player == 1 else 1
 	action_manager.reset_actions()
 	update_board_interactivity()
