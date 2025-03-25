@@ -40,17 +40,13 @@ func select_card(card: Card):
 
 	# Handle selecting a card from the board
 	if parent.is_in_group("BoardSlot"):
-		
 		var card_board = parent.get_parent().get_parent()
-		
-		var is_opponent_card = (card_board != current_board)
-		# If an attacking card is already selected, attack the clicked card
-		if selected_board_card and is_opponent_card:
-			if can_attack(selected_board_card, card):
-				attack_card(selected_board_card, card)
-			else:
-				print("Target is not in range or invalid attack")
-			return  # Exit early to avoid selecting the opponent's card
+		if card_board != current_board:  # This is opponent's card
+			if selected_board_card:  # Only interact if we have a card selected
+				if can_attack(selected_board_card, card):
+					attack_card(selected_board_card, card)
+				return
+			return   # Exit early to avoid selecting the opponent's card
 
 		# Deselect any hand card when selecting from the board
 		if selected_hand_card:
