@@ -10,6 +10,30 @@ var selected_hand_card: Card = null
 var selected_board_card: Card = null
 var current_player = 1
 
+const COMBAT_RULES = {
+	"Damage": {
+		"beats": "Magic",
+		"action_cost": {
+			"Magic": 1,
+			"Damage": 2
+		}
+	},
+	"Magic": {
+		"beats": "Tank",
+		"action_cost": {
+			"Tank": 1,
+			"Magic": 2
+		}
+	},
+	"Tank": {
+		"beats": "Damage",
+		"action_cost": {
+			"Damage": 1,
+			"Tank": 2
+		}
+	}
+}
+
 func _ready():
 	action_manager.actions_updated.connect(_on_actions_updated)
 	update_board_interactivity()
@@ -64,41 +88,56 @@ func select_card(card: Card):
 			card.toggle_selection()
 
 func can_attack(attacker: Card, target: Card) -> bool:
-	# Check if the target is in range of the attacker
+	# Check if target is in range (your existing range check)
 	var attacker_slot = attacker.get_parent()
 	var target_slot = target.get_parent()
-	
 	if not attacker_slot or not target_slot:
 		return false
 	
 	var board = get_current_board()
+	var in_range_cards = board.check_opponent_cards_in_range(attacker_slot)
+	if not target in in_range_cards:
+		return false
 	
-	# Check if the target is in range of the attacker
-	var in_range = board.check_opponent_cards_in_range(attacker_slot)
-	return target in in_range
+	# Check combat rules
+	var attacker_type = attacker.card_type
+	var target_type = target.card_type
+	
+	# Can't attack at all if target is your natural counter
+	if COMBAT_RULES[target_type]["beats"] == attacker_type:
+		print("Cannot attack - target counters attacker")
+		return false
+	
+	# Check if we have enough actions
+	var required_actions = COMBAT_RULES[attacker_type]["action_cost"].get(target_type, 0)
+	if action_manager.current_actions < required_actions:
+		print("Not enough actions (need ", required_actions, ")")
+		return false
+	
+	return true
 
 func attack_card(attacker: Card, target: Card):
-	if can_attack(attacker, target):
-		# Defeat the opponent's card
-		print("Defeating opponent's card: ", target.card_type)
-		
-		# Remove the target card from the board
-		var target_slot = target.get_parent()
-		if target_slot:
-			target_slot.remove_card()  # Remove the card from the slot
-		
-		# Use an action
-		action_manager.use_action()
-		
-		# Deselect cards after attack
-		if selected_hand_card:
-			selected_hand_card.toggle_selection()
-			selected_hand_card = null
-		if selected_board_card:
-			selected_board_card.toggle_selection()
-			selected_board_card = null
-	else:
-		print("Target is not in range or invalid attack")
+	if not can_attack(attacker, target):
+		return
+	
+	var attacker_type = attacker.card_type
+	var target_type = target.card_type
+	var required_actions = COMBAT_RULES[attacker_type]["action_cost"][target_type]
+	var was_selected = attacker.is_selected
+
+	target.get_parent().remove_card()
+	print(attacker_type, " defeats ", target_type, " (cost: ", required_actions, " actions)")
+
+	if was_selected:
+		attacker.toggle_selection()
+	if selected_board_card == attacker:
+		selected_board_card = null
+
+	for i in range(required_actions):
+		action_manager.use_action()  # This may trigger turn switch
+
+	if selected_board_card == attacker:
+		selected_board_card = null
 
 func _on_actions_updated(actions_left):
 	if actions_left == 0:
