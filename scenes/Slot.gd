@@ -37,14 +37,15 @@ func place_card(card):
 		card.get_parent().remove_child(card)
 
 	add_child(card)
+	card.set_activated(false)
 	card.position = Vector2.ZERO
-	board.check_opponent_cards_in_range(self)
+	placed_card = card
 	# Use an action
 	var action_manager = %ActionManager
 	action_manager.use_action()
 	card.toggle_selection()
-	# Store the placed card reference
-	placed_card = card
+	board.check_opponent_cards_in_range(self)
+
 
 func remove_card():
 	if placed_card:

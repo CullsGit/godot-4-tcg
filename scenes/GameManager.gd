@@ -93,6 +93,10 @@ func can_attack(attacker: Card, target: Card) -> bool:
 	var target_slot = target.get_parent()
 	if not attacker_slot or not target_slot:
 		return false
+
+	if not attacker.is_activated:
+		print("Cannot attack - card not activated this turn")
+		return false
 	
 	var board = get_current_board()
 	var in_range_cards = board.check_opponent_cards_in_range(attacker_slot)
@@ -151,6 +155,15 @@ func switch_turns():
 		selected_board_card.toggle_selection()
 		selected_board_card = null
 
+	# Activate all cards for the player whose turn just ended
+	var deactivating_player = current_player
+	var deactivating_board = board1 if deactivating_player == 1 else board2
+	
+	for slot in deactivating_board.slots:
+		if slot and slot.placed_card:
+			slot.placed_card.set_activated(true)
+	
+	# Switch turns
 	current_player = 2 if current_player == 1 else 1
 	action_manager.reset_actions()
 	update_board_interactivity()
