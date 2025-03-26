@@ -105,23 +105,15 @@ func get_lane_position(slot_idx):
 func check_opponent_cards_in_range(slot):
 	var game_manager = %GameManager
 	var opponent_board = game_manager.get_opponent_board()
-	
-	# Get the opponent's lane corresponding to this slot
 	var opponent_lane = get_opponent_lane(slot.slot_index, slot.is_player1)
-	print("Checking opponent cards in lane:", opponent_lane)
-
+	
 	var cards_in_range = []
-
-	# Iterate through the opponent's slots in the lane
+	
+	# Find first occupied slot in lane
 	for opp_index in opponent_lane:
 		var opp_slot = opponent_board.slots[opp_index]
 		if opp_slot and opp_slot.placed_card:
 			cards_in_range.append(opp_slot.placed_card)
-
-	# Print results
-	if cards_in_range.size() > 0:
-		print("Opponent cards in range:", cards_in_range)
-	else:
-		print("No opponent cards in range.")
+			break  # Only return the first card in lane
 	
 	return cards_in_range

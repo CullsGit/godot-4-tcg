@@ -88,34 +88,32 @@ func select_card(card: Card):
 			card.toggle_selection()
 
 func can_attack(attacker: Card, target: Card) -> bool:
-	# Check if target is in range (your existing range check)
-	var attacker_slot = attacker.get_parent()
-	var target_slot = target.get_parent()
-	if not attacker_slot or not target_slot:
-		return false
-
+	# Basic checks (activation, actions, etc.)
 	if not attacker.is_activated:
-		print("Cannot attack - card not activated this turn")
+		return false
+		
+	var attacker_slot = attacker.get_parent()
+	if not attacker_slot:
 		return false
 	
+	# Get closest target only
 	var board = get_current_board()
-	var in_range_cards = board.check_opponent_cards_in_range(attacker_slot)
-	if not target in in_range_cards:
+	var valid_targets = board.check_opponent_cards_in_range(attacker_slot)
+	
+	# Can only attack if target is the first in lane
+	if not target in valid_targets:
+		print("Can't attack - not the closest target in lane")
 		return false
 	
-	# Check combat rules
+	# Rest of your combat rules (action costs, etc.)
 	var attacker_type = attacker.card_type
 	var target_type = target.card_type
 	
-	# Can't attack at all if target is your natural counter
 	if COMBAT_RULES[target_type]["beats"] == attacker_type:
-		print("Cannot attack - target counters attacker")
 		return false
-	
-	# Check if we have enough actions
+		
 	var required_actions = COMBAT_RULES[attacker_type]["action_cost"].get(target_type, 0)
 	if action_manager.current_actions < required_actions:
-		print("Not enough actions (need ", required_actions, ")")
 		return false
 	
 	return true
