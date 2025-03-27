@@ -16,7 +16,7 @@ func _ready():
 func generate_deck():
 	deck.clear()
 	for type in CARD_TYPES:
-		for i in range(5):
+		for i in range(2):
 			var card = card_scene.instantiate()
 			card.card_type = type
 			card.card_selected.connect(%GameManager.select_card)

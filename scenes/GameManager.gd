@@ -4,6 +4,8 @@ extends Node
 @onready var board2: Control = $Board2
 @onready var hand1: Control = board1.get_node("Hand")
 @onready var hand2: Control = board2.get_node("Hand")
+@onready var deck1: Control = board2.get_node("Deck")
+@onready var deck2: Control = board2.get_node("Deck")
 @export var action_manager: Node
 
 var selected_hand_card: Card = null
@@ -126,9 +128,9 @@ func attack_card(attacker: Card, target: Card):
 	var target_type = target.card_type
 	var required_actions = COMBAT_RULES[attacker_type]["action_cost"][target_type]
 	var was_selected = attacker.is_selected
+	var opponent_player = 2 if current_player == 1 else 1
 
 	target.get_parent().remove_card()
-	print(attacker_type, " defeats ", target_type, " (cost: ", required_actions, " actions)")
 
 	if was_selected:
 		attacker.toggle_selection()
@@ -138,8 +140,7 @@ func attack_card(attacker: Card, target: Card):
 	for i in range(required_actions):
 		action_manager.use_action()  # This may trigger turn switch
 
-	if selected_board_card == attacker:
-		selected_board_card = null
+	check_opponent_defeated(opponent_player)
 
 func _on_actions_updated(actions_left):
 	if actions_left == 0:
@@ -196,3 +197,25 @@ func get_opponent_board():
 		return $Board2
 	else:
 		return $Board1
+
+func check_opponent_defeated(opponent_player: int):
+	var opponent_board = board1 if opponent_player == 1 else board2
+	var opponent_hand = hand1 if opponent_player == 1 else hand2
+	var opponent_deck = deck1 if opponent_player == 1 else deck2
+	
+	# Check board slots
+	var has_board_cards = false
+	for slot in opponent_board.slots:
+		if slot.placed_card:
+			has_board_cards = true
+			break
+	
+	# Check hand cards
+	var has_hand_cards = opponent_hand.get_child_count() > 0
+	
+	# Check deck
+	var has_deck_cards = opponent_deck.deck.size() > 0
+	
+	# If all empty, player wins
+	if not has_board_cards and not has_hand_cards and not has_deck_cards:
+		print(current_player, " WINS!")
