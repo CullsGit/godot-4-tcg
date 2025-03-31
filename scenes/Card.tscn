@@ -3,9 +3,9 @@
 [ext_resource type="Script" path="res://scenes/Card.gd" id="1_ev0x0"]
 
 [node name="Card" type="Panel"]
-custom_minimum_size = Vector2(100, 150)
+custom_minimum_size = Vector2(122, 172)
 anchors_preset = -1
-anchor_right = 0.0625
-anchor_bottom = 0.0833333
+anchor_right = 0.0635417
+anchor_bottom = 0.159259
 script = ExtResource("1_ev0x0")
 metadata/_edit_use_anchors_ = true

@@ -31,15 +31,12 @@ script = ExtResource("3_wec0a")
 action_manager = NodePath("../ActionManager")
 
 [node name="Board1" type="Control" parent="GameManager"]
-custom_minimum_size = Vector2(300, 458)
+custom_minimum_size = Vector2(374, 524)
 layout_mode = 3
-anchor_left = 0.358125
-anchor_top = 0.55
-anchor_right = 0.550625
-anchor_bottom = 0.806667
-offset_top = -68.0
-offset_right = -6.10352e-05
-offset_bottom = 81.9996
+anchor_left = 0.358333
+anchor_top = 0.503704
+anchor_right = 0.553125
+anchor_bottom = 0.988889
 script = ExtResource("4_ysr74")
 slot_scene = ExtResource("5_jv4da")
 card_scene = ExtResource("6_0bg1w")
@@ -101,19 +98,21 @@ is_player1 = true
 
 [node name="Hand" type="HBoxContainer" parent="GameManager/Board1"]
 layout_mode = 1
-offset_left = 395.0
-offset_top = 168.0
-offset_right = 395.0
-offset_bottom = 168.0
+offset_left = 424.0
+offset_top = 352.0
+offset_right = 1050.0
+offset_bottom = 524.0
 script = ExtResource("7_jx55p")
 
 [node name="Deck" type="Control" parent="GameManager/Board1" node_paths=PackedStringArray("hand_node")]
-custom_minimum_size = Vector2(100, 150)
+custom_minimum_size = Vector2(122, 172)
 layout_mode = 1
-anchor_left = 1.59416
-anchor_top = 0.69869
-anchor_right = 1.93614
-anchor_bottom = 1.04067
+anchor_left = 1.13369
+anchor_top = 0.335878
+anchor_right = 1.47567
+anchor_bottom = 0.677858
+offset_right = -5.90051
+offset_bottom = -7.19754
 script = ExtResource("8_m4jgh")
 card_scene = ExtResource("6_0bg1w")
 hand_node = NodePath("../Hand")
@@ -145,16 +144,16 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Board2" type="Control" parent="GameManager"]
-custom_minimum_size = Vector2(300, 458)
+custom_minimum_size = Vector2(374, 524)
 layout_mode = 3
-anchor_left = 0.358124
-anchor_top = 0.192501
-anchor_right = 0.551
-anchor_bottom = 0.449
-offset_left = 308.002
-offset_top = 344.999
-offset_right = 307.401
-offset_bottom = 495.2
+anchor_left = 0.325978
+anchor_top = 0.027
+anchor_right = 0.519
+anchor_bottom = 0.512
+offset_left = 436.122
+offset_top = 506.84
+offset_right = 439.52
+offset_bottom = 507.04
 rotation = 3.14159
 script = ExtResource("4_ysr74")
 slot_scene = ExtResource("5_jv4da")
@@ -210,20 +209,22 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = 548.999
-offset_top = 208.002
-offset_right = 548.999
-offset_bottom = 208.002
+offset_left = 23.9991
+offset_top = 352.001
+offset_right = 649.999
+offset_bottom = 524.001
 grow_horizontal = 0
 script = ExtResource("7_jx55p")
 
 [node name="Deck" type="Control" parent="GameManager/Board2" node_paths=PackedStringArray("hand_node")]
-custom_minimum_size = Vector2(100, 150)
+custom_minimum_size = Vector2(122, 172)
 layout_mode = 1
-anchor_left = 1.58766
-anchor_top = 0.803496
-anchor_right = 1.92964
-anchor_bottom = 1.14548
+anchor_left = 1.12834
+anchor_top = 0.33588
+anchor_right = 1.47032
+anchor_bottom = 0.677864
+offset_right = -5.90048
+offset_bottom = -7.19968
 script = ExtResource("8_m4jgh")
 card_scene = ExtResource("6_0bg1w")
 hand_node = NodePath("../Hand")
@@ -255,8 +256,8 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Background" type="Sprite2D" parent="."]
-position = Vector2(800, 600)
-scale = Vector2(0.300526, 0.338028)
+position = Vector2(960, 540)
+scale = Vector2(0.360631, 0.304225)
 texture = ExtResource("9_kkbyt")
 
 [connection signal="actions_updated" from="ActionManager" to="ActionManager/ActionLabel" method="_on_action_manager_actions_updated"]
