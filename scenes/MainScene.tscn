@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dgoplkvhg560w" path="res://scenes/Card.tscn" id="6_0bg1w"]
 [ext_resource type="Script" path="res://scenes/Hand.gd" id="7_jx55p"]
 [ext_resource type="Script" path="res://scenes/Deck.gd" id="8_m4jgh"]
-[ext_resource type="Texture2D" uid="uid://8xb66gaptowg" path="res://assets/wooden-floor-background.jpg" id="9_kkbyt"]
+[ext_resource type="Texture2D" uid="uid://dmgid6lhxy4e8" path="res://assets/woodland.png" id="9_uqq3h"]
 
 [node name="MainScene" type="Node2D"]
 
@@ -257,8 +257,8 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Background" type="Sprite2D" parent="."]
 position = Vector2(960, 540)
-scale = Vector2(0.360631, 0.304225)
-texture = ExtResource("9_kkbyt")
+scale = Vector2(1.25, 1.05469)
+texture = ExtResource("9_uqq3h")
 
 [connection signal="actions_updated" from="ActionManager" to="ActionManager/ActionLabel" method="_on_action_manager_actions_updated"]
 [connection signal="gui_input" from="GameManager/Board1/Deck/DeckVisual" to="GameManager/Board1/Deck" method="_on_deck_visual_gui_input"]
