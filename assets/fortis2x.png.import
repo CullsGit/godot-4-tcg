@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dfgw7umlurjhp"
-path="res://.godot/imported/villagebg.png-f3f36e62111e297de4a3c9068a64a720.ctex"
+uid="uid://be3mvu87ft15c"
+path="res://.godot/imported/fortis2x.png-e83cb002d4cb73bc1122716f979b5530.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/villagebg.png"
-dest_files=["res://.godot/imported/villagebg.png-f3f36e62111e297de4a3c9068a64a720.ctex"]
+source_file="res://assets/fortis2x.png"
+dest_files=["res://.godot/imported/fortis2x.png-e83cb002d4cb73bc1122716f979b5530.ctex"]
 
 [params]
 

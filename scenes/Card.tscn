@@ -7,5 +7,13 @@ custom_minimum_size = Vector2(122, 172)
 anchors_preset = -1
 anchor_right = 0.0635417
 anchor_bottom = 0.159259
+offset_bottom = 0.000274658
 script = ExtResource("1_ev0x0")
 metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(122, 172)
+layout_mode = 0
+offset_right = 122.0
+offset_bottom = 172.0
+expand_mode = 1

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bwkl7c7me3bug"
-path="res://.godot/imported/board_cell.png-65a34a4fec6866ca40f61021c45a1ecb.ctex"
+uid="uid://dvllwgwf4agxf"
+path="res://.godot/imported/cantobig.png-eaa88a968af7ae3c5491d86fad272bcc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/board_cell.png"
-dest_files=["res://.godot/imported/board_cell.png-65a34a4fec6866ca40f61021c45a1ecb.ctex"]
+source_file="res://assets/cantobig.png"
+dest_files=["res://.godot/imported/cantobig.png-eaa88a968af7ae3c5491d86fad272bcc.ctex"]
 
 [params]
 

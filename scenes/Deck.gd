@@ -3,9 +3,15 @@ extends Control
 @export var card_scene: PackedScene 
 @export var hand_node: Node  
 
-
 var deck = []
 const CARD_TYPES = ["Tank", "Damage", "Magic"]
+
+# Dictionary mapping card types to three different asset paths
+const CARD_ASSETS = {
+	"Tank": ["res://assets/cantobig.png"],
+	"Damage": ["res://assets/faetumresize.png"],
+	"Magic": ["res://assets/fortis2x.png"]
+}
 
 func _ready():
 	generate_deck()
@@ -19,6 +25,7 @@ func generate_deck():
 		for i in range(2):
 			var card = card_scene.instantiate()
 			card.card_type = type
+			card.card_asset = load(CARD_ASSETS[type][0])
 			card.card_selected.connect(%GameManager.select_card)
 			deck.append(card)
 
@@ -39,12 +46,6 @@ func draw_card(starting_hand := false):
 		hand_node.add_card(drawn_card)
 		update_deck_counter()
 
-		# Only consume an action if NOT drawing starting hand
-		if not starting_hand:
-			var action_manager = %ActionManager
-			action_manager.use_action()
-	else:
-		print("❌ Cannot draw a card: Either the deck is empty, hand is full, or it's not your turn.")
 
 func update_deck_counter():
 	$DeckCounter.text = str(deck.size())
