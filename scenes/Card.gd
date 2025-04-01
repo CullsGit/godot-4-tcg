@@ -9,10 +9,24 @@ var is_activated = true
 
 
 signal card_selected(card)  # Signal when card is selected
+var tween: Tween
 
 func _ready():
 	update_visual()
 	update_highlight()
+	mouse_entered.connect(_on_mouse_entered)
+	mouse_exited.connect(_on_mouse_exited)
+
+
+func _on_mouse_entered():
+	reset_tween()
+	tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
+	tween.tween_property(self, "scale", Vector2(1.1, 1.1), 0.4)
+
+func _on_mouse_exited():
+	reset_tween()
+	tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
+	tween.tween_property(self, "scale", Vector2.ONE, 0.4)
 
 func update_visual():
 	var texture_rect = $TextureRect
@@ -40,3 +54,8 @@ func update_highlight():
 		texture_rect.modulate = Color(1.5, 1.5, 1.5, 1)  # Bright glow
 	else:
 		texture_rect.modulate = Color(1, 1, 1, 1)  # Normal
+
+func reset_tween():
+	if tween:
+		tween.kill()
+	tween = create_tween()

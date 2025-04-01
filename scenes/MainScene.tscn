@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://btxsmm5hfyv5e"]
+[gd_scene load_steps=11 format=3 uid="uid://btxsmm5hfyv5e"]
 
 [ext_resource type="Script" path="res://scenes/ActionManager.gd" id="1_xsjp7"]
 [ext_resource type="Script" path="res://scenes/ActionLabel.gd" id="2_s7chb"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://scenes/Hand.gd" id="7_jx55p"]
 [ext_resource type="Script" path="res://scenes/Deck.gd" id="8_m4jgh"]
 [ext_resource type="Texture2D" uid="uid://dmgid6lhxy4e8" path="res://assets/woodland.png" id="9_uqq3h"]
+[ext_resource type="Texture2D" uid="uid://da53hl1fjvw5j" path="res://assets/back.png" id="9_xcdc6"]
 
 [node name="MainScene" type="Node2D"]
 
@@ -98,47 +99,52 @@ is_player1 = true
 
 [node name="Hand" type="HBoxContainer" parent="GameManager/Board1"]
 layout_mode = 1
-offset_left = 424.0
-offset_top = 352.0
-offset_right = 1050.0
-offset_bottom = 524.0
+anchors_preset = -1
+anchor_left = 1.13369
+anchor_top = 0.671756
+anchor_right = 2.80748
+anchor_bottom = 1.0
+offset_left = -3.05176e-05
 script = ExtResource("7_jx55p")
+metadata/_edit_use_anchors_ = true
 
 [node name="Deck" type="Control" parent="GameManager/Board1" node_paths=PackedStringArray("hand_node")]
 custom_minimum_size = Vector2(122, 172)
 layout_mode = 1
 anchor_left = 1.13369
 anchor_top = 0.335878
-anchor_right = 1.47567
-anchor_bottom = 0.677858
-offset_right = -5.90051
-offset_bottom = -7.19754
+anchor_right = 1.45989
+anchor_bottom = 0.664122
+offset_bottom = -3.05176e-05
 script = ExtResource("8_m4jgh")
 card_scene = ExtResource("6_0bg1w")
 hand_node = NodePath("../Hand")
 metadata/_edit_use_anchors_ = true
 
-[node name="DeckVisual" type="ColorRect" parent="GameManager/Board1/Deck"]
-custom_minimum_size = Vector2(100, 150)
+[node name="DeckVisual" type="TextureRect" parent="GameManager/Board1/Deck"]
+custom_minimum_size = Vector2(122, 172)
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(6.44952e-06, 0.565282, 0.803601, 1)
+texture = ExtResource("9_xcdc6")
+expand_mode = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="DeckCounter" type="Label" parent="GameManager/Board1/Deck"]
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_left = 0.327868
+anchor_top = -0.279072
+anchor_right = 0.680327
+anchor_bottom = 0.0290675
 theme_type_variation = &"HeaderLarge"
-theme_override_colors/font_color = Color(0.671493, 0.929723, 0.888258, 1)
+theme_override_colors/font_color = Color(0.840073, 0.931801, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0.752941, 0, 1)
-theme_override_font_sizes/font_size = 68
-text = "15"
+theme_override_font_sizes/font_size = 38
+text = "10"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
@@ -206,15 +212,14 @@ slot_index = 8
 
 [node name="Hand" type="HBoxContainer" parent="GameManager/Board2"]
 layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = 23.9991
-offset_top = 352.001
-offset_right = 649.999
-offset_bottom = 524.001
+anchors_preset = -1
+anchor_left = 1.06417
+anchor_top = 0.671758
+anchor_right = 2.73797
+anchor_bottom = 1.0
 grow_horizontal = 0
 script = ExtResource("7_jx55p")
+metadata/_edit_use_anchors_ = true
 
 [node name="Deck" type="Control" parent="GameManager/Board2" node_paths=PackedStringArray("hand_node")]
 custom_minimum_size = Vector2(122, 172)
@@ -230,7 +235,7 @@ card_scene = ExtResource("6_0bg1w")
 hand_node = NodePath("../Hand")
 metadata/_edit_use_anchors_ = true
 
-[node name="DeckVisual" type="ColorRect" parent="GameManager/Board2/Deck"]
+[node name="DeckVisual" type="TextureRect" parent="GameManager/Board2/Deck"]
 custom_minimum_size = Vector2(100, 150)
 layout_mode = 1
 anchors_preset = -1
@@ -238,19 +243,22 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.971866, 0, 0.274449, 1)
+texture = ExtResource("9_xcdc6")
+expand_mode = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="DeckCounter" type="Label" parent="GameManager/Board2/Deck"]
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_left = 0.327871
+anchor_top = -0.325581
+anchor_right = 0.68033
+anchor_bottom = -0.0174416
 theme_type_variation = &"HeaderLarge"
 theme_override_colors/font_color = Color(0.671493, 0.929723, 0.888258, 1)
 theme_override_colors/font_outline_color = Color(0, 0.752941, 0, 1)
-theme_override_font_sizes/font_size = 68
-text = "15"
+theme_override_font_sizes/font_size = 38
+text = "10"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true

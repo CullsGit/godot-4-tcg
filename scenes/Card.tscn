@@ -8,6 +8,7 @@ anchors_preset = -1
 anchor_right = 0.0635417
 anchor_bottom = 0.159259
 offset_bottom = 0.000274658
+pivot_offset = Vector2(61, 86)
 script = ExtResource("1_ev0x0")
 metadata/_edit_use_anchors_ = true
 
