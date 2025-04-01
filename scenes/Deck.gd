@@ -45,9 +45,10 @@ func draw_card(starting_hand := false):
 		var drawn_card = deck.pop_front()
 		hand_node.add_card(drawn_card)
 		update_deck_counter()
-	if not starting_hand:
-		var action_manager = %ActionManager
-		action_manager.use_action()
+
+		if not starting_hand:
+			var action_manager = %ActionManager
+			action_manager.use_action()
 
 func update_deck_counter():
 	$DeckCounter.text = str(deck.size())
