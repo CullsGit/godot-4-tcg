@@ -1,7 +1,7 @@
 extends Node
 
-@onready var board1: Control = $Board1
-@onready var board2: Control = $Board2
+@onready var board1: Control = %Board1
+@onready var board2: Control = %Board2
 @onready var hand1: Control = board1.get_node("Hand")
 @onready var hand2: Control = board2.get_node("Hand")
 @onready var deck1: Control = board2.get_node("Deck")
@@ -194,9 +194,9 @@ func get_current_hand():
 
 func get_opponent_board():
 	if current_player == 1:
-		return $Board2
+		return %Board2
 	else:
-		return $Board1
+		return %Board1
 
 func check_opponent_defeated(opponent_player: int):
 	var opponent_board = board1 if opponent_player == 1 else board2
