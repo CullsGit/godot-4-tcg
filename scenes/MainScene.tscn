@@ -36,26 +36,40 @@ position = Vector2(960, 540)
 scale = Vector2(1.25, 1.05469)
 texture = ExtResource("9_uqq3h")
 
-[node name="Node2D" type="Node2D" parent="."]
+[node name="BoardContainer" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(960, 540)
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
-[node name="Board1" type="Control" parent="Node2D"]
+[node name="Board1" type="Control" parent="BoardContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(374, 524)
-layout_mode = 3
-anchor_left = 0.358333
-anchor_top = 0.503704
-anchor_right = 0.553125
-anchor_bottom = 0.988889
-offset_left = 687.999
-offset_top = 544.0
-offset_right = 1062.0
-offset_bottom = 1068.0
+layout_mode = 1
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -187.0
+offset_top = -534.0
+offset_right = 187.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(187, 524)
 script = ExtResource("4_ysr74")
 slot_scene = ExtResource("5_jv4da")
 card_scene = ExtResource("6_0bg1w")
-metadata/_edit_use_anchors_ = true
 
-[node name="Grid" type="GridContainer" parent="Node2D/Board1"]
+[node name="Grid" type="GridContainer" parent="BoardContainer/Board1"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -65,51 +79,51 @@ grow_vertical = 2
 columns = 3
 metadata/_edit_use_anchors_ = true
 
-[node name="Slot_0_0" parent="Node2D/Board1/Grid" instance=ExtResource("5_jv4da")]
+[node name="Slot_0_0" parent="BoardContainer/Board1/Grid" instance=ExtResource("5_jv4da")]
 layout_mode = 2
 is_player1 = true
 
-[node name="Slot_0_1" parent="Node2D/Board1/Grid" instance=ExtResource("5_jv4da")]
+[node name="Slot_0_1" parent="BoardContainer/Board1/Grid" instance=ExtResource("5_jv4da")]
 layout_mode = 2
 slot_index = 1
 is_player1 = true
 
-[node name="Slot_0_2" parent="Node2D/Board1/Grid" instance=ExtResource("5_jv4da")]
+[node name="Slot_0_2" parent="BoardContainer/Board1/Grid" instance=ExtResource("5_jv4da")]
 layout_mode = 2
 slot_index = 2
 is_player1 = true
 
-[node name="Slot_1_0" parent="Node2D/Board1/Grid" instance=ExtResource("5_jv4da")]
+[node name="Slot_1_0" parent="BoardContainer/Board1/Grid" instance=ExtResource("5_jv4da")]
 layout_mode = 2
 slot_index = 3
 is_player1 = true
 
-[node name="Slot_1_1" parent="Node2D/Board1/Grid" instance=ExtResource("5_jv4da")]
+[node name="Slot_1_1" parent="BoardContainer/Board1/Grid" instance=ExtResource("5_jv4da")]
 layout_mode = 2
 slot_index = 4
 is_player1 = true
 
-[node name="Slot_1_2" parent="Node2D/Board1/Grid" instance=ExtResource("5_jv4da")]
+[node name="Slot_1_2" parent="BoardContainer/Board1/Grid" instance=ExtResource("5_jv4da")]
 layout_mode = 2
 slot_index = 5
 is_player1 = true
 
-[node name="Slot_2_0" parent="Node2D/Board1/Grid" instance=ExtResource("5_jv4da")]
+[node name="Slot_2_0" parent="BoardContainer/Board1/Grid" instance=ExtResource("5_jv4da")]
 layout_mode = 2
 slot_index = 6
 is_player1 = true
 
-[node name="Slot_2_1" parent="Node2D/Board1/Grid" instance=ExtResource("5_jv4da")]
+[node name="Slot_2_1" parent="BoardContainer/Board1/Grid" instance=ExtResource("5_jv4da")]
 layout_mode = 2
 slot_index = 7
 is_player1 = true
 
-[node name="Slot_2_2" parent="Node2D/Board1/Grid" instance=ExtResource("5_jv4da")]
+[node name="Slot_2_2" parent="BoardContainer/Board1/Grid" instance=ExtResource("5_jv4da")]
 layout_mode = 2
 slot_index = 8
 is_player1 = true
 
-[node name="Hand" type="HBoxContainer" parent="Node2D/Board1"]
+[node name="Hand" type="HBoxContainer" parent="BoardContainer/Board1"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 1.13369
@@ -120,7 +134,7 @@ offset_left = -3.05176e-05
 script = ExtResource("7_jx55p")
 metadata/_edit_use_anchors_ = true
 
-[node name="Deck" type="Control" parent="Node2D/Board1" node_paths=PackedStringArray("hand_node")]
+[node name="Deck" type="Control" parent="BoardContainer/Board1" node_paths=PackedStringArray("hand_node")]
 custom_minimum_size = Vector2(122, 172)
 layout_mode = 1
 anchor_left = 1.13369
@@ -133,7 +147,7 @@ card_scene = ExtResource("6_0bg1w")
 hand_node = NodePath("../Hand")
 metadata/_edit_use_anchors_ = true
 
-[node name="DeckVisual" type="TextureRect" parent="Node2D/Board1/Deck"]
+[node name="DeckVisual" type="TextureRect" parent="BoardContainer/Board1/Deck"]
 custom_minimum_size = Vector2(122, 172)
 layout_mode = 1
 anchors_preset = -1
@@ -145,7 +159,7 @@ texture = ExtResource("9_xcdc6")
 expand_mode = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="DeckCounter" type="Label" parent="Node2D/Board1/Deck"]
+[node name="DeckCounter" type="Label" parent="BoardContainer/Board1/Deck"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.327868
@@ -161,25 +175,25 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Board2" type="Control" parent="Node2D"]
+[node name="Board2" type="Control" parent="BoardContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(374, 524)
-layout_mode = 3
-anchor_left = 0.325978
-anchor_top = 0.027
-anchor_right = 0.519
-anchor_bottom = 0.512
-offset_left = 1062.0
-offset_top = 536.0
-offset_right = 1436.0
-offset_bottom = 1060.0
+layout_mode = 1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -187.0
+offset_top = -514.0
+offset_right = 187.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
 rotation = 3.14159
+pivot_offset = Vector2(187, 524)
 script = ExtResource("4_ysr74")
 slot_scene = ExtResource("5_jv4da")
 card_scene = ExtResource("6_0bg1w")
-metadata/_edit_use_anchors_ = true
 
-[node name="Grid" type="GridContainer" parent="Node2D/Board2"]
+[node name="Grid" type="GridContainer" parent="BoardContainer/Board2"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -188,42 +202,42 @@ grow_horizontal = 2
 grow_vertical = 2
 columns = 3
 
-[node name="Slot_0_0" parent="Node2D/Board2/Grid" instance=ExtResource("5_jv4da")]
+[node name="Slot_0_0" parent="BoardContainer/Board2/Grid" instance=ExtResource("5_jv4da")]
 layout_mode = 2
 
-[node name="Slot_0_1" parent="Node2D/Board2/Grid" instance=ExtResource("5_jv4da")]
+[node name="Slot_0_1" parent="BoardContainer/Board2/Grid" instance=ExtResource("5_jv4da")]
 layout_mode = 2
 slot_index = 1
 
-[node name="Slot_0_2" parent="Node2D/Board2/Grid" instance=ExtResource("5_jv4da")]
+[node name="Slot_0_2" parent="BoardContainer/Board2/Grid" instance=ExtResource("5_jv4da")]
 layout_mode = 2
 slot_index = 2
 
-[node name="Slot_1_0" parent="Node2D/Board2/Grid" instance=ExtResource("5_jv4da")]
+[node name="Slot_1_0" parent="BoardContainer/Board2/Grid" instance=ExtResource("5_jv4da")]
 layout_mode = 2
 slot_index = 3
 
-[node name="Slot_1_1" parent="Node2D/Board2/Grid" instance=ExtResource("5_jv4da")]
+[node name="Slot_1_1" parent="BoardContainer/Board2/Grid" instance=ExtResource("5_jv4da")]
 layout_mode = 2
 slot_index = 4
 
-[node name="Slot_1_2" parent="Node2D/Board2/Grid" instance=ExtResource("5_jv4da")]
+[node name="Slot_1_2" parent="BoardContainer/Board2/Grid" instance=ExtResource("5_jv4da")]
 layout_mode = 2
 slot_index = 5
 
-[node name="Slot_2_0" parent="Node2D/Board2/Grid" instance=ExtResource("5_jv4da")]
+[node name="Slot_2_0" parent="BoardContainer/Board2/Grid" instance=ExtResource("5_jv4da")]
 layout_mode = 2
 slot_index = 6
 
-[node name="Slot_2_1" parent="Node2D/Board2/Grid" instance=ExtResource("5_jv4da")]
+[node name="Slot_2_1" parent="BoardContainer/Board2/Grid" instance=ExtResource("5_jv4da")]
 layout_mode = 2
 slot_index = 7
 
-[node name="Slot_2_2" parent="Node2D/Board2/Grid" instance=ExtResource("5_jv4da")]
+[node name="Slot_2_2" parent="BoardContainer/Board2/Grid" instance=ExtResource("5_jv4da")]
 layout_mode = 2
 slot_index = 8
 
-[node name="Hand" type="HBoxContainer" parent="Node2D/Board2"]
+[node name="Hand" type="HBoxContainer" parent="BoardContainer/Board2"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 1.06417
@@ -234,7 +248,7 @@ grow_horizontal = 0
 script = ExtResource("7_jx55p")
 metadata/_edit_use_anchors_ = true
 
-[node name="Deck" type="Control" parent="Node2D/Board2" node_paths=PackedStringArray("hand_node")]
+[node name="Deck" type="Control" parent="BoardContainer/Board2" node_paths=PackedStringArray("hand_node")]
 custom_minimum_size = Vector2(122, 172)
 layout_mode = 1
 anchor_left = 1.12834
@@ -248,7 +262,7 @@ card_scene = ExtResource("6_0bg1w")
 hand_node = NodePath("../Hand")
 metadata/_edit_use_anchors_ = true
 
-[node name="DeckVisual" type="TextureRect" parent="Node2D/Board2/Deck"]
+[node name="DeckVisual" type="TextureRect" parent="BoardContainer/Board2/Deck"]
 custom_minimum_size = Vector2(100, 150)
 layout_mode = 1
 anchors_preset = -1
@@ -260,7 +274,7 @@ texture = ExtResource("9_xcdc6")
 expand_mode = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="DeckCounter" type="Label" parent="Node2D/Board2/Deck"]
+[node name="DeckCounter" type="Label" parent="BoardContainer/Board2/Deck"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.327871
@@ -277,5 +291,5 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [connection signal="actions_updated" from="ActionManager" to="ActionManager/ActionLabel" method="_on_action_manager_actions_updated"]
-[connection signal="gui_input" from="Node2D/Board1/Deck/DeckVisual" to="Node2D/Board1/Deck" method="_on_deck_visual_gui_input"]
-[connection signal="gui_input" from="Node2D/Board2/Deck/DeckVisual" to="Node2D/Board2/Deck" method="_on_deck_visual_gui_input"]
+[connection signal="gui_input" from="BoardContainer/Board1/Deck/DeckVisual" to="BoardContainer/Board1/Deck" method="_on_deck_visual_gui_input"]
+[connection signal="gui_input" from="BoardContainer/Board2/Deck/DeckVisual" to="BoardContainer/Board2/Deck" method="_on_deck_visual_gui_input"]

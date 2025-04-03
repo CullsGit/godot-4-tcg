@@ -174,6 +174,7 @@ func update_board_interactivity():
 	board2.set_process(current_player == 2)
 	board1.set_physics_process(current_player == 1)
 	board2.set_physics_process(current_player == 2)
+	update_board_view()
 	board1.visible = true  # Keep visible, but could later hide opponent’s view
 	board2.visible = true
 
@@ -219,3 +220,11 @@ func check_opponent_defeated(opponent_player: int):
 	# If all empty, player wins
 	if not has_board_cards and not has_hand_cards and not has_deck_cards:
 		print(current_player, " WINS!")
+
+func update_board_view():
+	var board_container = %BoardContainer
+	
+	if current_player == 1:
+		board_container.rotation_degrees = 0
+	else:
+		board_container.rotation_degrees = 180
