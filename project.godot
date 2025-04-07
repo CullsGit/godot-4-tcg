@@ -14,6 +14,10 @@ config/name="godot-tcg"
 run/main_scene="res://scenes/MainScene.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 
+[autoload]
+
+CardData="*res://scenes/CardData.gd"
+
 [display]
 
 window/size/viewport_width=1920

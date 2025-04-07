@@ -3,10 +3,10 @@ class_name Card
 
 @export var card_type: String = ""  # Card type
 @export var card_asset: Texture
+var card_data: Dictionary
 
 var is_selected = false  # Track selection state
 var is_activated = true
-
 
 signal card_selected(card)  # Signal when card is selected
 var tween: Tween
@@ -17,6 +17,19 @@ func _ready():
 	mouse_entered.connect(_on_mouse_entered)
 	mouse_exited.connect(_on_mouse_exited)
 
+
+func setup(data: Dictionary):
+	card_data = data
+	card_type = data["type"]
+	card_asset = load(data["image_path"])
+	call_deferred("_apply_card_image")
+
+func _apply_card_image():
+	var image_node = $TextureRect
+	if image_node:
+		image_node.texture = card_asset
+	else:
+		push_error("TextureRect not found in Card scene!")
 
 func _on_mouse_entered():
 	reset_tween()

@@ -6,13 +6,6 @@ extends Control
 var deck = []
 const CARD_TYPES = ["Tank", "Damage", "Magic"]
 
-# Dictionary mapping card types to three different asset paths
-const CARD_ASSETS = {
-	"Tank": ["res://assets/cantobig.png"],
-	"Damage": ["res://assets/faetumresize.png"],
-	"Magic": ["res://assets/fortis2x.png"]
-}
-
 func _ready():
 	generate_deck()
 	shuffle_deck()
@@ -22,10 +15,13 @@ func _ready():
 func generate_deck():
 	deck.clear()
 	for type in CARD_TYPES:
-		for i in range(5):
+		var cards_of_type = CardData.get_cards_by_type(type)
+		cards_of_type.shuffle()
+
+		for i in range(5):  # Adjust the number of each type
+			var card_data = cards_of_type[i % cards_of_type.size()]
 			var card = card_scene.instantiate()
-			card.card_type = type
-			card.card_asset = load(CARD_ASSETS[type][0])
+			card.setup(card_data)  # New setup method in Card.gd
 			card.card_selected.connect(%GameManager.select_card)
 			deck.append(card)
 

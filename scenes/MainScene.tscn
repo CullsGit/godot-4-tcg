@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://btxsmm5hfyv5e"]
+[gd_scene load_steps=12 format=3 uid="uid://btxsmm5hfyv5e"]
 
 [ext_resource type="Script" path="res://scenes/ActionManager.gd" id="1_xsjp7"]
 [ext_resource type="Script" path="res://scenes/ActionLabel.gd" id="2_s7chb"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://scenes/Deck.gd" id="8_m4jgh"]
 [ext_resource type="Texture2D" uid="uid://dmgid6lhxy4e8" path="res://assets/woodland.png" id="9_uqq3h"]
 [ext_resource type="Texture2D" uid="uid://da53hl1fjvw5j" path="res://assets/back.png" id="9_xcdc6"]
+[ext_resource type="Script" path="res://scenes/CardData.gd" id="11_x1wif"]
 
 [node name="MainScene" type="Node2D"]
 
@@ -54,6 +55,7 @@ size_flags_vertical = 4
 unique_name_in_owner = true
 custom_minimum_size = Vector2(374, 524)
 layout_mode = 1
+anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -179,6 +181,7 @@ metadata/_edit_use_anchors_ = true
 unique_name_in_owner = true
 custom_minimum_size = Vector2(374, 524)
 layout_mode = 1
+anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -187.0
@@ -289,6 +292,9 @@ text = "10"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
+
+[node name="CardData" type="Node" parent="."]
+script = ExtResource("11_x1wif")
 
 [connection signal="actions_updated" from="ActionManager" to="ActionManager/ActionLabel" method="_on_action_manager_actions_updated"]
 [connection signal="gui_input" from="BoardContainer/Board1/Deck/DeckVisual" to="BoardContainer/Board1/Deck" method="_on_deck_visual_gui_input"]

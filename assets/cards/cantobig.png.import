@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cycwxfp3trl1x"
-path="res://.godot/imported/faetumresize.png-9e68f866c4ec2cf75159eb67a178be64.ctex"
+uid="uid://dvllwgwf4agxf"
+path="res://.godot/imported/cantobig.png-5793ec4001718938143493b783d9d2a3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/faetumresize.png"
-dest_files=["res://.godot/imported/faetumresize.png-9e68f866c4ec2cf75159eb67a178be64.ctex"]
+source_file="res://assets/cards/cantobig.png"
+dest_files=["res://.godot/imported/cantobig.png-5793ec4001718938143493b783d9d2a3.ctex"]
 
 [params]
 
