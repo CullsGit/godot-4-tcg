@@ -1,7 +1,8 @@
 extends Panel  # Card is a Panel
 class_name Card
 
-@export var card_type: String = ""  # Card type
+@export var card_type: String
+@export var card_ability: String
 @export var card_asset: Texture
 var card_data: Dictionary
 
@@ -21,6 +22,7 @@ func _ready():
 func setup(data: Dictionary):
 	card_data = data
 	card_type = data["type"]
+	card_ability = data["ability"]
 	card_asset = load(data["image_path"])
 	call_deferred("_apply_card_image")
 
