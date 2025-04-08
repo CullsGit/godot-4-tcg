@@ -15,6 +15,7 @@ func _ready():
 			slots.append(child)
 
 
+@warning_ignore("INTEGER_DIVISION")
 func move_card(current_slot, direction_string):
 	var slot_index = slots.find(current_slot)
 	if slot_index == -1:
@@ -46,6 +47,7 @@ func move_card(current_slot, direction_string):
 	var dir = direction_map[direction_string]
 	var col = slot_index % 3
 	var row = slot_index / 3
+
 
 	var new_col = col + int(dir.x)
 	var new_row = row + int(dir.y)
