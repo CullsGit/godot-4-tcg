@@ -1,16 +1,16 @@
 [gd_scene load_steps=12 format=3 uid="uid://btxsmm5hfyv5e"]
 
-[ext_resource type="Script" path="res://scenes/ActionManager.gd" id="1_xsjp7"]
-[ext_resource type="Script" path="res://scenes/ActionLabel.gd" id="2_s7chb"]
-[ext_resource type="Script" path="res://scenes/GameManager.gd" id="3_wec0a"]
-[ext_resource type="Script" path="res://scenes/Board.gd" id="4_ysr74"]
+[ext_resource type="Script" path="res://scripts/ActionManager.gd" id="1_xsjp7"]
+[ext_resource type="Script" path="res://scripts/ActionLabel.gd" id="2_s7chb"]
+[ext_resource type="Script" path="res://scripts/GameManager.gd" id="3_wec0a"]
+[ext_resource type="Script" path="res://scripts/Board.gd" id="4_ysr74"]
 [ext_resource type="PackedScene" uid="uid://bc8ob71spb8ro" path="res://scenes/Slot.tscn" id="5_jv4da"]
 [ext_resource type="PackedScene" uid="uid://dgoplkvhg560w" path="res://scenes/Card.tscn" id="6_0bg1w"]
-[ext_resource type="Script" path="res://scenes/Hand.gd" id="7_jx55p"]
-[ext_resource type="Script" path="res://scenes/Deck.gd" id="8_m4jgh"]
+[ext_resource type="Script" path="res://scripts/Hand.gd" id="7_jx55p"]
+[ext_resource type="Script" path="res://scripts/Deck.gd" id="8_m4jgh"]
 [ext_resource type="Texture2D" uid="uid://dmgid6lhxy4e8" path="res://assets/woodland.png" id="9_uqq3h"]
 [ext_resource type="Texture2D" uid="uid://da53hl1fjvw5j" path="res://assets/back.png" id="9_xcdc6"]
-[ext_resource type="Script" path="res://scenes/CardData.gd" id="11_x1wif"]
+[ext_resource type="Script" path="res://scripts/CardData.gd" id="11_x1wif"]
 
 [node name="MainScene" type="Node2D"]
 

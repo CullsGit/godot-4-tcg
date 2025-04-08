@@ -16,7 +16,7 @@ config/features=PackedStringArray("4.3", "Forward Plus")
 
 [autoload]
 
-CardData="*res://scenes/CardData.gd"
+CardData="*res://scripts/CardData.gd"
 
 [display]
 
