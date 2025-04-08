@@ -55,7 +55,6 @@ func remove_card():
 func get_slot_direction(from_slot, to_slot):
 	var from_index = from_slot.slot_index
 	var to_index = to_slot.slot_index
-
 	var diff = to_index - from_index
 
 	match diff:
@@ -63,4 +62,8 @@ func get_slot_direction(from_slot, to_slot):
 		1: return "right"
 		-3: return "up"
 		3: return "down"
+		-4: return "up_left"
+		-2: return "up_right"
+		2: return "down_left"
+		4: return "down_right"
 		_: return ""

@@ -15,56 +15,62 @@ func _ready():
 			slots.append(child)
 
 
-func move_card(current_slot, direction):
-
+func move_card(current_slot, direction_string):
 	var slot_index = slots.find(current_slot)
-
 	if slot_index == -1:
-		return  # Slot not found
+		return
 
-	var target_index = get_target_index(slot_index, direction)
+	var moving_card = current_slot.placed_card
+	if moving_card == null:
+		return
 
-	if target_index == -1:
-		return  # No valid move
+	var direction_map = {
+		"left": Vector2(-1, 0),
+		"right": Vector2(1, 0),
+		"up": Vector2(0, -1),
+		"down": Vector2(0, 1),
+	}
+
+	if moving_card.card_ability == "Strafe":
+		direction_map.merge({
+			"up_left": Vector2(-1, -1),
+			"up_right": Vector2(1, -1),
+			"down_left": Vector2(-1, 1),
+			"down_right": Vector2(1, 1),
+		})
+
+	# If the direction is not valid, block the move
+	if not direction_string in direction_map:
+		return
+
+	var dir = direction_map[direction_string]
+	var col = slot_index % 3
+	var row = slot_index / 3
+
+	var new_col = col + int(dir.x)
+	var new_row = row + int(dir.y)
+
+	if new_col < 0 or new_col > 2 or new_row < 0 or new_row > 2:
+		return  # Out of bounds
+
+	var target_index = new_row * 3 + new_col
+
+	if target_index < 0 or target_index >= slots.size():
+		return
 
 	var target_slot = slots[target_index]
-
 	if target_slot.is_empty():
-		var moving_card = current_slot.placed_card
-		if moving_card == null:
-			return  # No card to move
-			
-		current_slot.placed_card = null  # Clear the old slot's reference
+		current_slot.placed_card = null
 		if moving_card.get_parent():
-			moving_card.get_parent().remove_child(moving_card)  # Remove card from old slot
+			moving_card.get_parent().remove_child(moving_card)
 
-		target_slot.add_child(moving_card)  # Move to new slot
-		target_slot.placed_card = moving_card  # Update new slot reference
-		moving_card.position = Vector2.ZERO  # Reset position after moving
+		target_slot.add_child(moving_card)
+		target_slot.placed_card = moving_card
+		moving_card.position = Vector2.ZERO
 
 		var action_manager = %ActionManager
 		check_opponent_cards_in_range(target_slot)
 		action_manager.use_action()
-
-func get_target_index(slot_index, direction):
-	var row = slot_index / 3  # Get row index
-	var col = slot_index % 3  # Get column index
-
-	match direction:
-		"left":
-			if col > 0:
-				return slot_index - 1
-		"right":
-			if col < 2:
-				return slot_index + 1
-		"up":
-			if row > 0:
-				return slot_index - 3
-		"down":
-			if row < 2:
-				return slot_index + 3
-	
-	return -1  # Invalid move
 
 # Corrected Lanes for Player 1 and Player 2
 var player1_lanes = [
