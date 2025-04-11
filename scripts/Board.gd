@@ -24,6 +24,8 @@ func move_card(current_slot, direction_string):
 	var moving_card = current_slot.placed_card
 	if moving_card == null:
 		return
+	if !moving_card.is_activated:
+		return
 
 	var direction_map = {
 		"left": Vector2(-1, 0),
