@@ -66,4 +66,6 @@ func get_slot_direction(from_slot, to_slot):
 		-2: return "up_right"
 		2: return "down_left"
 		4: return "down_right"
+		-6: return "back_to_front"
+		6: return "front_to_back"
 		_: return ""

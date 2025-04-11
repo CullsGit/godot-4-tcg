@@ -41,6 +41,12 @@ func move_card(current_slot, direction_string):
 			"down_left": Vector2(-1, 1),
 			"down_right": Vector2(1, 1),
 		})
+	
+	if moving_card.card_ability == "Dash":
+		direction_map.merge({
+			"back_to_front": Vector2(0, -2),
+			"front_to_back": Vector2(0, 2)
+		})
 
 	# If the direction is not valid, block the move
 	if not direction_string in direction_map:
