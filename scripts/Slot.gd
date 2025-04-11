@@ -44,6 +44,7 @@ func place_card(card):
 	var action_manager = %ActionManager
 	action_manager.use_action()
 	card.toggle_selection()
+	board.clear_all_slot_highlights()
 	board.check_opponent_cards_in_range(self)
 
 
@@ -69,3 +70,8 @@ func get_slot_direction(from_slot, to_slot):
 		-6: return "back_to_front"
 		6: return "front_to_back"
 		_: return ""
+
+func highlight():
+	$Panel.modulate = Color(0.6, 1, 0.6)
+func unhighlight():
+	$Panel.modulate = Color(1, 1, 1, 0.6)

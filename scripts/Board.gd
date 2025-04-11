@@ -133,3 +133,12 @@ func check_opponent_cards_in_range(slot):
 			break  # Only return the first card in lane
 	
 	return cards_in_range
+
+func highlight_empty_slots():
+	for slot in slots:
+		if slot.is_empty():
+			slot.highlight()
+
+func clear_all_slot_highlights():
+	for slot in slots:
+		slot.unhighlight()

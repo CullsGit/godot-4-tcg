@@ -45,7 +45,7 @@ func select_card(card: Card):
 	var hand = get_current_hand()
 	var parent = card.get_parent()
 	var current_board = get_current_board()
-
+	current_board.clear_all_slot_highlights()
 	# Handle selecting a card from the hand
 	if parent == hand:
 		# Deselect any board card when selecting from the hand
@@ -61,6 +61,7 @@ func select_card(card: Card):
 				selected_hand_card.toggle_selection()
 
 			selected_hand_card = card
+			current_board.highlight_empty_slots()
 			card.toggle_selection()
 		return
 

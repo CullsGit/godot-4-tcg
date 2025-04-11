@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://bc8ob71spb8ro"]
+[gd_scene load_steps=3 format=3 uid="uid://bc8ob71spb8ro"]
 
 [ext_resource type="Script" path="res://scripts/Slot.gd" id="1_ful1a"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6bmo0"]
 
 [node name="Slot" type="Control" groups=["BoardSlot"]]
 custom_minimum_size = Vector2(122, 172)
@@ -13,6 +15,7 @@ script = ExtResource("1_ful1a")
 metadata/_edit_use_anchors_ = true
 
 [node name="Panel" type="Panel" parent="."]
+modulate = Color(1, 1, 1, 0.6)
 custom_minimum_size = Vector2(122, 172)
 layout_mode = 0
 anchor_right = 1.0
@@ -20,6 +23,7 @@ anchor_bottom = 1.0
 offset_right = -60.0
 offset_bottom = -60.0
 mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_6bmo0")
 metadata/_edit_use_anchors_ = true
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
