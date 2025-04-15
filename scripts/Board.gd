@@ -27,26 +27,7 @@ func move_card(current_slot, direction_string):
 	if !moving_card.is_activated:
 		return
 
-	var direction_map = {
-		"left": Vector2(-1, 0),
-		"right": Vector2(1, 0),
-		"up": Vector2(0, -1),
-		"down": Vector2(0, 1),
-	}
-
-	if moving_card.card_ability == "Strafe":
-		direction_map.merge({
-			"up_left": Vector2(-1, -1),
-			"up_right": Vector2(1, -1),
-			"down_left": Vector2(-1, 1),
-			"down_right": Vector2(1, 1),
-		})
-	
-	if moving_card.card_ability == "Dash":
-		direction_map.merge({
-			"back_to_front": Vector2(0, -2),
-			"front_to_back": Vector2(0, 2)
-		})
+	var direction_map = get_direction_map(moving_card)
 
 	# If the direction is not valid, block the move
 	if not direction_string in direction_map:
@@ -79,7 +60,6 @@ func move_card(current_slot, direction_string):
 		moving_card.position = Vector2.ZERO
 
 		var action_manager = %ActionManager
-		check_opponent_cards_in_range(target_slot)
 		action_manager.use_action()
 
 # Corrected Lanes for Player 1 and Player 2
@@ -94,6 +74,34 @@ var player2_lanes = [
 	[1, 4, 7],  # Lane 2
 	[0, 3, 6]   # Lane 3
 ]
+
+func get_valid_target_slots(from_slot: Node, card: Node) -> Array:
+	var valid_slots := []
+	var slot_index = slots.find(from_slot)
+	if slot_index == -1 or card == null:
+		return valid_slots
+
+	var direction_map = get_direction_map(card)
+	var col = slot_index % 3
+	var row = slot_index / 3
+
+	for dir in direction_map.values():
+		var new_col = col + int(dir.x)
+		var new_row = row + int(dir.y)
+
+		if new_col < 0 or new_col > 2 or new_row < 0 or new_row > 2:
+			continue
+
+		var target_index = new_row * 3 + new_col
+		if target_index < 0 or target_index >= slots.size():
+			continue
+
+		var target_slot = slots[target_index]
+		if target_slot.is_empty():
+			valid_slots.append(target_slot)
+
+	return valid_slots
+
 
 func get_opponent_lane(slot_idx, player1_flag):
 	# Determine which set of lanes to use
@@ -134,10 +142,45 @@ func check_opponent_cards_in_range(slot):
 	
 	return cards_in_range
 
-func highlight_empty_slots():
+func get_direction_map(card) -> Dictionary:
+	var direction_map = {
+		"left": Vector2(-1, 0),
+		"right": Vector2(1, 0),
+		"up": Vector2(0, -1),
+		"down": Vector2(0, 1),
+	}
+
+	if card.card_ability == "Strafe":
+		direction_map.merge({
+			"up_left": Vector2(-1, -1),
+			"up_right": Vector2(1, -1),
+			"down_left": Vector2(-1, 1),
+			"down_right": Vector2(1, 1),
+		})
+
+	if card.card_ability == "Dash":
+		direction_map.merge({
+			"back_to_front": Vector2(0, -2),
+			"front_to_back": Vector2(0, 2)
+		})
+
+	return direction_map
+
+func find_empty_slots():
+	var empty_slots = []
 	for slot in slots:
 		if slot.is_empty():
-			slot.highlight()
+			empty_slots.append(slot)
+
+	highlight_slots(empty_slots)
+
+
+func highlight_slots(slot_list: Array = []):
+	for slot in slots:
+		slot.unhighlight()
+
+	for slot in slot_list:
+		slot.highlight()
 
 func clear_all_slot_highlights():
 	for slot in slots:

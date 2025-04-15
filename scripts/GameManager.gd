@@ -61,7 +61,7 @@ func select_card(card: Card):
 				selected_hand_card.toggle_selection()
 
 			selected_hand_card = card
-			current_board.highlight_empty_slots()
+			current_board.find_empty_slots()
 			card.toggle_selection()
 		return
 
@@ -89,6 +89,10 @@ func select_card(card: Card):
 
 			selected_board_card = card
 			card.toggle_selection()
+			var current_slot = card.get_parent()
+			var valid_slots = current_board.get_valid_target_slots(current_slot, card)
+			if card.is_activated:
+				current_board.highlight_slots(valid_slots)
 
 func can_attack(attacker: Card, target: Card) -> bool:
 	# Basic checks (activation, actions, etc.)
