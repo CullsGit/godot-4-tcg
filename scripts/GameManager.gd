@@ -50,12 +50,10 @@ func select_card(card: Card):
 	if parent == hand:
 		# Deselect any board card when selecting from the hand
 		if selected_board_card:
-			selected_board_card.toggle_selection()
-			selected_board_card = null
+			deselect_card(selected_board_card)
 
 		if selected_hand_card == card:
-			card.toggle_selection()
-			selected_hand_card = null
+			deselect_card(card)
 		else:
 			if selected_hand_card:
 				selected_hand_card.toggle_selection()
@@ -77,12 +75,10 @@ func select_card(card: Card):
 
 		# Deselect any hand card when selecting from the board
 		if selected_hand_card:
-			selected_hand_card.toggle_selection()
-			selected_hand_card = null
+			deselect_card(selected_hand_card)
 
 		if selected_board_card == card:
-			card.toggle_selection()
-			selected_board_card = null
+			deselect_card(card)
 		else:
 			if selected_board_card:
 				selected_board_card.toggle_selection()
@@ -94,6 +90,11 @@ func select_card(card: Card):
 			if card.is_activated:
 				current_board.highlight_slots(valid_slots)
 
+func deselect_card(card: Card):
+	card.toggle_selection()
+	selected_board_card = null
+	selected_hand_card = null
+	
 func can_attack(attacker: Card, target: Card) -> bool:
 	# Basic checks (activation, actions, etc.)
 	if not attacker.is_activated:

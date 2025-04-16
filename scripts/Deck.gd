@@ -35,6 +35,7 @@ func draw_starting_hand():
 func draw_card(starting_hand := false):
 	var game_manager = %GameManager
 	var current_hand = game_manager.get_current_hand()
+	var current_board = game_manager.get_current_board()
 
 	# Allow drawing if it's the current player's turn OR if drawing the starting hand
 	if deck.size() > 0 and (starting_hand or current_hand == hand_node) and hand_node.hand_cards.size() < 5:
@@ -43,6 +44,11 @@ func draw_card(starting_hand := false):
 		update_deck_counter()
 
 		if not starting_hand:
+			if game_manager.selected_hand_card:
+				game_manager.deselect_card(game_manager.selected_hand_card)
+			if game_manager.selected_board_card:
+				game_manager.deselect_card(game_manager.selected_board_card)
+			current_board.clear_all_slot_highlights()
 			var action_manager = %ActionManager
 			action_manager.use_action()
 
