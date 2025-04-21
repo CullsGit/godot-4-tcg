@@ -151,7 +151,6 @@ func attack_card(attacker: Card, target: Card):
 		attacker.toggle_selection()
 	if selected_board_card == attacker:
 		selected_board_card = null
-	deselect_all_cards()
 	for i in range(required_actions):
 		action_manager.use_action()  # This may trigger turn switch
 
@@ -162,12 +161,7 @@ func _on_actions_updated(actions_left):
 		switch_turns()
 
 func switch_turns():
-	if selected_hand_card:
-		selected_hand_card.toggle_selection()
-		selected_hand_card = null
-	if selected_board_card:
-		selected_board_card.toggle_selection()
-		selected_board_card = null
+	deselect_all_cards()
 
 	# Activate all cards for the player whose turn just ended
 	var deactivating_player = current_player
