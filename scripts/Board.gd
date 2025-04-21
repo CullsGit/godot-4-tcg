@@ -58,7 +58,8 @@ func move_card(current_slot, direction_string):
 		target_slot.add_child(moving_card)
 		target_slot.placed_card = moving_card
 		moving_card.position = Vector2.ZERO
-
+		var game_manager = %GameManager
+		game_manager.deselect_all_cards()
 		var action_manager = %ActionManager
 		action_manager.use_action()
 

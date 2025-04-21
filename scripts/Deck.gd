@@ -44,10 +44,7 @@ func draw_card(starting_hand := false):
 		update_deck_counter()
 
 		if not starting_hand:
-			if game_manager.selected_hand_card:
-				game_manager.deselect_card(game_manager.selected_hand_card)
-			if game_manager.selected_board_card:
-				game_manager.deselect_card(game_manager.selected_board_card)
+			game_manager.deselect_all_cards()
 			current_board.clear_all_slot_highlights()
 			var action_manager = %ActionManager
 			action_manager.use_action()

@@ -12,6 +12,7 @@ var selected_hand_card: Card = null
 var selected_board_card: Card = null
 var current_player = 1
 
+
 const COMBAT_RULES = {
 	"Damage": {
 		"beats": "Magic",
@@ -45,15 +46,15 @@ func select_card(card: Card):
 	var hand = get_current_hand()
 	var parent = card.get_parent()
 	var current_board = get_current_board()
-	current_board.clear_all_slot_highlights()
+	#current_board.clear_all_slot_highlights()
 	# Handle selecting a card from the hand
 	if parent == hand:
 		# Deselect any board card when selecting from the hand
 		if selected_board_card:
-			deselect_card(selected_board_card)
+			deselect_all_cards()
 
 		if selected_hand_card == card:
-			deselect_card(card)
+			deselect_all_cards()
 		else:
 			if selected_hand_card:
 				selected_hand_card.toggle_selection()
@@ -75,10 +76,10 @@ func select_card(card: Card):
 
 		# Deselect any hand card when selecting from the board
 		if selected_hand_card:
-			deselect_card(selected_hand_card)
+			deselect_all_cards()
 
 		if selected_board_card == card:
-			deselect_card(card)
+			deselect_all_cards()
 		else:
 			if selected_board_card:
 				selected_board_card.toggle_selection()
@@ -90,10 +91,18 @@ func select_card(card: Card):
 			if card.is_activated:
 				current_board.highlight_slots(valid_slots)
 
-func deselect_card(card: Card):
-	card.toggle_selection()
-	selected_board_card = null
-	selected_hand_card = null
+func deselect_all_cards():
+	var current_board = get_current_board()
+	current_board.clear_all_slot_highlights()
+
+	if selected_hand_card:
+		selected_hand_card.toggle_selection()
+		selected_hand_card = null
+
+	if selected_board_card:
+		selected_board_card.toggle_selection()
+		selected_board_card = null
+
 	
 func can_attack(attacker: Card, target: Card) -> bool:
 	# Basic checks (activation, actions, etc.)
@@ -142,7 +151,7 @@ func attack_card(attacker: Card, target: Card):
 		attacker.toggle_selection()
 	if selected_board_card == attacker:
 		selected_board_card = null
-
+	deselect_all_cards()
 	for i in range(required_actions):
 		action_manager.use_action()  # This may trigger turn switch
 
