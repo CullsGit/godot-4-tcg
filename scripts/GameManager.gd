@@ -151,10 +151,12 @@ func attack_card(attacker: Card, target: Card):
 		attacker.toggle_selection()
 	if selected_board_card == attacker:
 		selected_board_card = null
+		deselect_all_cards()
 	for i in range(required_actions):
+		check_opponent_defeated(opponent_player)
 		action_manager.use_action()  # This may trigger turn switch
 
-	check_opponent_defeated(opponent_player)
+	
 
 func _on_actions_updated(actions_left):
 	if actions_left == 0:

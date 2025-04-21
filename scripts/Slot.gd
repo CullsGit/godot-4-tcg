@@ -32,6 +32,7 @@ func _on_gui_input(event):
 
 func place_card(card):
 	var board = get_parent().get_parent()
+	var game_manager = %GameManager
 	# Remove the card from the previous parent safely
 	if card.get_parent():
 		card.get_parent().remove_child(card)
@@ -44,7 +45,7 @@ func place_card(card):
 	var action_manager = %ActionManager
 	action_manager.use_action()
 	card.toggle_selection()
-	board.clear_all_slot_highlights()
+	game_manager.deselect_all_cards()
 	board.check_opponent_cards_in_range(self)
 
 
