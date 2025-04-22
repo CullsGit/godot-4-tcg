@@ -103,7 +103,6 @@ func deselect_all_cards():
 		selected_board_card.toggle_selection()
 		selected_board_card = null
 
-	
 func can_attack(attacker: Card, target: Card) -> bool:
 	# Basic checks (activation, actions, etc.)
 	if not attacker.is_activated:
@@ -129,19 +128,14 @@ func can_attack(attacker: Card, target: Card) -> bool:
 	if COMBAT_RULES[target_type]["beats"] == attacker_type:
 		return false
 		
-	var required_actions = COMBAT_RULES[attacker_type]["action_cost"].get(target_type, 0)
+	var required_actions = get_action_cost(attacker, target)
 	if action_manager.current_actions < required_actions:
 		return false
 	
 	return true
 
 func attack_card(attacker: Card, target: Card):
-	if not can_attack(attacker, target):
-		return
-	
-	var attacker_type = attacker.card_type
-	var target_type = target.card_type
-	var required_actions = COMBAT_RULES[attacker_type]["action_cost"][target_type]
+	var required_actions = get_action_cost(attacker, target)
 	var was_selected = attacker.is_selected
 	var opponent_player = 2 if current_player == 1 else 1
 
@@ -156,7 +150,21 @@ func attack_card(attacker: Card, target: Card):
 		check_opponent_defeated(opponent_player)
 		action_manager.use_action()  # This may trigger turn switch
 
+func get_action_cost(attacker: Card, target: Card) -> int:
+	var attacker_type = attacker.card_type
+	var target_type = target.card_type
 	
+	if attacker_type in COMBAT_RULES:
+		var type_rules = COMBAT_RULES[attacker_type]
+		var cost = type_rules.action_cost.get(target_type, 2)
+
+		# Overpower rule: if same type, cost is 1 instead of 2
+		if attacker.card_ability == "Overpower" and attacker_type == target_type:
+			return 1
+
+		return cost
+	
+	return 2  # fallback
 
 func _on_actions_updated(actions_left):
 	if actions_left == 0:
