@@ -114,11 +114,14 @@ func can_attack(attacker: Card, target: Card) -> bool:
 	
 	# Get closest target only
 	var board = get_current_board()
+	if not board.has_clear_lane(attacker_slot):
+		print("Can't attack – your lane is blocked by an allied card.")
+		return false
 	var valid_targets = board.check_opponent_cards_in_range(attacker_slot)
 	
 	# Can only attack if target is the first in lane
 	if not target in valid_targets:
-		print("Can't attack - not the closest target in lane")
+		print("Can't attack - not a valid target")
 		return false
 	
 	# Rest of your combat rules (action costs, etc.)

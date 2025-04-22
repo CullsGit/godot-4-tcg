@@ -76,6 +76,37 @@ var player2_lanes = [
 	[0, 3, 6]   # Lane 3
 ]
 
+# Board.gd
+
+# … anywhere below your player*_lanes definitions …
+
+func has_clear_lane(from_slot: Node) -> bool:
+	# 1. Find this slot’s index
+	var slot_index = slots.find(from_slot)
+	if slot_index == -1:
+		return false
+
+	# 2. Pick the right lanes array
+	var is_p1 = from_slot.is_player1
+	var my_lanes = player1_lanes if is_p1 else player2_lanes
+
+	# 3. Locate which lane it’s in
+	for lane in my_lanes:
+		if slot_index in lane:
+			var pos_in_lane = lane.find(slot_index)
+			# 4. Check _all_ slots _before_ this one in the lane
+			#    (these are between attacker and the opponent)
+			for i in range(0, pos_in_lane):
+				var idx = lane[i]
+				if not slots[idx].is_empty():
+					return false
+			# 5. No blockers found
+			return true
+
+	# (shouldn’t happen if your lanes cover every slot)
+	return false
+
+
 func get_valid_target_slots(from_slot: Node, card: Node) -> Array:
 	var valid_slots := []
 	var slot_index = slots.find(from_slot)
