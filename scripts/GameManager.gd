@@ -14,25 +14,25 @@ var current_player = 1
 
 
 const COMBAT_RULES = {
-	"Damage": {
-		"beats": "Magic",
+	"Fury": {
+		"beats": "Aura",
 		"action_cost": {
-			"Magic": 1,
-			"Damage": 2
+			"Aura": 1,
+			"Fury": 2
 		}
 	},
-	"Magic": {
-		"beats": "Tank",
+	"Aura": {
+		"beats": "Void",
 		"action_cost": {
-			"Tank": 1,
-			"Magic": 2
+			"Void": 1,
+			"Aura": 2
 		}
 	},
-	"Tank": {
-		"beats": "Damage",
+	"Void": {
+		"beats": "Fury",
 		"action_cost": {
-			"Damage": 1,
-			"Tank": 2
+			"Fury": 1,
+			"Void": 2
 		}
 	}
 }

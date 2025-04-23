@@ -4,7 +4,7 @@ extends Control
 @export var hand_node: Node  
 
 var deck = []
-const CARD_TYPES = ["Tank", "Damage", "Magic"]
+const CARD_TYPES = ["Void", "Fury", "Aura"]
 
 func _ready():
 	generate_deck()
