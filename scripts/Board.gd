@@ -107,7 +107,7 @@ func has_clear_lane(from_slot: Node) -> bool:
 	return false
 
 
-func get_valid_target_slots(from_slot: Node, card: Node) -> Array:
+func get_valid_movement_slots(from_slot: Node, card: Node) -> Array:
 	var valid_slots := []
 	var slot_index = slots.find(from_slot)
 	if slot_index == -1 or card == null:

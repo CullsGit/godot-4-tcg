@@ -46,8 +46,6 @@ func place_card(card):
 	action_manager.use_action()
 	card.toggle_selection()
 	game_manager.deselect_all_cards()
-	board.check_opponent_cards_in_range(self)
-
 
 func remove_card():
 	if placed_card:
