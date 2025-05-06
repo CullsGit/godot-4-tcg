@@ -80,7 +80,7 @@ var player2_lanes = [
 
 # … anywhere below your player*_lanes definitions …
 
-func has_clear_lane(from_slot: Node) -> bool:
+func allied_blockers_in_lane(from_slot: Node):
 	# 1. Find this slot’s index
 	var slot_index = slots.find(from_slot)
 	if slot_index == -1:
@@ -93,15 +93,16 @@ func has_clear_lane(from_slot: Node) -> bool:
 	# 3. Locate which lane it’s in
 	for lane in my_lanes:
 		if slot_index in lane:
+			var blockers = 0
 			var pos_in_lane = lane.find(slot_index)
 			# 4. Check _all_ slots _before_ this one in the lane
 			#    (these are between attacker and the opponent)
 			for i in range(0, pos_in_lane):
 				var idx = lane[i]
 				if not slots[idx].is_empty():
-					return false
-			# 5. No blockers found
-			return true
+					blockers += 1
+			# 5. return amount of allied blockers
+			return blockers
 
 	# (shouldn’t happen if your lanes cover every slot)
 	return false
@@ -158,11 +159,11 @@ func get_lane_position(slot_idx):
 	print("Error: Slot not found in any lane.")
 	return -1  # Invalid
 
-func check_opponent_cards_in_range(slot):
+func check_opponent_cards_in_range(slot, has_overstrike = false):
 	var game_manager = %GameManager
 	var opponent_board = game_manager.get_opponent_board()
 	var opponent_lane = get_opponent_lane(slot.slot_index, slot.is_player1)
-	
+
 	var cards_in_range = []
 	
 	# Find first occupied slot in lane
@@ -170,9 +171,10 @@ func check_opponent_cards_in_range(slot):
 		var opp_slot = opponent_board.slots[opp_index]
 		if opp_slot and opp_slot.placed_card:
 			cards_in_range.append(opp_slot.placed_card)
-			break  # Only return the first card in lane
+			if has_overstrike == false:
+				break  # Only return the first card in lane
 	
-	return cards_in_range
+	return cards_in_range.slice(0, 2) # returns at MOST 2 cards in range
 
 func get_direction_map(card) -> Dictionary:
 	var direction_map = {

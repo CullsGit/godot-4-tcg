@@ -104,38 +104,48 @@ func deselect_all_cards():
 		selected_board_card = null
 
 func can_attack(attacker: Card, target: Card) -> bool:
-	# Basic checks (activation, actions, etc.)
-	if not attacker.is_activated:
-		return false
-		
-	var attacker_slot = attacker.get_parent()
-	if not attacker_slot:
-		return false
-	
-	# Get closest target only
 	var board = get_current_board()
-	if not board.has_clear_lane(attacker_slot):
-		print("Can't attack – your lane is blocked by an allied card.")
+	var attacker_slot = attacker.get_parent()
+
+	if not attacker.is_activated or not attacker_slot:
 		return false
-	var valid_targets = board.check_opponent_cards_in_range(attacker_slot)
+
+	var blockers = board.allied_blockers_in_lane(attacker_slot)
+	var valid_targets = []
+
+	if attacker.card_ability == "Overstrike":
+		match blockers:
+			2:  # In case you ever allow more than 2 blockers
+				print("Can't attack - your lane is blocked by an allied card.")
+				return false
+			1:
+				valid_targets = board.check_opponent_cards_in_range(attacker_slot)
+			0:
+				valid_targets = board.check_opponent_cards_in_range(attacker_slot, true)
+	else:
+		if blockers > 0:
+			print("Can't attack – your lane is blocked by an allied card.")
+			return false
+		valid_targets = board.check_opponent_cards_in_range(attacker_slot)
+
+	print('Valid targets: ', valid_targets)
 	
-	# Can only attack if target is the first in lane
-	if not target in valid_targets:
+	if target not in valid_targets:
 		print("Can't attack - not a valid target")
 		return false
-	
-	# Rest of your combat rules (action costs, etc.)
+
 	var attacker_type = attacker.card_type
 	var target_type = target.card_type
-	
+
 	if COMBAT_RULES[target_type]["beats"] == attacker_type:
 		return false
-		
+
 	var required_actions = get_action_cost(attacker, target)
 	if action_manager.current_actions < required_actions:
 		return false
-	
+
 	return true
+
 
 func attack_card(attacker: Card, target: Card):
 	var required_actions = get_action_cost(attacker, target)
