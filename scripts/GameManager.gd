@@ -85,6 +85,7 @@ func select_card(card: Card):
 				selected_board_card.toggle_selection()
 
 			selected_board_card = card
+			print('This card is on the board: ', selected_board_card.card_type)
 			card.toggle_selection()
 			var current_slot = card.get_parent()
 			var valid_slots = current_board.get_valid_movement_slots(current_slot, card)
@@ -170,11 +171,11 @@ func get_action_cost(attacker: Card, target: Card) -> int:
 	if attacker_type in COMBAT_RULES:
 		var type_rules = COMBAT_RULES[attacker_type]
 		var cost = type_rules.action_cost.get(target_type, 2)
-
 		# Overpower rule: if same type, cost is 1 instead of 2
 		if attacker.card_ability == "Overpower" and attacker_type == target_type:
 			return 1
-
+		if target.card_ability == "Bulwark" and cost:
+			return 3
 		return cost
 	
 	return 2  # fallback
