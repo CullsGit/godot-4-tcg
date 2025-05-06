@@ -50,7 +50,8 @@ func update_visual():
 
 func _gui_input(event):
 	if event is InputEventMouseButton and event.pressed:
-		card_selected.emit(self)  # Notify Hand.gd that this card was clicked
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			card_selected.emit(self)
 
 func set_activated(value: bool):
 	is_activated = value

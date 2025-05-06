@@ -10,7 +10,7 @@ func is_empty():
 	return placed_card == null
 
 func _on_gui_input(event):
-	if event is InputEventMouseButton and event.pressed:
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		var game_manager = %GameManager
 		var current_board = game_manager.get_current_board()
 		var board = self.get_parent().get_parent()
