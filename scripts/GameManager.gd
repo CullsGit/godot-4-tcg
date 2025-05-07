@@ -66,6 +66,8 @@ func select_card(card: Card):
 
 	# Handle selecting a card from the board
 	if parent.is_in_group("BoardSlot"):
+		if not card.is_activated:
+			return 
 		var card_board = parent.get_parent().get_parent()
 		if card_board != current_board:  # This is opponent's card
 			if selected_board_card:  # Only interact if we have a card selected
@@ -108,7 +110,7 @@ func can_attack(attacker: Card, target: Card) -> bool:
 	var board = get_current_board()
 	var attacker_slot = attacker.get_parent()
 
-	if not attacker.is_activated or not attacker_slot:
+	if not attacker_slot:
 		return false
 
 	var blockers = board.allied_blockers_in_lane(attacker_slot)
