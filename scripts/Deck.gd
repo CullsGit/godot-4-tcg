@@ -23,6 +23,7 @@ func generate_deck():
 			var card = card_scene.instantiate()
 			card.setup(card_data)  # New setup method in Card.gd
 			card.card_selected.connect(%GameManager.select_card)
+			card.use_bulwark_ability.connect(%GameManager.bulwarked)
 			deck.append(card)
 
 func shuffle_deck():

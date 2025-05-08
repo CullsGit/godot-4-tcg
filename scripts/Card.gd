@@ -8,8 +8,10 @@ var card_data: Dictionary
 
 var is_selected = false  # Track selection state
 var is_activated = true
+var bulwarked = false
 
 signal card_selected(card)  # Signal when card is selected
+signal use_bulwark_ability(card)
 var tween: Tween
 
 func _ready():
@@ -52,6 +54,8 @@ func _gui_input(event):
 	if event is InputEventMouseButton and event.pressed:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			card_selected.emit(self)
+		elif event.button_index == MOUSE_BUTTON_RIGHT and is_activated and card_ability == 'Bulwark':
+			use_bulwark_ability.emit(self)
 
 func set_activated(value: bool):
 	is_activated = value
@@ -60,6 +64,20 @@ func set_activated(value: bool):
 func toggle_selection():
 	is_selected = !is_selected  # Toggle selection state
 	update_highlight()  # Apply highlight immediately
+
+func toggle_bulwarked():
+	var texture_rect = $TextureRect
+
+	bulwarked = !bulwarked
+	var t = create_tween()
+	
+	if bulwarked:
+		t.tween_property(texture_rect, "self_modulate", Color(1, 0, 0, 1), 0.15).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+		t.tween_property(texture_rect, "scale", Vector2(1.14, 1.14), 0.15).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+	else:
+		t.tween_property(texture_rect, "self_modulate", Color(1, 1, 1, 1), 0.15).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+		t.tween_property(texture_rect, "scale", Vector2(1, 1), 0.15).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+
 
 func update_highlight():
 	var texture_rect = $TextureRect

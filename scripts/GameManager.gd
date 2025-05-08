@@ -46,7 +46,6 @@ func select_card(card: Card):
 	var hand = get_current_hand()
 	var parent = card.get_parent()
 	var current_board = get_current_board()
-	#current_board.clear_all_slot_highlights()
 	# Handle selecting a card from the hand
 	if parent == hand:
 		# Deselect any board card when selecting from the hand
@@ -91,7 +90,7 @@ func select_card(card: Card):
 			card.toggle_selection()
 			var current_slot = card.get_parent()
 			var valid_slots = current_board.get_valid_movement_slots(current_slot, card)
-			if card.is_activated:
+			if card.is_activated and !card.bulwarked:
 				current_board.highlight_slots(valid_slots)
 
 func deselect_all_cards():
@@ -106,11 +105,22 @@ func deselect_all_cards():
 		selected_board_card.toggle_selection()
 		selected_board_card = null
 
+func bulwarked(card):
+	if selected_hand_card:
+		return
+	elif card == selected_board_card:
+		card.toggle_bulwarked()
+		deselect_all_cards()
+		action_manager.use_action()
+
 func can_attack(attacker: Card, target: Card) -> bool:
 	var board = get_current_board()
 	var attacker_slot = attacker.get_parent()
 
 	if not attacker_slot:
+		return false
+
+	if attacker.bulwarked:
 		return false
 
 	var blockers = board.allied_blockers_in_lane(attacker_slot)
@@ -176,7 +186,7 @@ func get_action_cost(attacker: Card, target: Card) -> int:
 		# Overpower rule: if same type, cost is 1 instead of 2
 		if attacker.card_ability == "Overpower" and attacker_type == target_type:
 			return 1
-		if target.card_ability == "Bulwark" and cost:
+		if target.bulwarked and cost:
 			return 3
 		return cost
 	
