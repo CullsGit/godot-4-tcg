@@ -184,7 +184,7 @@ func get_action_cost(attacker: Card, target: Card) -> int:
 		var type_rules = COMBAT_RULES[attacker_type]
 		var cost = type_rules.action_cost.get(target_type, 2)
 		# Overpower rule: if same type, cost is 1 instead of 2
-		if attacker.card_ability == "Overpower" and attacker_type == target_type:
+		if attacker.card_ability == "Overpower" and attacker_type == target_type and !target.bulwarked:
 			return 1
 		if target.bulwarked and cost:
 			return 3

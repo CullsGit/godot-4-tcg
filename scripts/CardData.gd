@@ -103,12 +103,12 @@ var all_cards := [
 		#"image_path": "res://assets/cards/Vaeri.png",
 		#"ability": "Overstrike",
 	#},
-			#{
-		#"name": "Vorn",
-		#"type": "Aura",
-		#"image_path": "res://assets/cards/Vorn.png",
-		#"ability": "Overpower",
-	#},
+			{
+		"name": "Vorn",
+		"type": "Aura",
+		"image_path": "res://assets/cards/Vorn.png",
+		"ability": "Overpower",
+	},
 			#{
 		#"name": "Zoas",
 		#"type": "Fury",
