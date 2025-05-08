@@ -14,8 +14,6 @@ func _ready():
 		if child is Control:
 			slots.append(child)
 
-
-@warning_ignore("INTEGER_DIVISION")
 func move_card(current_slot, direction_string):
 	var slot_index = slots.find(current_slot)
 	if slot_index == -1:

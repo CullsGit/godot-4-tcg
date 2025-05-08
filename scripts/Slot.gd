@@ -31,7 +31,6 @@ func _on_gui_input(event):
 			board.move_card(current_slot, get_slot_direction(current_slot, self))
 
 func place_card(card):
-	var board = get_parent().get_parent()
 	var game_manager = %GameManager
 	# Remove the card from the previous parent safely
 	if card.get_parent():
