@@ -9,9 +9,12 @@ var card_data: Dictionary
 var is_selected = false  # Track selection state
 var is_activated = true
 var bulwarked = false
+var shrouding = false
+var is_shrouded = false
 
 signal card_selected(card)  # Signal when card is selected
 signal use_bulwark_ability(card)
+signal use_shroud_ability(card)
 var tween: Tween
 
 func _ready():
@@ -56,10 +59,23 @@ func _gui_input(event):
 			card_selected.emit(self)
 		elif event.button_index == MOUSE_BUTTON_RIGHT and is_activated and card_ability == 'Bulwark':
 			use_bulwark_ability.emit(self)
+		elif event.button_index == MOUSE_BUTTON_RIGHT and is_activated and card_ability == 'Shroud':
+			use_shroud_ability.emit(self)
 
 func set_activated(value: bool):
 	is_activated = value
 	update_highlight()
+
+func toggle_shrouded():
+	is_shrouded = !is_shrouded
+
+	var texture_rect = $TextureRect
+	var t = create_tween()
+	
+	if is_shrouded:
+		t.tween_property(texture_rect, "self_modulate", Color('black'), 0.15).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+	else:
+		t.tween_property(texture_rect, "self_modulate", Color(1, 1, 1, 1), 0.15).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 
 func toggle_selection():
 	is_selected = !is_selected  # Toggle selection state
@@ -78,6 +94,18 @@ func toggle_bulwarked():
 		t.tween_property(texture_rect, "self_modulate", Color(1, 1, 1, 1), 0.15).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 		t.tween_property(texture_rect, "scale", Vector2(1, 1), 0.15).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 
+func toggle_shrouding():
+	var texture_rect = $TextureRect
+
+	shrouding = !shrouding
+	var t = create_tween()
+	
+	if shrouding:
+		t.tween_property(texture_rect, "self_modulate", Color(1, 0, 1, 1), 0.15).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+		t.tween_property(texture_rect, "scale", Vector2(1.14, 1.14), 0.15).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+	else:
+		t.tween_property(texture_rect, "self_modulate", Color(1, 1, 1, 1), 0.15).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+		t.tween_property(texture_rect, "scale", Vector2(1, 1), 0.15).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 
 func update_highlight():
 	var texture_rect = $TextureRect

@@ -20,7 +20,7 @@ func move_card(current_slot, direction_string):
 		return
 
 	var moving_card = current_slot.placed_card
-	if moving_card == null or moving_card.bulwarked:
+	if moving_card == null or moving_card.bulwarked or moving_card.shrouding:
 		return
 
 	var direction_map = get_direction_map(moving_card)

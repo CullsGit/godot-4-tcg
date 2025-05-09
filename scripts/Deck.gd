@@ -18,12 +18,13 @@ func generate_deck():
 		var cards_of_type = CardData.get_cards_by_type(type)
 		cards_of_type.shuffle()
 
-		for i in range(5):  # Adjust the number of each type
+		for i in range(6):  # Adjust the number of each type
 			var card_data = cards_of_type[i % cards_of_type.size()]
 			var card = card_scene.instantiate()
 			card.setup(card_data)  # New setup method in Card.gd
 			card.card_selected.connect(%GameManager.select_card)
 			card.use_bulwark_ability.connect(%GameManager.bulwarked)
+			card.use_shroud_ability.connect(%GameManager.shrouding)
 			deck.append(card)
 
 func shuffle_deck():

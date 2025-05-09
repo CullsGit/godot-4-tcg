@@ -11,6 +11,7 @@ extends Node
 var selected_hand_card: Card = null
 var selected_board_card: Card = null
 var current_player = 1
+var cards_shrouding = []
 
 
 const COMBAT_RULES = {
@@ -65,7 +66,7 @@ func select_card(card: Card):
 
 	# Handle selecting a card from the board
 	if parent.is_in_group("BoardSlot"):
-		if not card.is_activated:
+		if not card.is_activated or card.is_shrouded:
 			return 
 		var card_board = parent.get_parent().get_parent()
 		if card_board != current_board:  # This is opponent's card
@@ -90,8 +91,10 @@ func select_card(card: Card):
 			card.toggle_selection()
 			var current_slot = card.get_parent()
 			var valid_slots = current_board.get_valid_movement_slots(current_slot, card)
-			if card.is_activated and !card.bulwarked:
+			if card.is_activated and !card.bulwarked and !card.shrouding:
 				current_board.highlight_slots(valid_slots)
+			else:
+				current_board.clear_all_slot_highlights()
 
 func deselect_all_cards():
 	var current_board = get_current_board()
@@ -113,6 +116,18 @@ func bulwarked(card):
 		deselect_all_cards()
 		action_manager.use_action()
 
+func shrouding(card):
+	if selected_hand_card:
+		return
+	elif card == selected_board_card:
+		card.toggle_shrouding()
+		if card in cards_shrouding:
+			cards_shrouding.erase(card)
+		else:
+			cards_shrouding.append(card)
+		deselect_all_cards()
+		action_manager.use_action()
+
 func can_attack(attacker: Card, target: Card) -> bool:
 	var board = get_current_board()
 	var attacker_slot = attacker.get_parent()
@@ -120,7 +135,7 @@ func can_attack(attacker: Card, target: Card) -> bool:
 	if not attacker_slot:
 		return false
 
-	if attacker.bulwarked:
+	if attacker.bulwarked or attacker.shrouding:
 		return false
 
 	var blockers = board.allied_blockers_in_lane(attacker_slot)
@@ -210,6 +225,10 @@ func switch_turns():
 	# Switch turns
 	current_player = 2 if current_player == 1 else 1
 	action_manager.reset_actions()
+	var activated_board = get_current_board()
+	for slot in activated_board.slots:
+		if slot and slot.placed_card and slot.placed_card.is_shrouded:
+			slot.placed_card.toggle_shrouded()
 	update_board_interactivity()
 	update_hand_interactivity()  # Update the active hand
 	print("Switched to Player %d" % current_player)

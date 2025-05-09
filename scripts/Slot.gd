@@ -10,17 +10,16 @@ func is_empty():
 	return placed_card == null
 
 func _on_gui_input(event):
-	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		var game_manager = %GameManager
-		var current_board = game_manager.get_current_board()
-		var board = self.get_parent().get_parent()
+	var game_manager = %GameManager
+	var current_board = game_manager.get_current_board()
+	var board = self.get_parent().get_parent()
+	var selected_hand_card = game_manager.selected_hand_card
+	var selected_board_card = game_manager.selected_board_card
 
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:	
 		# Ensure the slot belongs to the current board
 		if board.get_instance_id() != current_board.get_instance_id():
 			return
-			
-		var selected_hand_card = game_manager.selected_hand_card
-		var selected_board_card = game_manager.selected_board_card
 
 		if is_empty() and selected_hand_card:
 			selected_hand_card.get_parent().remove_card(selected_hand_card)
@@ -30,14 +29,25 @@ func _on_gui_input(event):
 			var current_slot = selected_board_card.get_parent()
 			board.move_card(current_slot, get_slot_direction(current_slot, self))
 
-func place_card(card):
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_RIGHT and game_manager.cards_shrouding.size() > 0:
+			if is_empty() and selected_hand_card:
+				selected_hand_card.get_parent().remove_card(selected_hand_card)
+				game_manager.selected_hand_card = null  # Clear hand selection
+				place_card(selected_hand_card, true)
+
+
+
+func place_card(card, shroud := false):
 	var game_manager = %GameManager
 	# Remove the card from the previous parent safely
 	if card.get_parent():
 		card.get_parent().remove_child(card)
 
 	add_child(card)
-	card.set_activated(false)
+	if shroud:
+		card.toggle_shrouded()
+	else:
+		card.set_activated(false)
 	card.position = Vector2.ZERO
 	placed_card = card
 	# Use an action
