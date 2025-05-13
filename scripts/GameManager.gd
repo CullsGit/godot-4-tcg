@@ -11,7 +11,10 @@ extends Node
 var selected_hand_card: Card = null
 var selected_board_card: Card = null
 var current_player = 1
-var cards_shrouding = []
+var cards_shrouding := {
+	1: [],  # Player 1’s shrouded cards
+	2: []   # Player 2’s shrouded cards
+}
 
 
 const COMBAT_RULES = {
@@ -116,15 +119,24 @@ func bulwarked(card):
 		deselect_all_cards()
 		action_manager.use_action()
 
-func shrouding(card):
+func shrouding(card, opponent = false):
+	var opposing_player = 3 - current_player
 	if selected_hand_card:
 		return
-	elif card == selected_board_card:
+	
+	if opponent:
+		if card in cards_shrouding[opposing_player]:
+			cards_shrouding[opposing_player].erase(card)
+			return
+
+	var shrouding_list = cards_shrouding[current_player]
+
+	if card == selected_board_card:
 		card.toggle_shrouding()
-		if card in cards_shrouding:
-			cards_shrouding.erase(card)
+		if card in shrouding_list:
+			shrouding_list.erase(card)
 		else:
-			cards_shrouding.append(card)
+			shrouding_list.append(card)
 		deselect_all_cards()
 		action_manager.use_action()
 
@@ -184,6 +196,8 @@ func attack_card(attacker: Card, target: Card):
 
 	if was_selected:
 		attacker.toggle_selection()
+	if target.shrouding:
+		shrouding(target, true)
 	if selected_board_card == attacker:
 		selected_board_card = null
 		deselect_all_cards()
