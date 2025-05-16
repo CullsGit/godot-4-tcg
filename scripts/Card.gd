@@ -13,8 +13,8 @@ var shrouding = false
 var is_shrouded = false
 
 signal card_selected(card)  # Signal when card is selected
-signal use_bulwark_ability(card)
-signal use_shroud_ability(card)
+signal used_bulwark_ability(card)
+signal used_shroud_ability(card)
 var tween: Tween
 
 func _ready():
@@ -22,7 +22,6 @@ func _ready():
 	update_highlight()
 	mouse_entered.connect(_on_mouse_entered)
 	mouse_exited.connect(_on_mouse_exited)
-
 
 func setup(data: Dictionary):
 	card_data = data
@@ -58,9 +57,9 @@ func _gui_input(event):
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			card_selected.emit(self)
 		elif event.button_index == MOUSE_BUTTON_RIGHT and is_activated and card_ability == 'Bulwark':
-			use_bulwark_ability.emit(self)
+			used_bulwark_ability.emit(self)
 		elif event.button_index == MOUSE_BUTTON_RIGHT and is_activated and card_ability == 'Shroud':
-			use_shroud_ability.emit(self)
+			used_shroud_ability.emit(self)
 
 func set_activated(value: bool):
 	is_activated = value
