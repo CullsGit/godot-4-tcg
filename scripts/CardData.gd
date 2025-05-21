@@ -61,12 +61,12 @@ var all_cards := [
 		#"image_path": "res://assets/cards/Sku.png",
 		#"ability": "Bulwark",
 	#},
-		#{
-		#"name": "Skyace",
-		#"type": "Void",
-		#"image_path": "res://assets/cards/Skyace.png",
-		#"ability": "Bulwark",
-	#},
+		{
+		"name": "Skyace",
+		"type": "Void",
+		"image_path": "res://assets/cards/Skyace.png",
+		"ability": "Bulwark",
+	},
 		#{
 		#"name": "Taeg",
 		#"type": "Fury",

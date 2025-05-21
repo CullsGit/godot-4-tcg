@@ -15,7 +15,10 @@ var is_shrouded = false
 signal card_selected(card)  # Signal when card is selected
 signal used_bulwark_ability(card)
 signal used_shroud_ability(card)
-var tween: Tween
+var hover_tween: Tween
+var bulwarked_tween: Tween
+var shrouding_tween: Tween
+var shrouded_tween: Tween
 
 func _ready():
 	update_visual()
@@ -27,7 +30,11 @@ func setup(data: Dictionary):
 	card_data = data
 	card_type = data["type"]
 	card_ability = data["ability"]
-	card_asset = load(data["image_path"])
+	
+	var img_path = data.get("image_path", '')
+	if img_path != '' and ResourceLoader.exists(img_path):
+		card_asset = load(data["image_path"])
+
 	call_deferred("_apply_card_image")
 
 func _apply_card_image():
@@ -38,14 +45,18 @@ func _apply_card_image():
 		push_error("TextureRect not found in Card scene!")
 
 func _on_mouse_entered():
-	reset_tween()
-	tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
-	tween.tween_property(self, "scale", Vector2(1.1, 1.1), 0.4)
+	if hover_tween:
+		hover_tween.kill()
+	hover_tween = create_tween()
+	hover_tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
+	hover_tween.tween_property(self, "scale", Vector2(1.1, 1.1), 0.4)
 
 func _on_mouse_exited():
-	reset_tween()
-	tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
-	tween.tween_property(self, "scale", Vector2.ONE, 0.4)
+	if hover_tween:
+		hover_tween.kill()
+	hover_tween = create_tween()
+	hover_tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
+	hover_tween.tween_property(self, "scale", Vector2.ONE, 0.4)
 
 func update_visual():
 	var texture_rect = $TextureRect
@@ -67,14 +78,14 @@ func set_activated(value: bool):
 
 func toggle_shrouded():
 	is_shrouded = !is_shrouded
-
+	
 	var texture_rect = $TextureRect
-	var t = create_tween()
+	shrouded_tween = create_tween()
 	
 	if is_shrouded:
-		t.tween_property(texture_rect, "self_modulate", Color('black'), 0.15).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+		shrouded_tween.tween_property(texture_rect, "self_modulate", Color('black'), 0.15).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 	else:
-		t.tween_property(texture_rect, "self_modulate", Color(1, 1, 1, 1), 0.15).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+		shrouded_tween.tween_property(texture_rect, "self_modulate", Color(1, 1, 1, 1), 0.15).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 
 func toggle_selection():
 	is_selected = !is_selected  # Toggle selection state
@@ -84,27 +95,27 @@ func toggle_bulwarked():
 	var texture_rect = $TextureRect
 
 	bulwarked = !bulwarked
-	var t = create_tween()
+	bulwarked_tween = create_tween()
 	
 	if bulwarked:
-		t.tween_property(texture_rect, "self_modulate", Color(1, 0, 0, 1), 0.15).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
-		t.tween_property(texture_rect, "scale", Vector2(1.14, 1.14), 0.15).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+		bulwarked_tween.tween_property(texture_rect, "self_modulate", Color(1, 0, 0, 1), 0.15).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+		bulwarked_tween.tween_property(texture_rect, "scale", Vector2(1.14, 1.14), 0.15).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 	else:
-		t.tween_property(texture_rect, "self_modulate", Color(1, 1, 1, 1), 0.15).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
-		t.tween_property(texture_rect, "scale", Vector2(1, 1), 0.15).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+		bulwarked_tween.tween_property(texture_rect, "self_modulate", Color(1, 1, 1, 1), 0.15).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+		bulwarked_tween.tween_property(texture_rect, "scale", Vector2(1, 1), 0.15).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 
 func toggle_shrouding():
 	var texture_rect = $TextureRect
 
 	shrouding = !shrouding
-	var t = create_tween()
+	shrouding_tween = create_tween()
 	
 	if shrouding:
-		t.tween_property(texture_rect, "self_modulate", Color(1, 0, 1, 1), 0.15).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
-		t.tween_property(texture_rect, "scale", Vector2(1.14, 1.14), 0.15).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+		shrouding_tween.tween_property(texture_rect, "self_modulate", Color(1, 0, 1, 1), 0.15).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+		shrouding_tween.tween_property(texture_rect, "scale", Vector2(1.14, 1.14), 0.15).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 	else:
-		t.tween_property(texture_rect, "self_modulate", Color(1, 1, 1, 1), 0.15).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
-		t.tween_property(texture_rect, "scale", Vector2(1, 1), 0.15).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+		shrouding_tween.tween_property(texture_rect, "self_modulate", Color(1, 1, 1, 1), 0.15).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+		shrouding_tween.tween_property(texture_rect, "scale", Vector2(1, 1), 0.15).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 
 func update_highlight():
 	var texture_rect = $TextureRect
@@ -115,8 +126,3 @@ func update_highlight():
 		texture_rect.modulate = Color(1.5, 1.5, 1.5, 1)  # Bright glow
 	else:
 		texture_rect.modulate = Color(1, 1, 1, 1)  # Normal
-
-func reset_tween():
-	if tween:
-		tween.kill()
-	tween = create_tween()
