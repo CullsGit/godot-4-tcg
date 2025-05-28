@@ -207,6 +207,7 @@ func attack_card(attacker: Card, target: Card):
 		attack_player.play("attack")
 		if target.hover_tween:
 			target.hover_tween.kill()
+		defeat_player.stop()
 		defeat_player.play("defeat")
 		await attack_player.animation_finished  # Wait for the animation to complete
 		check_opponent_defeated(opponent_player)
