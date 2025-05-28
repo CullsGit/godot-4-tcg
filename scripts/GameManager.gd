@@ -8,6 +8,7 @@ extends Node
 @onready var deck2: Control = board2.get_node("Deck")
 @export var action_manager: Node
 
+
 var selected_hand_card: Card = null
 var selected_board_card: Card = null
 var current_player = 1
@@ -191,8 +192,9 @@ func attack_card(attacker: Card, target: Card):
 	var required_actions = get_action_cost(attacker, target)
 	var was_selected = attacker.is_selected
 	var opponent_player = 2 if current_player == 1 else 1
+	var attack_player = attacker.get_node("CardAnimation")
+	var defeat_player = target.get_node("CardAnimation")
 
-	target.get_parent().remove_card()
 
 	if was_selected:
 		attacker.toggle_selection()
@@ -202,8 +204,14 @@ func attack_card(attacker: Card, target: Card):
 		selected_board_card = null
 		deselect_all_cards()
 	for i in range(required_actions):
+		attack_player.play("attack")
+		if target.hover_tween:
+			target.hover_tween.kill()
+		defeat_player.play("defeat")
+		await attack_player.animation_finished  # Wait for the animation to complete
 		check_opponent_defeated(opponent_player)
 		action_manager.use_action()  # This may trigger turn switch
+	target.get_parent().remove_card()
 
 func get_action_cost(attacker: Card, target: Card) -> int:
 	var attacker_type = attacker.card_type
