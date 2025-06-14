@@ -9,9 +9,9 @@ signal actions_updated(current_actions)
 func _ready():
 	actions_updated.emit(current_actions)
 
-func use_action() -> void:
-	if current_actions > 0:
-		current_actions -= 1
+func use_action(required_actions = 1) -> void:
+	if current_actions >= required_actions:
+		current_actions -= required_actions
 		actions_updated.emit(current_actions)
 	else:
 		print("No actions left!")

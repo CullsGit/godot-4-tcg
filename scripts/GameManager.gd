@@ -210,9 +210,9 @@ func attack_card(attacker: Card, target: Card):
 		defeat_player.stop()
 		defeat_player.play("defeat")
 		await attack_player.animation_finished  # Wait for the animation to complete
-		check_opponent_defeated(opponent_player)
-		action_manager.use_action()  # This may trigger turn switch
 	target.get_parent().remove_card()
+	check_opponent_defeated(opponent_player)
+	action_manager.use_action(required_actions)
 
 func get_action_cost(attacker: Card, target: Card) -> int:
 	var attacker_type = attacker.card_type
@@ -297,6 +297,7 @@ func check_opponent_defeated(opponent_player: int):
 		if slot.placed_card:
 			has_board_cards = true
 			break
+
 	
 	# Check hand cards
 	var has_hand_cards = opponent_hand.get_child_count() > 0
