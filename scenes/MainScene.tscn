@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://btxsmm5hfyv5e"]
+[gd_scene load_steps=14 format=3 uid="uid://btxsmm5hfyv5e"]
 
 [ext_resource type="Script" uid="uid://ckfm8ueliwh7f" path="res://scripts/ActionManager.gd" id="1_xsjp7"]
 [ext_resource type="Script" uid="uid://bgkutd45f8w1x" path="res://scripts/ActionLabel.gd" id="2_s7chb"]
 [ext_resource type="Script" uid="uid://bffcsx8vkem4y" path="res://scripts/GameManager.gd" id="3_wec0a"]
+[ext_resource type="PackedScene" uid="uid://bpw2n0vejh6hs" path="res://scenes/ui/victory_screen.tscn" id="4_o3jky"]
 [ext_resource type="Script" uid="uid://cdyqmy2bgj6mk" path="res://scripts/Board.gd" id="4_ysr74"]
 [ext_resource type="PackedScene" uid="uid://bc8ob71spb8ro" path="res://scenes/Slot.tscn" id="5_jv4da"]
 [ext_resource type="PackedScene" uid="uid://dgoplkvhg560w" path="res://scenes/Card.tscn" id="6_0bg1w"]
@@ -11,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://dmgid6lhxy4e8" path="res://assets/woodland.png" id="9_uqq3h"]
 [ext_resource type="Texture2D" uid="uid://da53hl1fjvw5j" path="res://assets/back.png" id="9_xcdc6"]
 [ext_resource type="Script" uid="uid://bbovgl2j1xts" path="res://scripts/CardData.gd" id="11_x1wif"]
+[ext_resource type="Script" uid="uid://cry0hd5x7ros8" path="res://scenes/restart_button.gd" id="13_kp0ql"]
 
 [node name="MainScene" type="Node2D"]
 
@@ -31,6 +33,7 @@ script = ExtResource("2_s7chb")
 unique_name_in_owner = true
 script = ExtResource("3_wec0a")
 action_manager = NodePath("../ActionManager")
+victory_screen_scene = ExtResource("4_o3jky")
 
 [node name="Background" type="Sprite2D" parent="."]
 position = Vector2(960, 540)
@@ -295,6 +298,17 @@ metadata/_edit_use_anchors_ = true
 
 [node name="CardData" type="Node" parent="."]
 script = ExtResource("11_x1wif")
+
+[node name="RestartButton" type="Button" parent="."]
+unique_name_in_owner = true
+offset_left = 1773.0
+offset_top = 26.0
+offset_right = 1893.0
+offset_bottom = 124.0
+theme_override_font_sizes/font_size = 32
+text = "Restart"
+vertical_icon_alignment = 2
+script = ExtResource("13_kp0ql")
 
 [connection signal="actions_updated" from="ActionManager" to="ActionManager/ActionLabel" method="_on_action_manager_actions_updated"]
 [connection signal="gui_input" from="BoardContainer/Board1/Deck/DeckVisual" to="BoardContainer/Board1/Deck" method="_on_deck_visual_gui_input"]

@@ -1,9 +1,10 @@
 extends CanvasLayer
 
+var winner: int
 
 func _ready():
 	get_tree().paused = true
-	%PlayerLabel.text = 'Player 1' + 'Won!'
+	%PlayerLabel.text = "Player %s Wins" % str(winner)
 	%RestartButton.pressed.connect(on_restart_button_pressed)
 	%QuitButton.pressed.connect(on_quit_button_pressed)
 

@@ -8,6 +8,7 @@ extends Node
 @onready var deck2: Control = board2.get_node("Deck")
 @export var action_manager: Node
 
+@export var victory_screen_scene: PackedScene
 
 var selected_hand_card: Card = null
 var selected_board_card: Card = null
@@ -297,7 +298,6 @@ func check_opponent_defeated(opponent_player: int):
 		if slot.placed_card:
 			has_board_cards = true
 			break
-
 	
 	# Check hand cards
 	var has_hand_cards = opponent_hand.get_child_count() > 0
@@ -307,6 +307,9 @@ func check_opponent_defeated(opponent_player: int):
 	
 	# If all empty, player wins
 	if not has_board_cards and not has_hand_cards and not has_deck_cards:
+		var victory_screen_instance = victory_screen_scene.instantiate()
+		victory_screen_instance.winner = current_player
+		add_child(victory_screen_instance)
 		print(current_player, " WINS!")
 
 func update_board_view():
