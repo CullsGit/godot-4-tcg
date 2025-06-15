@@ -18,7 +18,7 @@ func generate_deck():
 		var cards_of_type = CardData.get_cards_by_type(type)
 		cards_of_type.shuffle()
 
-		for i in range(1):  # Adjust the number of each type
+		for i in range(6):  # Adjust the number of each type
 			var card_data = cards_of_type[i % cards_of_type.size()]
 			var card = card_scene.instantiate()
 			card.setup(card_data)  # New setup method in Card.gd
