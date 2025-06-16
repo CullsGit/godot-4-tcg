@@ -10,7 +10,7 @@
 [ext_resource type="Script" uid="uid://dugi8w68yiesd" path="res://scripts/Hand.gd" id="7_jx55p"]
 [ext_resource type="Script" uid="uid://b47njcwhankce" path="res://scripts/Deck.gd" id="8_m4jgh"]
 [ext_resource type="Texture2D" uid="uid://dmgid6lhxy4e8" path="res://assets/woodland.png" id="9_uqq3h"]
-[ext_resource type="Texture2D" uid="uid://da53hl1fjvw5j" path="res://assets/back.png" id="9_xcdc6"]
+[ext_resource type="Texture2D" uid="uid://bv2h3dqgyiuac" path="res://assets/back2.jpeg" id="11_08o8g"]
 [ext_resource type="Script" uid="uid://bbovgl2j1xts" path="res://scripts/CardData.gd" id="11_x1wif"]
 [ext_resource type="Script" uid="uid://cry0hd5x7ros8" path="res://scenes/restart_button.gd" id="13_kp0ql"]
 
@@ -160,7 +160,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("9_xcdc6")
+texture = ExtResource("11_08o8g")
 expand_mode = 1
 metadata/_edit_use_anchors_ = true
 
@@ -276,7 +276,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("9_xcdc6")
+texture = ExtResource("11_08o8g")
 expand_mode = 1
 metadata/_edit_use_anchors_ = true
 
