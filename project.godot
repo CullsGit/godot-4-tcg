@@ -34,6 +34,10 @@ window/stretch/mode="viewport"
 
 enabled=PackedStringArray("res://addons/gut/plugin.cfg")
 
+[gui]
+
+theme/custom="uid://chxw5ph8knu0x"
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
