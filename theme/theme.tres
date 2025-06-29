@@ -1,7 +1,34 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://chxw5ph8knu0x"]
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://chxw5ph8knu0x"]
 
+[ext_resource type="Texture2D" uid="uid://cy3i1484bq1wn" path="res://theme/banner_hanging.png" id="1_4yjuo"]
 [ext_resource type="FontFile" uid="uid://bwt7wsqvwec36" path="res://theme/KarenFat.ttf" id="1_8ab6e"]
+[ext_resource type="Texture2D" uid="uid://q8eyyrd6wx74" path="res://theme/panel_brown_damaged.png" id="1_nrt0f"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gco77"]
+texture = ExtResource("1_4yjuo")
+texture_margin_left = 24.0
+texture_margin_top = 24.0
+texture_margin_right = 24.0
+texture_margin_bottom = 20.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4yjuo"]
+texture = ExtResource("1_nrt0f")
+texture_margin_left = 10.0
+texture_margin_top = 10.0
+texture_margin_right = 10.0
+texture_margin_bottom = 10.0
+region_rect = Rect2(0, 0, 64, 64)
 
 [resource]
 default_font = ExtResource("1_8ab6e")
 default_font_size = 16
+Label/colors/font_color = Color(1, 1, 1, 1)
+Label/colors/font_outline_color = Color(0, 0, 0, 1)
+Label/colors/font_shadow_color = Color(0, 0, 0, 0)
+Label/constants/line_spacing = 3
+Label/constants/outline_size = 0
+Label/constants/shadow_offset_x = 1
+Label/constants/shadow_offset_y = 1
+Label/constants/shadow_outline_size = 1
+Label/styles/normal = SubResource("StyleBoxTexture_gco77")
+PanelContainer/styles/panel = SubResource("StyleBoxTexture_4yjuo")
