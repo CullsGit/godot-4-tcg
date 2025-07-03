@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bpw2n0vejh6hs" path="res://scenes/ui/victory_screen.tscn" id="4_o3jky"]
 [ext_resource type="Script" uid="uid://cdyqmy2bgj6mk" path="res://scripts/Board.gd" id="4_ysr74"]
 [ext_resource type="PackedScene" uid="uid://bc8ob71spb8ro" path="res://scenes/Slot.tscn" id="5_jv4da"]
-[ext_resource type="Texture2D" uid="uid://hqq4f0ruvwml" path="res://assets/medieval_wallpaper_1920x1080_adjusted.png" id="5_kp0ql"]
+[ext_resource type="Texture2D" uid="uid://bw7ypvg8s7f7a" path="res://assets/background.png" id="5_kp0ql"]
 [ext_resource type="PackedScene" uid="uid://dgoplkvhg560w" path="res://scenes/Card.tscn" id="6_0bg1w"]
 [ext_resource type="Script" uid="uid://dugi8w68yiesd" path="res://scripts/Hand.gd" id="7_jx55p"]
 [ext_resource type="Script" uid="uid://b47njcwhankce" path="res://scripts/Deck.gd" id="8_m4jgh"]
@@ -40,6 +40,7 @@ victory_screen_scene = ExtResource("4_o3jky")
 
 [node name="Background" type="Sprite2D" parent="."]
 position = Vector2(960, 540)
+scale = Vector2(1.25, 1.05469)
 texture = ExtResource("5_kp0ql")
 
 [node name="BoardContainer" type="Control" parent="."]

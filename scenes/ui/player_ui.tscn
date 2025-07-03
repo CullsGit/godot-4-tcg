@@ -1,4 +1,14 @@
-[gd_scene format=3 uid="uid://yfxb01g4s38"]
+[gd_scene load_steps=3 format=3 uid="uid://buqc70wvsyly6"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_vu4vs"]
+load_path = "res://.godot/imported/panel_brown_damaged.png-9fe02550e49c5647a661e5b580821253.ctex"
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2sf84"]
+texture = SubResource("CompressedTexture2D_vu4vs")
+texture_margin_left = 10.0
+texture_margin_top = 10.0
+texture_margin_right = 10.0
+texture_margin_bottom = 10.0
 
 [node name="PlayerUi" type="CanvasLayer"]
 
@@ -16,6 +26,7 @@ grow_vertical = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="MarginContainer"]
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_2sf84")
 
 [node name="Panel" type="Panel" parent="MarginContainer/PanelContainer"]
 z_index = -1
