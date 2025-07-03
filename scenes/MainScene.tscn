@@ -1,6 +1,7 @@
-[gd_scene load_steps=14 format=3 uid="uid://btxsmm5hfyv5e"]
+[gd_scene load_steps=16 format=3 uid="uid://btxsmm5hfyv5e"]
 
 [ext_resource type="Script" uid="uid://ckfm8ueliwh7f" path="res://scripts/ActionManager.gd" id="1_xsjp7"]
+[ext_resource type="Texture2D" uid="uid://dep4505al0xl4" path="res://theme/panel-border-000.png" id="2_08o8g"]
 [ext_resource type="Script" uid="uid://bgkutd45f8w1x" path="res://scripts/ActionLabel.gd" id="2_s7chb"]
 [ext_resource type="Script" uid="uid://bffcsx8vkem4y" path="res://scripts/GameManager.gd" id="3_wec0a"]
 [ext_resource type="PackedScene" uid="uid://bpw2n0vejh6hs" path="res://scenes/ui/victory_screen.tscn" id="4_o3jky"]
@@ -14,6 +15,16 @@
 [ext_resource type="Script" uid="uid://bbovgl2j1xts" path="res://scripts/CardData.gd" id="11_x1wif"]
 [ext_resource type="Script" uid="uid://cry0hd5x7ros8" path="res://scenes/restart_button.gd" id="13_kp0ql"]
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0cxu4"]
+content_margin_left = 20.0
+content_margin_right = 20.0
+texture = ExtResource("2_08o8g")
+texture_margin_left = 10.0
+texture_margin_top = 10.0
+texture_margin_right = 10.0
+texture_margin_bottom = 10.0
+modulate_color = Color(0.68, 0.6596, 0.5984, 1)
+
 [node name="MainScene" type="Node2D"]
 
 [node name="ActionManager" type="Node" parent="."]
@@ -25,10 +36,12 @@ offset_left = 1288.0
 offset_top = 320.0
 offset_right = 1328.0
 offset_bottom = 389.0
-theme_override_colors/font_color = Color(0.552941, 0.85098, 0.372549, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.68, 0.6596, 0.5984, 1)
+theme_override_colors/font_outline_color = Color(0.2475, 0.25, 0.245, 1)
 theme_override_constants/outline_size = 15
+theme_override_constants/shadow_outline_size = 20
 theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxTexture_0cxu4")
 text = "Actions: 0"
 script = ExtResource("2_s7chb")
 
@@ -175,10 +188,8 @@ layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.172115
 anchor_top = -0.500001
-anchor_right = 1.19671
-anchor_bottom = 0.156976
-offset_right = -41.0
-offset_bottom = -30.0
+anchor_right = 0.860644
+anchor_bottom = -0.0174426
 theme_type_variation = &"HeaderLarge"
 theme_override_colors/font_color = Color(0.839216, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
