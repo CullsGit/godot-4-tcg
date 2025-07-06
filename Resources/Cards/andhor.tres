@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=2 format=3 uid="uid://c1d0wbdpd4lvr"]
+
+[ext_resource type="Script" uid="uid://2hfxvjucdyg5" path="res://Scripts/data/card_data.gd" id="1_nkys4"]
+
+[resource]
+script = ExtResource("1_nkys4")
+id = "andhor"
+name = "Andhor"
+type = "Void"
+ability = "Dash"
+texture_path = "res://Assets/game_cards/andhor.jpg"
+rarity = "Uncommon"
+metadata/_custom_type_script = "uid://2hfxvjucdyg5"

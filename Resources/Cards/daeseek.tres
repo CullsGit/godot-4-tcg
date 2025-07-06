@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=2 format=3 uid="uid://b3nhp0qjhp3tk"]
+
+[ext_resource type="Script" uid="uid://2hfxvjucdyg5" path="res://Scripts/data/card_data.gd" id="1_2gr6j"]
+
+[resource]
+script = ExtResource("1_2gr6j")
+id = "daeseek"
+name = "Daeseek"
+type = "Void"
+ability = "Strafe"
+texture_path = "res://Assets/game_cards/daeseek.jpg"
+rarity = "Common"
+metadata/_custom_type_script = "uid://2hfxvjucdyg5"

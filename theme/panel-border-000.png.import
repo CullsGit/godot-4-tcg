@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dep4505al0xl4"
-path="res://.godot/imported/panel-border-000.png-9c39c618ad8f78180eb52f7127ec3ec8.ctex"
+path="res://.godot/imported/panel-border-000.png-d9c2bf2b5e9ae5674b23f010ea01da24.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://theme/panel-border-000.png"
-dest_files=["res://.godot/imported/panel-border-000.png-9c39c618ad8f78180eb52f7127ec3ec8.ctex"]
+source_file="res://Theme/panel-border-000.png"
+dest_files=["res://.godot/imported/panel-border-000.png-d9c2bf2b5e9ae5674b23f010ea01da24.ctex"]
 
 [params]
 

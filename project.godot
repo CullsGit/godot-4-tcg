@@ -11,12 +11,15 @@ config_version=5
 [application]
 
 config/name="godot-tcg"
-run/main_scene="res://scenes/MainScene.tscn"
+run/main_scene="res://Scenes/MainScene.tscn"
 config/features=PackedStringArray("4.4", "Forward Plus")
 
 [autoload]
 
-CardData="*res://scripts/CardData.gd"
+CardDB="*res://Scripts/data/card_database.gd"
+TurnManager="*res://Scripts/managers/turn_manager.gd"
+MatchManager="*res://Scripts/managers/match_manager.gd"
+ActionManager="*res://Scripts/managers/action_manager.gd"
 
 [debug]
 
@@ -32,7 +35,7 @@ window/stretch/mode="viewport"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/gut/plugin.cfg")
+enabled=PackedStringArray()
 
 [gui]
 

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=2 format=3 uid="uid://cbw0wd1h6hlsd"]
+
+[ext_resource type="Script" uid="uid://2hfxvjucdyg5" path="res://Scripts/data/card_data.gd" id="1_kt001"]
+
+[resource]
+script = ExtResource("1_kt001")
+id = "tsuma"
+name = "Tsuma"
+type = "Aura"
+ability = "Dash"
+texture_path = "res://Assets/game_cards/tsuma.jpg"
+rarity = "Common"
+metadata/_custom_type_script = "uid://2hfxvjucdyg5"

@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://dgoplkvhg560w"]
 
-[ext_resource type="Script" uid="uid://bnw8urtadxkqg" path="res://scripts/Card.gd" id="1_ev0x0"]
+[ext_resource type="Script" uid="uid://bnw8urtadxkqg" path="res://Scripts/components/card.gd" id="1_ev0x0"]
 
 [sub_resource type="Animation" id="Animation_tgmmg"]
 length = 0.001

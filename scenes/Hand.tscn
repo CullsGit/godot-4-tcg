@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://dhwm0e6wct3dm"]
+
+[ext_resource type="Script" uid="uid://dugi8w68yiesd" path="res://Scripts/components/hand.gd" id="1_0xaq6"]
+
+[node name="Hand" type="HBoxContainer"]
+anchors_preset = -1
+anchor_left = 1.13169
+anchor_top = 0.667939
+anchor_right = 2.41975
+anchor_bottom = 0.996183
+script = ExtResource("1_0xaq6")
+metadata/_edit_use_anchors_ = true

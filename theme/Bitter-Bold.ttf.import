@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://q37igm1i3h3e"
-path="res://.godot/imported/Bitter-Bold.ttf-670a7da5393097e9682befe0f90b097b.fontdata"
+path="res://.godot/imported/Bitter-Bold.ttf-315e1f5b6d2cc837bae6e829bf5bd4cc.fontdata"
 
 [deps]
 
-source_file="res://theme/Bitter-Bold.ttf"
-dest_files=["res://.godot/imported/Bitter-Bold.ttf-670a7da5393097e9682befe0f90b097b.fontdata"]
+source_file="res://Theme/Bitter-Bold.ttf"
+dest_files=["res://.godot/imported/Bitter-Bold.ttf-315e1f5b6d2cc837bae6e829bf5bd4cc.fontdata"]
 
 [params]
 

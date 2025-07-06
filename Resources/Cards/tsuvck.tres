@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=2 format=3 uid="uid://d05b4w4wv2q2y"]
+
+[ext_resource type="Script" uid="uid://2hfxvjucdyg5" path="res://Scripts/data/card_data.gd" id="1_icmft"]
+
+[resource]
+script = ExtResource("1_icmft")
+id = "tsuvck"
+name = "Tsuvck"
+type = "Fury"
+ability = "Shroud"
+texture_path = "res://Assets/game_cards/tsuvck.jpg"
+rarity = "Common"
+metadata/_custom_type_script = "uid://2hfxvjucdyg5"

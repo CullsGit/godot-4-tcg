@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=2 format=3 uid="uid://b816bwsijg15m"]
+
+[ext_resource type="Script" uid="uid://2hfxvjucdyg5" path="res://Scripts/data/card_data.gd" id="1_07vtm"]
+
+[resource]
+script = ExtResource("1_07vtm")
+id = "tsula"
+name = "Tsula"
+type = "Void"
+ability = "Shroud"
+texture_path = "res://Assets/game_cards/tsula.jpg"
+rarity = "Uncommon"
+metadata/_custom_type_script = "uid://2hfxvjucdyg5"
