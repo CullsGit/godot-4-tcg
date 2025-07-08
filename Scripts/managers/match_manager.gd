@@ -23,7 +23,7 @@ func _on_turn_started(current_player) -> void:
 
 func _check_loss(current_player) -> Node:
 	# replace this stub with your real “no moves / deck empty” logic
-	if current_player._deck.size() == 0:
+	if current_player.deck.is_empty():
 		return current_player
 	return null
 

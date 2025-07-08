@@ -12,3 +12,9 @@ func start_turn() -> void:
 func next_turn() -> void:
 	current_player_index = (current_player_index + 1) % players.size()
 	start_turn()
+
+func get_current_player() -> Node:
+	return players[current_player_index]
+
+func get_current_opponent() -> Node:
+	return players[(current_player_index + 1) % players.size()]

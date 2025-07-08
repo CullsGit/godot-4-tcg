@@ -20,6 +20,8 @@ CardDB="*res://Scripts/data/card_database.gd"
 TurnManager="*res://Scripts/managers/turn_manager.gd"
 MatchManager="*res://Scripts/managers/match_manager.gd"
 ActionManager="*res://Scripts/managers/action_manager.gd"
+UIManager="*res://Scripts/managers/ui_manager.gd"
+BoardManager="*res://Scripts/managers/board_manager.gd"
 
 [debug]
 

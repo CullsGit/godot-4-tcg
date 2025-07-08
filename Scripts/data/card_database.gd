@@ -1,4 +1,3 @@
-# res://Scripts/data/card_database.gd
 extends Node
 
 var cards: Dictionary = {}
@@ -14,6 +13,6 @@ func _ready() -> void:
 func get_cards_by_type(type_filter: String) -> Array:
 	var matches: Array = []
 	for data in cards.values():
-		if data.card_type == type_filter:
+		if data.type == type_filter:
 			matches.append(data)
 	return matches
