@@ -1,50 +1,92 @@
 # Scripts/managers/attack_manager.gd
 extends Node
-class_name AttackManager
 
 signal card_defeated(defeated_card: Card)
 
-# RPS rules
-var _beats := {
-	"Rock":     "Scissors",
-	"Scissors": "Paper",
-	"Paper":    "Rock"
+# Your original RPS rules and costs
+const COMBAT_RULES := {
+	"Fury": {
+		"beats": "Aura",
+		"action_cost": { "Aura": 1, "Fury": 2 }
+	},
+	"Aura": {
+		"beats": "Void",
+		"action_cost": { "Void": 1, "Aura": 2 }
+	},
+	"Void": {
+		"beats": "Fury",
+		"action_cost": { "Fury": 1, "Void": 2 }
+	}
 }
 
-# 1) Delegate your existing can_attack check
-func can_attack(attacker: Card, target_slot: Node) -> bool:
-	return BoardManager.can_attack(attacker, target_slot)
+# No @onready board here—grab it inside can_attack()
 
-# 2) Actually resolve one attack
-func resolve_attack(attacker: Card, target_slot: Node) -> void:
-	var defender: Card = target_slot.get_node_or_null("Card") as Card
-	if defender == null or not can_attack(attacker, target_slot):
+# Note: ActionManager is an autoload, so we can call it directly
+func can_attack(attacker: Card, target: Card) -> bool:
+	var current_board = TurnManager.get_current_player().board
+	var attacker_slot = attacker.get_parent()
+	if attacker_slot == null:
+		return false
+	if attacker.bulwarked or attacker.shrouding:
+		return false
+
+	# Lane‐blocking logic
+	var blockers = current_board.allied_blockers_in_lane(attacker_slot)
+	var valid_targets: Array
+	if attacker.card_ability == "Overstrike":
+		match blockers:
+			2:
+				return false
+			1:
+				valid_targets = current_board.check_opponent_cards_in_range(attacker_slot)
+			0:
+				valid_targets = current_board.check_opponent_cards_in_range(attacker_slot, true)
+	else:
+		if blockers > 0:
+			return false
+		valid_targets = current_board.check_opponent_cards_in_range(attacker_slot)
+
+	if target not in valid_targets:
+		return false
+
+	# RPS defeat check
+	var atype = attacker.card_ability
+	var ttype = target.card_ability
+	if COMBAT_RULES[ttype]["beats"] == atype:
+		return false
+
+	# Action‐point check
+	var cost = get_action_cost(attacker, target)
+	if ActionManager.current_actions < cost:
+		return false
+
+	return true
+
+func get_action_cost(attacker: Card, target: Card) -> int:
+	var rules = COMBAT_RULES.get(attacker.card_ability)
+	var ttype = target.card_ability
+	if rules:
+		var cost = rules.action_cost.get(ttype, 2)
+		# Overpower tweak
+		if attacker.card_ability == "Overpower" and attacker.card_ability == ttype and not target.bulwarked:
+			cost = 1
+		# Bulwark penalty
+		if target.bulwarked:
+			cost = 3
+		return cost
+	return 2
+
+func resolve_attack(attacker: Card, target: Card) -> void:
+	if not can_attack(attacker, target):
 		return
 
-	emit_signal("pre_attack", attacker, defender)
+	var cost = get_action_cost(attacker, target)
+	# Spend the actions
+	ActionManager.use_action(cost)
 
-	# Determine outcome
-	var outcome: String
-	if _beats[attacker.card_ability] == defender.card_ability:
-		outcome = "attacker"
-	elif _beats[defender.card_ability] == attacker.card_ability:
-		outcome = "defender"
-	else:
-		outcome = "tie"
+	# (Optional) play animations here…
 
-	match outcome:
-		"attacker":
-			_remove_card(defender)
-			emit_signal("card_defeated", defender)
-		"defender":
-			_remove_card(attacker)
-			emit_signal("card_defeated", attacker)
-		"tie":
-			# No removals on tie; you can add effects here if desired
-
-	emit_signal("post_attack", attacker, defender, outcome)
-
-# 3) Helper to actually free the card node
-func _remove_card(card: Card) -> void:
-	card.get_parent().remove_child(card)
-	card.queue_free()
+	# Remove the defeated card
+	target.get_parent().remove_child(target)
+	target.queue_free()
+	emit_signal("card_defeated", target)

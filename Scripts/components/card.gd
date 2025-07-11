@@ -34,7 +34,7 @@ signal used_shroud_ability(card)
 # === Startup ===
 func _ready() -> void:
 	# 1) Fetch data from the singleton
-	var data = %CardDB.get_card_data(card_id)
+	var data = CardDB.get_card_data(card_id)
 	if data == null:
 		push_error("CardData not found for id '%s'" % card_id)
 		return

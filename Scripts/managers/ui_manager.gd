@@ -1,8 +1,14 @@
 extends Node
 
-var current_player : Player = null
-var selected_hand_card   : Card = null
-var selected_board_card  : Card = null
+var current_player       : Player = null
+var selected_hand_card   : Card   = null
+var selected_board_card  : Card   = null
+
+func _ready() -> void:
+	# Hook up slot clicks from every slot under each player’s board
+	for player in TurnManager.players:
+		for slot in player.board.get_children():
+			slot.slot_clicked.connect(_on_slot_clicked)
 
 func _on_turn_started(current_player):
 	current_player = current_player
@@ -14,28 +20,44 @@ func _on_match_ended(winner_id):
 	$UI/WinPopup.show("Player %d Wins!" % (winner_id + 1))
 
 func on_card_selected(card: Card) -> void:
-	if TurnManager.get_current_player() != card.get_owner():
+	# Only allow selection on your turn
+	if current_player == null or card.get_owner() != current_player:
 		return
-	var hand  = current_player.hand
-	var board = current_player.board
-	var parent = card.get_parent()
 
-	# First, clear any existing selection/highlights
+	# Clear previous selections/highlights
 	deselect_all_cards()
 	BoardManager.clear_all_slot_highlights()
-	# Now toggle the clicked card
+
+	# Toggle this card’s selection
 	card.toggle_selection()
 
-	# Track it
-	if parent == hand:
+	# Track which card is selected and highlight options
+	if card.get_parent() == current_player.hand:
 		selected_hand_card = card
-	elif parent == board:
+	elif card.get_parent() == current_player.board:
 		selected_board_card = card
-		var move_slots = BoardManager.get_valid_moves(card)
+		var move_slots   = BoardManager.get_valid_moves(card)
 		BoardManager.highlight_slots(move_slots, Color(0, 1, 0, 0.5))
-		# Highlight valid moves/attacks for this card
 		var attack_slots = BoardManager.get_valid_attacks(card)
 		BoardManager.highlight_slots(attack_slots, Color(1, 0, 0, 0.5))
+
+
+func _on_slot_clicked(slot: Slot) -> void:
+	# 1) Placing a hand card onto an empty slot
+	if selected_hand_card and slot.is_empty():
+		BoardManager.place_from_hand(selected_hand_card, slot)
+		return
+
+	# 2) Moving or attacking with a board card
+	if selected_board_card:
+		if slot.placed_card:
+			# Attack!
+			AttackManager.resolve_attack(selected_board_card, slot.placed_card)
+		else:
+			# Move
+			BoardManager.move_card(selected_board_card.get_parent(), slot)
+		return
+
 
 func deselect_all_cards() -> void:
 	if selected_hand_card:

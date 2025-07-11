@@ -1,5 +1,5 @@
-class_name Player
 extends Node2D
+class_name Player
 
 @export var controller: Node = null
 @onready var board = $Board
@@ -14,7 +14,7 @@ func _on_turn_started(current_player) -> void:
 			board.place_card(card, slot_idx)
 			emit_signal("card_played", card, slot_idx)
 		# end the AI’s turn
-		%TurnManager.next_turn()
+		TurnManager.next_turn()
 	# else: wait for human input…
 
 func play_card(slot_index):

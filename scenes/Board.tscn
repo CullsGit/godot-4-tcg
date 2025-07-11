@@ -1,8 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://bxb2hq0uvqof"]
+[gd_scene load_steps=2 format=3 uid="uid://bxb2hq0uvqof"]
 
-[ext_resource type="Script" uid="uid://cdyqmy2bgj6mk" path="res://Scripts/components/board.gd" id="1_xbakj"]
 [ext_resource type="PackedScene" uid="uid://bc8ob71spb8ro" path="res://Scenes/Slot.tscn" id="2_23sda"]
-[ext_resource type="PackedScene" uid="uid://dgoplkvhg560w" path="res://Scenes/Card.tscn" id="3_m454s"]
 
 [node name="Board" type="Control"]
 custom_minimum_size = Vector2(374, 524)
@@ -19,9 +17,6 @@ offset_bottom = -12.0
 grow_horizontal = 2
 grow_vertical = 0
 pivot_offset = Vector2(187, 524)
-script = ExtResource("1_xbakj")
-slot_scene = ExtResource("2_23sda")
-card_scene = ExtResource("3_m454s")
 
 [node name="Grid" type="GridContainer" parent="."]
 layout_mode = 1
@@ -36,44 +31,35 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Slot_0_0" parent="Grid" instance=ExtResource("2_23sda")]
 layout_mode = 2
-is_player1 = true
 
 [node name="Slot_0_1" parent="Grid" instance=ExtResource("2_23sda")]
 layout_mode = 2
 slot_index = 1
-is_player1 = true
 
 [node name="Slot_0_2" parent="Grid" instance=ExtResource("2_23sda")]
 layout_mode = 2
 slot_index = 2
-is_player1 = true
 
 [node name="Slot_1_0" parent="Grid" instance=ExtResource("2_23sda")]
 layout_mode = 2
 slot_index = 3
-is_player1 = true
 
 [node name="Slot_1_1" parent="Grid" instance=ExtResource("2_23sda")]
 layout_mode = 2
 slot_index = 4
-is_player1 = true
 
 [node name="Slot_1_2" parent="Grid" instance=ExtResource("2_23sda")]
 layout_mode = 2
 slot_index = 5
-is_player1 = true
 
 [node name="Slot_2_0" parent="Grid" instance=ExtResource("2_23sda")]
 layout_mode = 2
 slot_index = 6
-is_player1 = true
 
 [node name="Slot_2_1" parent="Grid" instance=ExtResource("2_23sda")]
 layout_mode = 2
 slot_index = 7
-is_player1 = true
 
 [node name="Slot_2_2" parent="Grid" instance=ExtResource("2_23sda")]
 layout_mode = 2
 slot_index = 8
-is_player1 = true

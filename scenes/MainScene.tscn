@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://btxsmm5hfyv5e"]
+[gd_scene load_steps=11 format=3 uid="uid://btxsmm5hfyv5e"]
 
 [ext_resource type="Script" uid="uid://cemd06beis04k" path="res://Scripts/managers/turn_manager.gd" id="1_4b75m"]
 [ext_resource type="Script" uid="uid://bffcsx8vkem4y" path="res://Scripts/managers/game_manager.gd" id="3_wec0a"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://b8kn7ik2djkyi" path="res://Scripts/managers/attack_manager.gd" id="6_0iob3"]
 [ext_resource type="PackedScene" uid="uid://ccub1rnkww5vk" path="res://Scenes/Player.tscn" id="7_0iob3"]
 [ext_resource type="Script" uid="uid://c04vrbaaxfpef" path="res://Scripts/players/ai_controller.gd" id="8_f140w"]
+[ext_resource type="Script" uid="uid://ckfm8ueliwh7f" path="res://Scripts/managers/action_manager.gd" id="10_4b75m"]
 [ext_resource type="Script" uid="uid://dn0dpqxdawp37" path="res://Scripts/managers/match_manager.gd" id="11_8ju71"]
 
 [node name="MainScene" type="Node2D"]
@@ -22,10 +23,9 @@ unique_name_in_owner = true
 script = ExtResource("1_4b75m")
 players = [NodePath("../Player1"), NodePath("../Player2")]
 
-[node name="MatchManager" type="Node" parent="." node_paths=PackedStringArray("players")]
+[node name="MatchManager" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("11_8ju71")
-players = [NodePath("../Player1"), NodePath("../Player2")]
 
 [node name="BoardManager" type="Node" parent="."]
 unique_name_in_owner = true
@@ -56,9 +56,12 @@ controller = NodePath("AIController")
 [node name="AIController" type="Node" parent="Player2"]
 script = ExtResource("8_f140w")
 
+[node name="ActionManager" type="Node" parent="."]
+script = ExtResource("10_4b75m")
+
 [connection signal="turn_started" from="TurnManager" to="MatchManager" method="_on_turn_started"]
 [connection signal="turn_started" from="TurnManager" to="BoardManager" method="_on_turn_started"]
 [connection signal="turn_started" from="TurnManager" to="UIManager" method="_on_turn_started"]
 [connection signal="turn_started" from="TurnManager" to="Player1" method="_on_turn_started"]
 [connection signal="turn_started" from="TurnManager" to="Player2" method="_on_turn_started"]
-[connection signal="match_ended" from="MatchManager" to="UIManager" method="_on_match_ended"]
+[connection signal="card_defeated" from="AttackManager" to="MatchManager" method="_on_card_defeated"]
