@@ -1,9 +1,7 @@
-# Scripts/managers/attack_manager.gd
 extends Node
 
 signal card_defeated(defeated_card: Card)
 
-# Your original RPS rules and costs
 const COMBAT_RULES := {
 	"Fury": {
 		"beats": "Aura",
@@ -19,9 +17,7 @@ const COMBAT_RULES := {
 	}
 }
 
-# No @onready board here—grab it inside can_attack()
 
-# Note: ActionManager is an autoload, so we can call it directly
 func can_attack(attacker: Card, target: Card) -> bool:
 	var current_board = TurnManager.get_current_player().board
 	var attacker_slot = attacker.get_parent()
@@ -50,8 +46,8 @@ func can_attack(attacker: Card, target: Card) -> bool:
 		return false
 
 	# RPS defeat check
-	var atype = attacker.card_ability
-	var ttype = target.card_ability
+	var atype = attacker.card_type
+	var ttype = target.card_type
 	if COMBAT_RULES[ttype]["beats"] == atype:
 		return false
 
@@ -63,12 +59,12 @@ func can_attack(attacker: Card, target: Card) -> bool:
 	return true
 
 func get_action_cost(attacker: Card, target: Card) -> int:
-	var rules = COMBAT_RULES.get(attacker.card_ability)
-	var ttype = target.card_ability
+	var rules = COMBAT_RULES.get(attacker.card_type)
+	var ttype = target.card_type
 	if rules:
 		var cost = rules.action_cost.get(ttype, 2)
 		# Overpower tweak
-		if attacker.card_ability == "Overpower" and attacker.card_ability == ttype and not target.bulwarked:
+		if attacker.card_ability == "Overpower" and attacker.card_type == ttype and not target.bulwarked:
 			cost = 1
 		# Bulwark penalty
 		if target.bulwarked:

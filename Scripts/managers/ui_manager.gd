@@ -4,14 +4,18 @@ var current_player       : Player = null
 var selected_hand_card   : Card   = null
 var selected_board_card  : Card   = null
 
-func _ready() -> void:
-	# Hook up slot clicks from every slot under each player’s board
-	for player in TurnManager.players:
-		for slot in player.board.get_children():
-			slot.slot_clicked.connect(_on_slot_clicked)
 
-func _on_turn_started(current_player):
-	current_player = current_player
+func _ready() -> void:
+	await get_tree().process_frame
+
+	for slot in get_tree().get_nodes_in_group("BoardSlot"):
+		slot.slot_clicked.connect(_on_slot_clicked)
+
+	TurnManager.turn_started.connect(_on_turn_started)
+
+func _on_turn_started(new_current_player: Player) -> void:
+	current_player = new_current_player
+	print(current_player)
 	deselect_all_cards()
 	BoardManager.clear_all_slot_highlights()
 
@@ -20,8 +24,7 @@ func _on_match_ended(winner_id):
 	$UI/WinPopup.show("Player %d Wins!" % (winner_id + 1))
 
 func on_card_selected(card: Card) -> void:
-	# Only allow selection on your turn
-	if current_player == null or card.get_owner() != current_player:
+	if current_player == null or card.card_owner != current_player:
 		return
 
 	# Clear previous selections/highlights

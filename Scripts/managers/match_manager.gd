@@ -1,22 +1,18 @@
 extends Node
 
-# (retain whatever signals you need for match_ended)
 signal match_ended(winner_index: int)
 
-#func _ready() -> void:
-	# … your other wiring …
+func _ready() -> void:
+	AttackManager.card_defeated.connect(_on_card_defeated)
 
-	# Instead of checking on turn start, listen for defeated cards
-	# (Assumes you emit `card_defeated(defeated_card)` in your combat resolution)
-
-# This runs whenever a card dies
 func _on_card_defeated(defeated_card: Card) -> void:
-	var loser = defeated_card.get_owner()
+	var loser = defeated_card.card_owner
 	if _check_loss(loser):
-		# Whoever’s *not* the loser is the winner
-		var winner = TurnManager.players.find_all(lambda p: p != loser)[0]
-		var wi = TurnManager.players.find(winner)
-		emit_signal("match_ended", wi)
+		# Find loser’s index, then the other player is +1 mod 2
+		var idx = TurnManager.players.find(loser)
+		var winner_index = (idx + 1) % TurnManager.players.size()
+		emit_signal("match_ended", winner_index)
+
 
 # Returns true if the given player has *no* cards in hand, deck, or on their board
 func _check_loss(player: Node) -> bool:

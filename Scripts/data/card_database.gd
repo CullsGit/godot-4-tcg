@@ -10,9 +10,17 @@ func _ready() -> void:
 				var data = ResourceLoader.load("res://Resources/Cards/%s" % file)
 				cards[data.id] = data
 
+
 func get_cards_by_type(type_filter: String) -> Array:
 	var matches: Array = []
 	for data in cards.values():
 		if data.type == type_filter:
 			matches.append(data)
 	return matches
+
+
+func get_card_data(card_id: String) -> CardData:
+	if cards.has(card_id):
+		return cards[card_id]
+	push_error("CardDatabase: no CardData for id '%s'" % card_id)
+	return null

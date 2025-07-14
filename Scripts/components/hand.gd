@@ -3,10 +3,12 @@ extends HBoxContainer
 var hand_cards: Array = []
 const MAX_HAND_SIZE = 5
 
-func add_card(card: Card):
-	if hand_cards.size() < MAX_HAND_SIZE:
-		hand_cards.append(card)
-		add_child(card)  # Add visually
+func add_card(card: Card) -> bool:
+	if hand_cards.size() >= MAX_HAND_SIZE:
+		return false
+	hand_cards.append(card)
+	add_child(card)
+	return true
 
 func remove_card(card):
 	if card in hand_cards:
