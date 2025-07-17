@@ -15,7 +15,6 @@ func _ready() -> void:
 
 func _on_turn_started(new_current_player: Player) -> void:
 	current_player = new_current_player
-	print(current_player)
 	deselect_all_cards()
 	BoardManager.clear_all_slot_highlights()
 
@@ -26,18 +25,17 @@ func _on_match_ended(winner_id):
 func on_card_selected(card: Card) -> void:
 	if current_player == null or card.card_owner != current_player:
 		return
-
 	# Clear previous selections/highlights
 	deselect_all_cards()
 	BoardManager.clear_all_slot_highlights()
 
 	# Toggle this card’s selection
 	card.toggle_selection()
-
+	var parent = card.get_parent()
 	# Track which card is selected and highlight options
-	if card.get_parent() == current_player.hand:
+	if parent == current_player.hand:
 		selected_hand_card = card
-	elif card.get_parent() == current_player.board:
+	elif parent is Slot:
 		selected_board_card = card
 		var move_slots   = BoardManager.get_valid_moves(card)
 		BoardManager.highlight_slots(move_slots, Color(0, 1, 0, 0.5))
@@ -46,19 +44,26 @@ func on_card_selected(card: Card) -> void:
 
 
 func _on_slot_clicked(slot: Slot) -> void:
+	var opponent = TurnManager.get_current_opponent()
 	# 1) Placing a hand card onto an empty slot
-	if selected_hand_card and slot.is_empty():
-		BoardManager.place_from_hand(selected_hand_card, slot)
-		return
+	if selected_hand_card:
+		if slot.get_board() == current_player.board and slot.is_empty():
+			BoardManager.place_from_hand(selected_hand_card, slot)
 
-	# 2) Moving or attacking with a board card
 	if selected_board_card:
-		if slot.placed_card:
-			# Attack!
+		var from_slot = selected_board_card.get_parent()
+
+		# 2a) Move: empty slot on my board
+		if slot.get_board() == current_player.board and slot.is_empty():
+			BoardManager.move_card(from_slot, slot)
+			return
+
+		# 2b) Attack: non-empty slot on opponent’s board
+		if slot.get_board() == opponent.board and slot.placed_card:
 			AttackManager.resolve_attack(selected_board_card, slot.placed_card)
-		else:
-			# Move
-			BoardManager.move_card(selected_board_card.get_parent(), slot)
+			return
+
+		# Otherwise, ignore
 		return
 
 

@@ -2,6 +2,7 @@
 extends Node
 
 var current_player : Player = null
+var slots: Array[Slot] = []
 
 const ATTACKER_LANES := [
 	[0, 3, 6],
@@ -15,24 +16,17 @@ const TARGET_LANES := [
 	[0, 3, 6],
 ]
 
-const BOARD_WIDTH := 3  # fixed for 3×3
+const BOARD_WIDTH := 3
 
 func _ready() -> void:
 	TurnManager.turn_started.connect(_on_turn_started)
 
 func _on_turn_started(new_player: Player) -> void:
 	current_player = new_player
-	clear_all_slot_highlights()
-
-
-# Returns all slots belonging to the current player
-func get_slots() -> Array:
-	var slots := []
 	for slot in get_tree().get_nodes_in_group("BoardSlot"):
-		# slot.parent is GridContainer, its parent is the Player node
-		if slot.get_parent().get_parent() == current_player.board:
+		if slot.get_board() == current_player.board:
 			slots.append(slot)
-	return slots
+	clear_all_slot_highlights()
 
 
 # Place a card from hand onto the board
@@ -44,7 +38,6 @@ func place_from_hand(card: Card, slot: Slot, shroud := false) -> void:
 	slot.add_child(card)
 	card.position = Vector2.ZERO
 	slot.placed_card = card
-	card.owner_player = current_player
 	card.set_activated(not shroud)
 	if shroud:
 		card.toggle_shrouded()
@@ -59,17 +52,11 @@ func move_card(from_slot: Slot, to_slot: Slot) -> void:
 	if card == null or not card.is_activated:
 		return
 
-	# compute delta index via slot_index and BOARD_WIDTH
-	var delta = to_slot.slot_index - from_slot.slot_index
-	# build allowed offsets
-	var allowed_offsets := []
-	for dir_vec in get_direction_map(card).values():
-		allowed_offsets.append(int(dir_vec.y) * BOARD_WIDTH + int(dir_vec.x))
+	var legal_moves = get_valid_moves(card)
 
-	if delta not in allowed_offsets or not to_slot.is_empty():
+	if to_slot not in legal_moves:
 		return
 
-	# do the move
 	from_slot.placed_card = null
 	card.get_parent().remove_child(card)
 	to_slot.add_child(card)
@@ -80,19 +67,40 @@ func move_card(from_slot: Slot, to_slot: Slot) -> void:
 	UIManager.deselect_all_cards()
 
 
-# Highlight moves: one-step, empty neighbors
 func get_valid_moves(attacker: Card) -> Array:
-	var moves := []
+	var valid_moves := []
 	var from_slot = attacker.get_parent() as Slot
 	if from_slot == null:
-		return moves
+		return valid_moves
 
+	const COLS = BOARD_WIDTH  # e.g. 3
+	var from_idx = from_slot.slot_index
+	var from_col = from_idx % COLS
+	var from_row = from_idx / COLS
+
+
+	# 3) Loop each allowed direction
 	for dir_vec in get_direction_map(attacker).values():
-		var target_idx = from_slot.slot_index + int(dir_vec.y) * BOARD_WIDTH + int(dir_vec.x)
-		var target_slot = get_slot_by_index(target_idx, get_slots())
-		if target_slot and target_slot.is_empty():
-			moves.append(target_slot)
-	return moves
+		var dx = int(dir_vec.x)
+		var dy = int(dir_vec.y)
+		var new_col = from_col + dx
+		var new_row = from_row + dy
+
+		# 4) Reject anything off‑grid
+		if new_col < 0 or new_col >= COLS or new_row < 0 or new_row >= COLS:
+			continue
+
+		# 5) Compute the target slot index
+		var target_idx = new_row * COLS + new_col
+
+		# 6) Find the slot with that index and see if it’s empty
+		for slot in slots:
+			if slot.slot_index == target_idx and slot.is_empty():
+				valid_moves.append(slot)
+				break
+		# note: we don’t add non‐empty slots here because you can’t move into them
+	return valid_moves
+
 
 
 # RPS‐range attacks: first 1 or 2 enemies in your lane
@@ -106,7 +114,7 @@ func get_valid_attacks(attacker: Card, allow_overstrike := false) -> Array:
 	var opp_slots := []
 	# pull only the opponent’s slots
 	for slot in get_tree().get_nodes_in_group("BoardSlot"):
-		if slot.get_parent().get_parent() == TurnManager.get_current_opponent().board:
+		if slot.get_board() == TurnManager.get_current_opponent().board:
 			opp_slots.append(slot)
 
 	for idx in TARGET_LANES[lane_idx]:
@@ -127,8 +135,8 @@ func allied_blockers_in_lane(attacker_slot: Slot) -> int:
 	for idx in ATTACKER_LANES[lane_idx]:
 		if idx == attacker_slot.slot_index:
 			break
-		var s = get_slot_by_index(idx, get_slots())
-		if s and not s.is_empty():
+		var slot = get_slot_by_index(idx, slots)
+		if slot and not slot.is_empty():
 			blockers += 1
 	return blockers
 
@@ -170,9 +178,9 @@ func get_direction_map(card: Card) -> Dictionary:
 
 # Visual helpers
 func highlight_slots(slots: Array, tint: Color) -> void:
-	for s in slots:
-		s.modulate = tint
+	for slot in slots:
+		slot.modulate = tint
 
 func clear_all_slot_highlights() -> void:
-	for s in get_slots():
-		s.modulate = Color(1,1,1,1)
+	for slot in slots:
+		slot.modulate = Color(1,1,1,1)

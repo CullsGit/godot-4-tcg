@@ -11,6 +11,8 @@ var placed_card: Card = null
 func is_empty():
 	return placed_card == null
 
+func get_board() -> Control:
+	return get_parent().get_parent()
 
 func _on_gui_input(event):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
