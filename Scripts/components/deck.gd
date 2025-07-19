@@ -49,22 +49,16 @@ func draw_card(starting_hand := false) -> void:
 		print('empty')
 		return
 
-	# FIRST: handle the startup draw without ever touching TurnManager
-	if starting_hand:
-		var drawn_card = _deck.pop_front()
-		player.hand.add_card(drawn_card)
-		update_deck_counter()
+	if not starting_hand and player.hand.cards_in_hand.size() >= player.hand.MAX_HAND_SIZE:
 		return
 
-
-	if player.hand.cards_in_hand.size() >= player.hand.MAX_HAND_SIZE:
-		return
 	var drawn_card = _deck.pop_front()
 	player.hand.add_card(drawn_card)
 	update_deck_counter()
 
-	UIManager.deselect_all_cards()
-	ActionManager.use_action()
+	if not starting_hand:
+		UIManager.deselect_all_cards()
+		ActionManager.use_action()
 
 
 func update_deck_counter() -> void:
