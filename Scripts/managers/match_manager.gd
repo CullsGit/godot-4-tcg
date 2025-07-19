@@ -17,7 +17,7 @@ func _on_card_defeated(defeated_card: Card) -> void:
 # Returns true if the given player has *no* cards in hand, deck, or on their board
 func _check_loss(player: Node) -> bool:
 	# 1) Hand
-	var has_hand = player.hand.hand_cards.size() > 0
+	var has_hand = player.hand.cards_in_hand.size() > 0
 	# 2) Deck
 	var has_deck = not player.deck.is_empty()
 	# 3) Board

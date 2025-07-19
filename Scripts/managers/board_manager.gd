@@ -33,8 +33,8 @@ func _on_turn_started(new_player: Player) -> void:
 func place_from_hand(card: Card, slot: Slot, shroud := false) -> void:
 	if not slot.is_empty():
 		return
-	# reparent
-	card.get_parent().remove_child(card)
+
+	current_player.hand.remove_card(card)
 	slot.add_child(card)
 	card.position = Vector2.ZERO
 	slot.placed_card = card
@@ -102,8 +102,6 @@ func get_valid_moves(attacker: Card) -> Array:
 	return valid_moves
 
 
-
-# RPS‐range attacks: first 1 or 2 enemies in your lane
 func get_valid_attacks(attacker: Card, allow_overstrike := false) -> Array:
 	var from_slot = attacker.get_parent() as Slot
 	var lane_idx = _get_lane_index(from_slot.slot_index)
@@ -177,8 +175,8 @@ func get_direction_map(card: Card) -> Dictionary:
 	return movement
 
 # Visual helpers
-func highlight_slots(slots: Array, tint: Color) -> void:
-	for slot in slots:
+func highlight_slots(tinted_slots: Array, tint: Color) -> void:
+	for slot in tinted_slots:
 		slot.modulate = tint
 
 func clear_all_slot_highlights() -> void:

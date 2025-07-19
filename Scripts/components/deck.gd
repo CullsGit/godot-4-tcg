@@ -46,6 +46,7 @@ func draw_starting_hand() -> void:
 
 func draw_card(starting_hand := false) -> void:
 	if _deck.size() == 0:
+		print('empty')
 		return
 
 	# FIRST: handle the startup draw without ever touching TurnManager
@@ -53,26 +54,24 @@ func draw_card(starting_hand := false) -> void:
 		var drawn_card = _deck.pop_front()
 		player.hand.add_card(drawn_card)
 		update_deck_counter()
-		return  # <— stop here
+		return
 
-	# ONLY run this once the game is actually underway
-	var current_player = TurnManager.get_current_player()
-	if current_player.hand == player.hand:
-		var next_card = _deck.front()
-		if player.hand.add_card(next_card):
-			_deck.pop_front()
-			update_deck_counter()
 
-			UIManager.deselect_all_cards()
-			current_player.board.clear_all_slot_highlights()
-			ActionManager.use_action()
+	if player.hand.cards_in_hand.size() >= player.hand.MAX_HAND_SIZE:
+		return
+	var drawn_card = _deck.pop_front()
+	player.hand.add_card(drawn_card)
+	update_deck_counter()
+
+	UIManager.deselect_all_cards()
+	ActionManager.use_action()
 
 
 func update_deck_counter() -> void:
 	$DeckCounter.text = str(_deck.size())
 
 
-func _on_Deck_visual_gui_input(event) -> void:
+func _on_deck_visual_gui_input(event) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		draw_card()
 

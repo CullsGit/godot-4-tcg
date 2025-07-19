@@ -25,9 +25,12 @@ func _on_match_ended(winner_id):
 func on_card_selected(card: Card) -> void:
 	if current_player == null or card.card_owner != current_player:
 		return
-	# Clear previous selections/highlights
+
+	if card == selected_hand_card or card == selected_board_card:
+		deselect_all_cards()
+		BoardManager.clear_all_slot_highlights()
+		return
 	deselect_all_cards()
-	BoardManager.clear_all_slot_highlights()
 
 	# Toggle this card’s selection
 	card.toggle_selection()
@@ -35,6 +38,11 @@ func on_card_selected(card: Card) -> void:
 	# Track which card is selected and highlight options
 	if parent == current_player.hand:
 		selected_hand_card = card
+		var empties := []
+		for slot in BoardManager.slots:
+			if slot.is_empty():
+				empties.append(slot)
+		BoardManager.highlight_slots(empties, Color(0, 1, 0, 0.5))
 	elif parent is Slot:
 		selected_board_card = card
 		var move_slots   = BoardManager.get_valid_moves(card)
