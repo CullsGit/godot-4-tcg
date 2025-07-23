@@ -23,6 +23,14 @@ func _on_match_ended(winner_id):
 	$UI/WinPopup.show("Player %d Wins!" % (winner_id + 1))
 
 func on_card_selected(card: Card) -> void:
+	if selected_board_card and card.card_owner != current_player:
+		# enemy card clicked
+		if AttackManager.can_attack(selected_board_card, card):
+			AttackManager.resolve_attack(selected_board_card, card)
+		else:
+			print("Cannot attack:", selected_board_card.name, "→", card.name)
+		return
+
 	if current_player == null or card.card_owner != current_player:
 		return
 
@@ -39,7 +47,7 @@ func on_card_selected(card: Card) -> void:
 	if parent == current_player.hand:
 		selected_hand_card = card
 		var empties := []
-		for slot in BoardManager.slots:
+		for slot in BoardManager.get_slots():
 			if slot.is_empty():
 				empties.append(slot)
 		BoardManager.highlight_slots(empties, Color(0, 1, 0, 0.5))
@@ -52,7 +60,6 @@ func on_card_selected(card: Card) -> void:
 
 
 func _on_slot_clicked(slot: Slot) -> void:
-	var opponent = TurnManager.get_current_opponent()
 	# 1) Placing a hand card onto an empty slot
 	if selected_hand_card:
 		if slot.get_board() == current_player.board and slot.is_empty():
@@ -66,12 +73,6 @@ func _on_slot_clicked(slot: Slot) -> void:
 			BoardManager.move_card(from_slot, slot)
 			return
 
-		# 2b) Attack: non-empty slot on opponent’s board
-		if slot.get_board() == opponent.board and slot.placed_card:
-			AttackManager.resolve_attack(selected_board_card, slot.placed_card)
-			return
-
-		# Otherwise, ignore
 		return
 
 

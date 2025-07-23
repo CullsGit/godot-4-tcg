@@ -2,7 +2,6 @@
 extends Node
 
 var current_player : Player = null
-var slots: Array[Slot] = []
 
 const ATTACKER_LANES := [
 	[0, 3, 6],
@@ -23,13 +22,16 @@ func _ready() -> void:
 
 func _on_turn_started(new_player: Player) -> void:
 	current_player = new_player
-	for slot in get_tree().get_nodes_in_group("BoardSlot"):
-		if slot.get_board() == current_player.board:
-			slots.append(slot)
 	clear_all_slot_highlights()
 
+func get_slots(player: Player = current_player) -> Array:
+	var slots := []
+	for slot in get_tree().get_nodes_in_group("BoardSlot"):
+		if slot.get_board() == player.board:
+			slots.append(slot)
+	return slots
 
-# Place a card from hand onto the board
+
 func place_from_hand(card: Card, slot: Slot, shroud := false) -> void:
 	if not slot.is_empty():
 		return
@@ -94,11 +96,10 @@ func get_valid_moves(attacker: Card) -> Array:
 		var target_idx = new_row * COLS + new_col
 
 		# 6) Find the slot with that index and see if it’s empty
-		for slot in slots:
+		for slot in get_slots():
 			if slot.slot_index == target_idx and slot.is_empty():
 				valid_moves.append(slot)
 				break
-		# note: we don’t add non‐empty slots here because you can’t move into them
 	return valid_moves
 
 
@@ -123,6 +124,33 @@ func get_valid_attacks(attacker: Card, allow_overstrike := false) -> Array:
 				break
 	return targets
 
+func check_opponent_cards_in_range(slot, has_overstrike = false):
+	var opponent = TurnManager.get_current_opponent()
+	var opponent_lane = get_opponent_lane(slot.slot_index)
+
+	var cards_in_range = []
+	
+	# Find first occupied slot in lane
+	for opp_index in opponent_lane:
+		var opp_slot = BoardManager.get_slots(opponent)[opp_index]
+		if opp_slot and opp_slot.placed_card:
+			cards_in_range.append(opp_slot.placed_card)
+			if has_overstrike == false:
+				break  # Only return the first card in lane
+	
+	return cards_in_range.slice(0, 2)
+
+
+func get_opponent_lane(slot_idx):
+	for i in range(3):  # Loop through each lane
+		if slot_idx in ATTACKER_LANES[i]:
+			var index_in_lane = ATTACKER_LANES[i].find(slot_idx)
+			match index_in_lane:
+				0: return TARGET_LANES[i].slice(0, 3)  # Target indexes 0-2
+				1: return TARGET_LANES[i].slice(0, 2)  # Target indexes 0-1
+				2: return [TARGET_LANES[i][0]]  # Target only index 0
+	print("Error: Slot not found in any lane.")
+	return []
 
 # Count allied blockers before you in your lane
 func allied_blockers_in_lane(attacker_slot: Slot) -> int:
@@ -133,11 +161,10 @@ func allied_blockers_in_lane(attacker_slot: Slot) -> int:
 	for idx in ATTACKER_LANES[lane_idx]:
 		if idx == attacker_slot.slot_index:
 			break
-		var slot = get_slot_by_index(idx, slots)
+		var slot = get_slot_by_index(idx, get_slots())
 		if slot and not slot.is_empty():
 			blockers += 1
 	return blockers
-
 
 # Helpers
 
@@ -180,5 +207,5 @@ func highlight_slots(tinted_slots: Array, tint: Color) -> void:
 		slot.modulate = tint
 
 func clear_all_slot_highlights() -> void:
-	for slot in slots:
+	for slot in get_tree().get_nodes_in_group("BoardSlot"):
 		slot.modulate = Color(1,1,1,1)

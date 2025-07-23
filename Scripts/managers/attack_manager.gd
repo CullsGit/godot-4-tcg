@@ -19,36 +19,36 @@ const COMBAT_RULES := {
 
 
 func can_attack(attacker: Card, target: Card) -> bool:
-	var current_board = TurnManager.get_current_player().board
 	var attacker_slot = attacker.get_parent()
+	print(attacker_slot)
 	if attacker_slot == null:
 		return false
 	if attacker.bulwarked or attacker.shrouding:
 		return false
 
 	# Lane‐blocking logic
-	var blockers = current_board.allied_blockers_in_lane(attacker_slot)
+	var blockers = BoardManager.allied_blockers_in_lane(attacker_slot)
 	var valid_targets: Array
 	if attacker.card_ability == "Overstrike":
 		match blockers:
 			2:
 				return false
 			1:
-				valid_targets = current_board.check_opponent_cards_in_range(attacker_slot)
+				valid_targets = BoardManager.check_opponent_cards_in_range(attacker_slot)
 			0:
-				valid_targets = current_board.check_opponent_cards_in_range(attacker_slot, true)
+				valid_targets = BoardManager.check_opponent_cards_in_range(attacker_slot, true)
 	else:
 		if blockers > 0:
 			return false
-		valid_targets = current_board.check_opponent_cards_in_range(attacker_slot)
+		valid_targets = BoardManager.check_opponent_cards_in_range(attacker_slot)
 
 	if target not in valid_targets:
 		return false
 
 	# RPS defeat check
-	var atype = attacker.card_type
-	var ttype = target.card_type
-	if COMBAT_RULES[ttype]["beats"] == atype:
+	var attack_type = attacker.card_type
+	var target_type = target.card_type
+	if COMBAT_RULES[target_type]["beats"] == attack_type:
 		return false
 
 	# Action‐point check
@@ -60,11 +60,12 @@ func can_attack(attacker: Card, target: Card) -> bool:
 
 func get_action_cost(attacker: Card, target: Card) -> int:
 	var rules = COMBAT_RULES.get(attacker.card_type)
-	var ttype = target.card_type
+	var target_type = target.card_type
 	if rules:
-		var cost = rules.action_cost.get(ttype, 2)
+		var cost = rules.action_cost.get(target_type, 2)
 		# Overpower tweak
-		if attacker.card_ability == "Overpower" and attacker.card_type == ttype and not target.bulwarked:
+		if attacker.card_ability == "Overpower" and attacker.card_type == target_type and not target.bulwarked:
+			print('true')
 			cost = 1
 		# Bulwark penalty
 		if target.bulwarked:
@@ -78,6 +79,7 @@ func resolve_attack(attacker: Card, target: Card) -> void:
 
 	var cost = get_action_cost(attacker, target)
 	# Spend the actions
+	BoardManager.clear_all_slot_highlights()
 	ActionManager.use_action(cost)
 
 	# (Optional) play animations here…
