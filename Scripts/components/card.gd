@@ -13,10 +13,10 @@ var card_rarity      : String
 
 # State flags
 var is_selected   : bool = false
-var is_activated  : bool = true
+var deactivated   : bool = false
 var bulwarked     : bool = false
 var shrouding     : bool = false
-var is_shrouded   : bool = false
+var shrouded      : bool = false
 
 # Tweens & Nodes
 var hover_tween      : Tween
@@ -69,7 +69,7 @@ func _on_mouse_exited() -> void:
 # === UI & Highlighting ===
 func update_highlight() -> void:
 	var mod = Color(1,1,1,1)
-	if not is_activated:
+	if deactivated:
 		mod.a = 0.3
 	elif is_selected:
 		mod = Color(1.5,1.5,1.5,1)
@@ -81,15 +81,13 @@ func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			emit_signal("card_selected", self)
-		elif event.button_index == MOUSE_BUTTON_RIGHT and is_activated:
+		elif event.button_index == MOUSE_BUTTON_RIGHT and not deactivated:
 			match card_ability:
 				"Bulwark": emit_signal("used_bulwark_ability", self)
 				"Shroud":  emit_signal("used_shroud_ability", self)
 
-
-func set_activated(value: bool) -> void:
-	is_activated = value
-	update_highlight()
+func is_locked() -> bool:
+	return deactivated or shrouded or bulwarked or shrouding
 
 func toggle_selection() -> void:
 	is_selected = not is_selected
@@ -116,9 +114,9 @@ func toggle_shrouding() -> void:
 		shrouding_tween.tween_property(image_node, "scale", Vector2.ONE, 0.15).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 
 func toggle_shrouded() -> void:
-	is_shrouded = not is_shrouded
+	shrouded = not shrouded
 	shrouded_tween = create_tween()
-	if is_shrouded:
+	if shrouded:
 		shrouded_tween.tween_property(image_node, "self_modulate", Color.BLACK, 0.15).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 	else:
 		shrouded_tween.tween_property(image_node, "self_modulate", Color(1,1,1,1), 0.15).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)

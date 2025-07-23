@@ -40,9 +40,9 @@ func place_from_hand(card: Card, slot: Slot, shroud := false) -> void:
 	slot.add_child(card)
 	card.position = Vector2.ZERO
 	slot.placed_card = card
-	card.set_activated(not shroud)
+	card.deactivated = true
 	if shroud:
-		card.toggle_shrouded()
+		card.shrouded = true
 
 	ActionManager.use_action()
 	UIManager.deselect_all_cards()
@@ -51,7 +51,7 @@ func place_from_hand(card: Card, slot: Slot, shroud := false) -> void:
 # Move a card one allowed step
 func move_card(from_slot: Slot, to_slot: Slot) -> void:
 	var card = from_slot.placed_card
-	if card == null or not card.is_activated:
+	if card == null:
 		return
 
 	var legal_moves = get_valid_moves(card)

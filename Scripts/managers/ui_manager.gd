@@ -31,7 +31,7 @@ func on_card_selected(card: Card) -> void:
 			print("Cannot attack:", selected_board_card.name, "→", card.name)
 		return
 
-	if current_player == null or card.card_owner != current_player:
+	if current_player == null or card.card_owner != current_player or card.is_locked():
 		return
 
 	if card == selected_hand_card or card == selected_board_card:

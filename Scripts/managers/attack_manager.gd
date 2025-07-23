@@ -20,10 +20,9 @@ const COMBAT_RULES := {
 
 func can_attack(attacker: Card, target: Card) -> bool:
 	var attacker_slot = attacker.get_parent()
-	print(attacker_slot)
-	if attacker_slot == null:
+	if target.shrouded:
 		return false
-	if attacker.bulwarked or attacker.shrouding:
+	if attacker_slot == null:
 		return false
 
 	# Lane‐blocking logic
