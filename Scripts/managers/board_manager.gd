@@ -44,7 +44,6 @@ func place_from_hand(card: Card, slot: Slot, shroud := false) -> void:
 		card.shrouded = true
 
 	ActionManager.use_action()
-	UIManager.deselect_all_cards()
 
 
 func move_card(from_slot: Slot, to_slot: Slot) -> void:
@@ -64,7 +63,6 @@ func move_card(from_slot: Slot, to_slot: Slot) -> void:
 	to_slot.placed_card = card
 
 	ActionManager.use_action()
-	UIManager.deselect_all_cards()
 
 
 func get_valid_moves(attacker: Card) -> Array:

@@ -76,7 +76,6 @@ func resolve_attack(attacker: Card, target: Card) -> void:
 
 	var cost = get_action_cost(attacker, target)
 
-	UIManager.deselect_all_cards()
 	ActionManager.use_action(cost)
 
 	var slot = target.get_parent() as Slot

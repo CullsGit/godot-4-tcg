@@ -61,7 +61,6 @@ func draw_card(starting_hand := false) -> void:
 	player.hand.add_card(_deck.pop_front())
 	update_deck_counter()
 
-	UIManager.deselect_all_cards()
 	ActionManager.use_action()
 
 

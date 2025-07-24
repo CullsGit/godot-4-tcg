@@ -15,4 +15,3 @@ func _toggle_with_cost(_card: Card, _flag_name: String, toggle_fn: Callable) -> 
 
 	ActionManager.use_action()
 	toggle_fn.call()
-	UIManager.deselect_all_cards()

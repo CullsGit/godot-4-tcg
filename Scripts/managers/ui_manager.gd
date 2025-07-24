@@ -15,8 +15,6 @@ func _ready() -> void:
 
 func _on_turn_started(new_current_player: Player) -> void:
 	current_player = new_current_player
-	deselect_all_cards()
-	BoardManager.clear_all_slot_highlights()
 
 func _on_match_ended(winner_id):
 	get_tree().paused = true
@@ -36,7 +34,6 @@ func on_card_selected(card: Card) -> void:
 
 	if card == selected_hand_card or card == selected_board_card:
 		deselect_all_cards()
-		BoardManager.clear_all_slot_highlights()
 		return
 	deselect_all_cards()
 
