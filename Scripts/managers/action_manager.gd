@@ -19,6 +19,7 @@ func _ready() -> void:
 func use_action(required_actions = 1) -> void:
 	if current_actions >= required_actions:
 		current_actions -= required_actions
+		UIManager.deselect_all_cards()
 		actions_updated.emit(current_actions)
 	else:
 		print("No actions left!")

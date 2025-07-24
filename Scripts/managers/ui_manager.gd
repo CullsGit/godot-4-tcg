@@ -55,7 +55,7 @@ func on_card_selected(card: Card) -> void:
 		selected_board_card = card
 		var move_slots   = BoardManager.get_valid_moves(card)
 		BoardManager.highlight_slots(move_slots, Color(0, 1, 0, 0.5))
-		var attack_slots = BoardManager.get_valid_attacks(card)
+		var attack_slots = AttackManager.get_valid_attack_slots(card)
 		BoardManager.highlight_slots(attack_slots, Color(1, 0, 0, 0.5))
 
 
@@ -92,5 +92,4 @@ func deselect_all_cards() -> void:
 	if selected_board_card:
 		selected_board_card.toggle_selection()
 		selected_board_card = null
-	# clear any highlights
 	BoardManager.clear_all_slot_highlights()

@@ -20,6 +20,7 @@ func next_turn() -> void:
 	var new_player = players[current_player_index]
 
 	_clear_shrouded(new_player)
+	UIManager.deselect_all_cards()
 	start_turn()
 
 func get_current_player() -> Player:

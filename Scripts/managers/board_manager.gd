@@ -1,4 +1,3 @@
-# Scripts/managers/BoardManager.gd
 extends Node
 
 var current_player : Player = null
@@ -48,7 +47,6 @@ func place_from_hand(card: Card, slot: Slot, shroud := false) -> void:
 	UIManager.deselect_all_cards()
 
 
-# Move a card one allowed step
 func move_card(from_slot: Slot, to_slot: Slot) -> void:
 	var card = from_slot.placed_card
 	if card == null or card.is_locked():
@@ -102,59 +100,50 @@ func get_valid_moves(attacker: Card) -> Array:
 				break
 	return valid_moves
 
-
-func get_valid_attacks(attacker: Card, allow_overstrike := false) -> Array:
+func get_cards_in_range(attacker: Card, allow_overstrike := false) -> Array:
 	var from_slot = attacker.get_parent() as Slot
-	var lane_idx = _get_lane_index(from_slot.slot_index)
-	if lane_idx == -1:
+	if from_slot == null:
+		return []
+	var lane_idx = get_lane_index(from_slot.slot_index)
+	if lane_idx < 0:
 		return []
 
-	var targets := []
-	var opp_slots := []
-	# pull only the opponent’s slots
-	for slot in get_tree().get_nodes_in_group("BoardSlot"):
-		if slot.get_board() == TurnManager.get_current_opponent().board:
-			opp_slots.append(slot)
+	var opponent_lane = TARGET_LANES[lane_idx]
+	var attacker_pos = ATTACKER_LANES[lane_idx].find(from_slot.slot_index)
 
-	for idx in TARGET_LANES[lane_idx]:
-		var s = get_slot_by_index(idx, opp_slots)
-		if s and s.placed_card:
-			targets.append(s)
-			if not allow_overstrike:
+	var lane_indices: Array = []
+	match attacker_pos:
+		0:
+			lane_indices = opponent_lane
+		1:
+			lane_indices = opponent_lane.slice(0, 2)
+		2:
+			lane_indices = [ opponent_lane[0] ]
+		_:
+			lane_indices = []
+
+	var blockers = allied_blockers_in_lane(from_slot)
+	if blockers >= 2:
+		return []
+
+
+	var max_targets: int = 1
+	if allow_overstrike and blockers == 0:
+		max_targets = 2
+
+	var opponent_slots = get_slots(TurnManager.get_current_opponent())
+	var results := []
+	for idx in lane_indices:
+		var slot = get_slot_by_index(idx, opponent_slots)
+		if slot and slot.placed_card:
+			results.append(slot.placed_card)
+			if results.size() >= max_targets:
 				break
-	return targets
-
-func check_opponent_cards_in_range(slot, has_overstrike = false):
-	var opponent = TurnManager.get_current_opponent()
-	var opponent_lane = get_opponent_lane(slot.slot_index)
-
-	var cards_in_range = []
-	
-	# Find first occupied slot in lane
-	for opp_index in opponent_lane:
-		var opp_slot = BoardManager.get_slots(opponent)[opp_index]
-		if opp_slot and opp_slot.placed_card:
-			cards_in_range.append(opp_slot.placed_card)
-			if has_overstrike == false:
-				break  # Only return the first card in lane
-	
-	return cards_in_range.slice(0, 2)
+	return results
 
 
-func get_opponent_lane(slot_idx):
-	for i in range(3):  # Loop through each lane
-		if slot_idx in ATTACKER_LANES[i]:
-			var index_in_lane = ATTACKER_LANES[i].find(slot_idx)
-			match index_in_lane:
-				0: return TARGET_LANES[i].slice(0, 3)  # Target indexes 0-2
-				1: return TARGET_LANES[i].slice(0, 2)  # Target indexes 0-1
-				2: return [TARGET_LANES[i][0]]  # Target only index 0
-	print("Error: Slot not found in any lane.")
-	return []
-
-# Count allied blockers before you in your lane
 func allied_blockers_in_lane(attacker_slot: Slot) -> int:
-	var lane_idx = _get_lane_index(attacker_slot.slot_index)
+	var lane_idx = get_lane_index(attacker_slot.slot_index)
 	if lane_idx == -1:
 		return 0
 	var blockers = 0
@@ -174,7 +163,7 @@ func get_slot_by_index(idx: int, pool: Array) -> Slot:
 			return slot
 	return null
 
-func _get_lane_index(slot_idx: int) -> int:
+func get_lane_index(slot_idx: int) -> int:
 	for i in ATTACKER_LANES.size():
 		if slot_idx in ATTACKER_LANES[i]:
 			return i
