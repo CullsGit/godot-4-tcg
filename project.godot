@@ -23,6 +23,7 @@ UIManager="*res://Scripts/managers/ui_manager.gd"
 AttackManager="*res://Scripts/managers/attack_manager.gd"
 ActionManager="*res://Scripts/managers/action_manager.gd"
 CardDB="*res://Scripts/data/card_database.gd"
+AbilityManager="*res://Scripts/managers/ability_manager.gd"
 
 [debug]
 

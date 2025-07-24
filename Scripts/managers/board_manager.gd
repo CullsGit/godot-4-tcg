@@ -51,7 +51,7 @@ func place_from_hand(card: Card, slot: Slot, shroud := false) -> void:
 # Move a card one allowed step
 func move_card(from_slot: Slot, to_slot: Slot) -> void:
 	var card = from_slot.placed_card
-	if card == null:
+	if card == null or card.is_locked():
 		return
 
 	var legal_moves = get_valid_moves(card)

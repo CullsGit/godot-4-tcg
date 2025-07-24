@@ -30,8 +30,7 @@ func generate_deck() -> void:
 			card.card_id = data.id
 			card.card_owner = player
 			card.card_selected.connect(UIManager.on_card_selected)
-			#card.used_bulwark_ability.connect( %GameManager.bulwarked )
-			#card.used_shroud_ability.connect( %GameManager.shrouding )
+			card.use_ability.connect(UIManager.on_use_card_ability)
 			_deck.append(card)
 
 

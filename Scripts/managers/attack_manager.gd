@@ -20,7 +20,7 @@ const COMBAT_RULES := {
 
 func can_attack(attacker: Card, target: Card) -> bool:
 	var attacker_slot = attacker.get_parent()
-	if target.shrouded:
+	if target.shrouded or attacker.is_locked():
 		return false
 	if attacker_slot == null:
 		return false

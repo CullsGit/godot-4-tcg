@@ -27,11 +27,9 @@ var shrouded_tween   : Tween
 
 # Your existing signals
 signal card_selected(card)
-signal used_bulwark_ability(card)
-signal used_shroud_ability(card)
+signal use_ability(card: Card, ability: String)
 
 
-# === Startup ===
 func _ready() -> void:
 	# 1) Fetch data from the singleton
 	var data = CardDB.get_card_data(card_id)
@@ -80,11 +78,11 @@ func update_highlight() -> void:
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:
 		if event.button_index == MOUSE_BUTTON_LEFT:
-			emit_signal("card_selected", self)
-		elif event.button_index == MOUSE_BUTTON_RIGHT and not deactivated:
+			card_selected.emit(self)
+		elif event.button_index == MOUSE_BUTTON_RIGHT and is_selected:
 			match card_ability:
-				"Bulwark": emit_signal("used_bulwark_ability", self)
-				"Shroud":  emit_signal("used_shroud_ability", self)
+				"Bulwark": use_ability.emit(self, "Bulwark")
+				"Shroud":  use_ability.emit(self, "Shroud")
 
 func is_locked() -> bool:
 	return deactivated or shrouded or bulwarked or shrouding
