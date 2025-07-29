@@ -121,7 +121,7 @@ func get_cards_in_range(attacker: Card, allow_overstrike := false) -> Array:
 			lane_indices = []
 
 	var blockers = allied_blockers_in_lane(from_slot)
-	if blockers >= 2:
+	if blockers >= 2 or (blockers > 0 and not allow_overstrike):
 		return []
 
 
