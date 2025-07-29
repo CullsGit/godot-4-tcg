@@ -26,7 +26,7 @@ func on_card_selected(card: Card) -> void:
 		if AttackManager.can_attack(selected_board_card, card):
 			AttackManager.resolve_attack(selected_board_card, card)
 		else:
-			print("Cannot attack:", selected_board_card.name, "→", card.name)
+			print("Cannot attack: ", selected_board_card.name, "→", card.name)
 		return
 
 	if current_player == null or card.card_owner != current_player or card.deactivated:
@@ -48,12 +48,13 @@ func on_card_selected(card: Card) -> void:
 			if slot.is_empty():
 				empties.append(slot)
 		BoardManager.highlight_slots(empties, Color(0, 1, 0, 0.5))
-	elif parent is Slot and not card.is_locked():
+	elif parent is Slot:
 		selected_board_card = card
-		var move_slots   = BoardManager.get_valid_moves(card)
-		BoardManager.highlight_slots(move_slots, Color(0, 1, 0, 0.5))
-		var attack_slots = AttackManager.get_valid_attack_slots(card)
-		BoardManager.highlight_slots(attack_slots, Color(1, 0, 0, 0.5))
+		if not card.is_locked():
+			var move_slots   = BoardManager.get_valid_moves(card)
+			BoardManager.highlight_slots(move_slots, Color(0, 1, 0, 0.5))
+			var attack_slots = AttackManager.get_valid_attack_slots(card)
+			BoardManager.highlight_slots(attack_slots, Color(1, 0, 0, 0.5))
 
 
 func _on_slot_clicked(slot: Slot) -> void:
@@ -73,13 +74,16 @@ func _on_slot_clicked(slot: Slot) -> void:
 		return
 
 func on_use_card_ability(card: Card, ability: String) -> void:
-	# Can't fire abilities from hand
+	if card.card_owner != TurnManager.get_current_player():
+		return
+
 	if card.get_parent() == card.card_owner.hand:
 		return
 
 	match ability:
 		"Bulwark": AbilityManager.bulwarked(card)
 		"Shroud":  AbilityManager.shrouding(card)
+
 
 
 func deselect_all_cards() -> void:
