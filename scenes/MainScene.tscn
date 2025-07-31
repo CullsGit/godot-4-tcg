@@ -19,10 +19,11 @@ script = ExtResource("3_wec0a")
 unique_name_in_owner = true
 position = Vector2(960, 1080)
 
-[node name="Player2" parent="." instance=ExtResource("7_0iob3")]
+[node name="Player2" parent="." node_paths=PackedStringArray("controller") instance=ExtResource("7_0iob3")]
 unique_name_in_owner = true
 position = Vector2(960, 0)
 rotation = 3.14159
+controller = NodePath("AIController")
 
 [node name="ActionsLabel" type="Label" parent="."]
 unique_name_in_owner = true
@@ -33,3 +34,5 @@ offset_right = 1414.0
 offset_bottom = 224.0
 theme_override_font_sizes/font_size = 48
 text = "Actions: 3"
+
+[editable path="Player2"]

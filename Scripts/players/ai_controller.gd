@@ -1,18 +1,28 @@
 extends Node
 class_name AIController
 
-# Called each time it’s the AI’s turn. Return any structure you like;
-# for now let’s just return a slot index (int).
-func decide_move(player: Node) -> int:
-	# Simple example: play the first card in hand onto the first empty board slot
-	var hand = player.hand  # your Hand node
-	if hand.card_count() == 0:
-		return -1  # “no move”
-	var card = hand.get_card_at(0)
-	
-	# Find first empty slot on board
-	var board = player.board
-	for i in board.get_slot_count():
-		if board.is_slot_empty(i):
-			return i
-	return -1
+# Called once at the very start of the AI's turn:
+func take_turn(player: Player) -> void:
+	await get_tree().create_timer(2).timeout
+	#_draw_phase(player)
+	_play_phase(player)
+
+	#_move_phase(player)
+	#_attack_phase(player)
+
+func _play_phase(player: Player) -> void:
+	while ActionManager.current_actions > 0 \
+	  and player.hand.cards_in_hand.size() > 0:
+		# 1) Pick the first card in hand
+		var card = player.hand.cards_in_hand[0]
+		# 2) Find the first empty slot on THIS player’s board
+		var chosen_slot: Slot = null
+		for slot in BoardManager.get_slots(player):
+			if slot.is_empty():
+				chosen_slot = slot
+				break
+		if chosen_slot == null:
+			break
+		BoardManager.place_from_hand(card, chosen_slot)
+		var delay = randf_range(2, 3)
+		await get_tree().create_timer(delay).timeout

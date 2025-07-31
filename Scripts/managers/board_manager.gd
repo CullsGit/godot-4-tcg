@@ -32,7 +32,12 @@ func get_slots(player: Player = current_player) -> Array:
 
 
 func place_from_hand(card: Card, slot: Slot, shroud := false) -> void:
-
+	if TurnManager.get_current_player() != card.card_owner:
+		return
+	if slot.get_board() != card.card_owner.board:
+		return
+	if not slot.is_empty():
+		return
 	current_player.hand.remove_card(card)
 	slot.add_child(card)
 	card.position = Vector2.ZERO

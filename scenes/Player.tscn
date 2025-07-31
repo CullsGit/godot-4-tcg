@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://ccub1rnkww5vk"]
+[gd_scene load_steps=6 format=3 uid="uid://ccub1rnkww5vk"]
 
 [ext_resource type="Script" uid="uid://n44f16cfd0on" path="res://Scripts/players/player.gd" id="1_dewec"]
 [ext_resource type="PackedScene" uid="uid://bxb2hq0uvqof" path="res://Scenes/Board.tscn" id="2_5ixxa"]
 [ext_resource type="PackedScene" uid="uid://dhwm0e6wct3dm" path="res://Scenes/Hand.tscn" id="3_nn08x"]
 [ext_resource type="PackedScene" uid="uid://dvqt6u68hru8y" path="res://Scenes/Deck.tscn" id="4_52ee3"]
+[ext_resource type="Script" uid="uid://c04vrbaaxfpef" path="res://Scripts/players/ai_controller.gd" id="5_5ixxa"]
 
 [node name="Player" type="Node2D"]
 script = ExtResource("1_dewec")
@@ -21,3 +22,7 @@ offset_left = 328.0
 offset_top = -520.0
 offset_right = 450.0
 offset_bottom = -348.0
+
+[node name="AIController" type="Node" parent="."]
+script = ExtResource("5_5ixxa")
+metadata/_custom_type_script = "uid://c04vrbaaxfpef"

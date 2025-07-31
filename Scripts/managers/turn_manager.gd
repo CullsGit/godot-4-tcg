@@ -10,7 +10,16 @@ func _ready() -> void:
 	ActionManager.actions_updated.connect(_on_actions_updated)
 
 func start_turn() -> void:
-	turn_started.emit(players[current_player_index])
+	var player = players[current_player_index]
+
+	turn_started.emit(player)
+
+	# 2) If this player has an AIController, run its logic
+	if player.controller:
+		# Optional: give the engine a frame to process your UI updates
+		await get_tree().process_frame
+		player.controller.take_turn(player)
+	
 
 func next_turn() -> void:
 	var old_player = players[current_player_index]

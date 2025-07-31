@@ -87,7 +87,6 @@ func on_use_card_ability(card: Card, ability: String) -> void:
 		"Shroud":  AbilityManager.shrouding(card)
 
 
-
 func deselect_all_cards() -> void:
 	if selected_hand_card:
 		selected_hand_card.toggle_selection()
