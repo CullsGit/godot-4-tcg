@@ -57,21 +57,23 @@ func on_card_selected(card: Card) -> void:
 			BoardManager.highlight_slots(attack_slots, Color(1, 0, 0, 0.5))
 
 
-func _on_slot_clicked(slot: Slot) -> void:
+func _on_slot_clicked(slot: Slot, button_index: int) -> void:
+	if slot.get_board() != current_player.board or not slot.is_empty():
+		return
 	# 1) Placing a hand card onto an empty slot
 	if selected_hand_card:
-		if slot.get_board() == current_player.board and slot.is_empty():
+		if button_index == MOUSE_BUTTON_LEFT:
 			BoardManager.place_from_hand(selected_hand_card, slot)
-
-	if selected_board_card:
-		var from_slot = selected_board_card.get_parent()
-
-		# 2a) Move: empty slot on my board
-		if slot.get_board() == current_player.board and slot.is_empty():
-			BoardManager.move_card(from_slot, slot)
 			return
-
+		elif button_index == MOUSE_BUTTON_RIGHT and AbilityManager.is_shrouding_active_for(current_player):
+			BoardManager.place_from_hand(selected_hand_card, slot, true)
+			return
+		
+	if selected_board_card and button_index == MOUSE_BUTTON_LEFT:
+		var from_slot = selected_board_card.get_parent()
+		BoardManager.move_card(from_slot, slot)
 		return
+
 
 func on_use_card_ability(card: Card, ability: String) -> void:
 	if card.card_owner != TurnManager.get_current_player():

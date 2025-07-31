@@ -95,7 +95,7 @@ func toggle_bulwarked() -> void:
 	bulwarked = not bulwarked
 	bulwarked_tween = create_tween()
 	if bulwarked:
-		bulwarked_tween.tween_property(image_node, "self_modulate", Color(1,0,0,1), 0.15).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+		bulwarked_tween.tween_property(image_node, "self_modulate", Color(1,0.9,0,1), 0.15).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 		bulwarked_tween.tween_property(image_node, "scale", Vector2(1.14,1.14), 0.15).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 	else:
 		bulwarked_tween.tween_property(image_node, "self_modulate", Color(1,1,1,1), 0.15).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
@@ -105,7 +105,7 @@ func toggle_shrouding() -> void:
 	shrouding = not shrouding
 	shrouding_tween = create_tween()
 	if shrouding:
-		shrouding_tween.tween_property(image_node, "self_modulate", Color(1,0,1,1), 0.15).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+		shrouding_tween.tween_property(image_node, "self_modulate", Color(0.741,0.455,1,1), 0.15).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 		shrouding_tween.tween_property(image_node, "scale", Vector2(1.14,1.14), 0.15).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 	else:
 		shrouding_tween.tween_property(image_node, "self_modulate", Color(1,1,1,1), 0.15).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)

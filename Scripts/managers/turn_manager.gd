@@ -42,5 +42,5 @@ func _clear_deactivated(player: Player) -> void:
 func _clear_shrouded(player: Player) -> void:
 	for slot in BoardManager.get_slots(player):
 		var card: Card = slot.placed_card
-		if card:
-			card.shrouded = false
+		if card and card.shrouded:
+			card.toggle_shrouded()

@@ -14,9 +14,9 @@ func is_empty():
 func get_board() -> Control:
 	return get_parent().get_parent()
 
-func _on_gui_input(event):
-	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		emit_signal("slot_clicked", self)
+func _on_gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.pressed:
+		emit_signal("slot_clicked", self, event.button_index)
 
 
 func highlight():

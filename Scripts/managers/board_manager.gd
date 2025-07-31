@@ -32,16 +32,15 @@ func get_slots(player: Player = current_player) -> Array:
 
 
 func place_from_hand(card: Card, slot: Slot, shroud := false) -> void:
-	if not slot.is_empty():
-		return
 
 	current_player.hand.remove_card(card)
 	slot.add_child(card)
 	card.position = Vector2.ZERO
 	slot.placed_card = card
-	card.deactivated = true
 	if shroud:
-		card.shrouded = true
+		card.toggle_shrouded()
+	else:
+		card.deactivated = true
 
 	ActionManager.use_action()
 
