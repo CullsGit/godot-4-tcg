@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=2 format=3 uid="uid://cb16w7tppifcw"]
+
+[ext_resource type="Script" uid="uid://2hfxvjucdyg5" path="res://Scripts/data/card_data.gd" id="1_k4uhm"]
+
+[resource]
+script = ExtResource("1_k4uhm")
+id = "drav"
+name = "Drav"
+type = "Fury"
+ability = "Overpower"
+texture_path = "res://Assets/game_cards/drav.jpg"
+rarity = "Rare"
+metadata/_custom_type_script = "uid://2hfxvjucdyg5"

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=2 format=3 uid="uid://c6y4rssxx6hhr"]
+
+[ext_resource type="Script" uid="uid://2hfxvjucdyg5" path="res://Scripts/data/card_data.gd" id="1_obcqf"]
+
+[resource]
+script = ExtResource("1_obcqf")
+id = "skyace"
+name = "Skyace"
+type = "Void"
+ability = "Bulwark"
+texture_path = "res://Assets/game_cards/skyace.jpg"
+rarity = "Common"
+metadata/_custom_type_script = "uid://2hfxvjucdyg5"

@@ -1,7 +1,7 @@
 [gd_resource type="Theme" load_steps=4 format=3 uid="uid://chxw5ph8knu0x"]
 
-[ext_resource type="FontFile" uid="uid://q37igm1i3h3e" path="res://theme/Bitter-Bold.ttf" id="1_8ab6e"]
-[ext_resource type="Texture2D" uid="uid://dep4505al0xl4" path="res://theme/panel-border-000.png" id="1_nrt0f"]
+[ext_resource type="FontFile" uid="uid://q37igm1i3h3e" path="res://Theme/Bitter-Bold.ttf" id="1_8ab6e"]
+[ext_resource type="Texture2D" uid="uid://dep4505al0xl4" path="res://Theme/panel-border-000.png" id="1_nrt0f"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4yjuo"]
 texture = ExtResource("1_nrt0f")

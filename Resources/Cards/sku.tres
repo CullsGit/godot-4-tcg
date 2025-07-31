@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=2 format=3 uid="uid://cfbhw1vi25jvs"]
+
+[ext_resource type="Script" uid="uid://2hfxvjucdyg5" path="res://Scripts/data/card_data.gd" id="1_0lyre"]
+
+[resource]
+script = ExtResource("1_0lyre")
+id = "sku"
+name = "Sku"
+type = "Aura"
+ability = "Bulwark"
+texture_path = "res://Assets/game_cards/sku.jpg"
+rarity = "Uncommon"
+metadata/_custom_type_script = "uid://2hfxvjucdyg5"

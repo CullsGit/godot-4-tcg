@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=2 format=3 uid="uid://bj6orrk8t4c1x"]
+
+[ext_resource type="Script" uid="uid://2hfxvjucdyg5" path="res://Scripts/data/card_data.gd" id="1_pdqlu"]
+
+[resource]
+script = ExtResource("1_pdqlu")
+id = "vaeri"
+name = "Vaeri"
+type = "Fury"
+ability = "Overstrike"
+texture_path = "res://Assets/game_cards/vaeri.jpg"
+rarity = "Common"
+metadata/_custom_type_script = "uid://2hfxvjucdyg5"

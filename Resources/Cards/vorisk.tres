@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=2 format=3 uid="uid://71yynvqy5t6a"]
+
+[ext_resource type="Script" uid="uid://2hfxvjucdyg5" path="res://Scripts/data/card_data.gd" id="1_oa0ej"]
+
+[resource]
+script = ExtResource("1_oa0ej")
+id = "vorisk"
+name = "Vorisk"
+type = "Void"
+ability = "Overstrike"
+texture_path = "res://Assets/game_cards/vorisk.jpg"
+rarity = "Uncommon"
+metadata/_custom_type_script = "uid://2hfxvjucdyg5"
