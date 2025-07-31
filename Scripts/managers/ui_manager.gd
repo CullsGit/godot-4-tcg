@@ -21,6 +21,8 @@ func _on_match_ended(winner_id):
 	$UI/WinPopup.show("Player %d Wins!" % (winner_id + 1))
 
 func on_card_selected(card: Card) -> void:
+	if TurnManager.get_current_player().controller != null:
+		return
 	if selected_board_card and card.card_owner != current_player:
 		# enemy card clicked
 		if AttackManager.can_attack(selected_board_card, card):

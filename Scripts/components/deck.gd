@@ -69,6 +69,8 @@ func update_deck_counter() -> void:
 
 
 func _on_deck_visual_gui_input(event) -> void:
+	#if TurnManager.get_current_player().controller != null:
+		#return
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		draw_card()
 
