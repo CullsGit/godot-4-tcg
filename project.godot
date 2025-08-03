@@ -16,14 +16,15 @@ config/features=PackedStringArray("4.4", "Forward Plus")
 
 [autoload]
 
-TurnManager="*res://Scripts/managers/turn_manager.gd"
 MatchManager="*res://Scripts/managers/match_manager.gd"
 BoardManager="*res://Scripts/managers/board_manager.gd"
+TurnManager="*res://Scripts/managers/turn_manager.gd"
 UIManager="*res://Scripts/managers/ui_manager.gd"
 AttackManager="*res://Scripts/managers/attack_manager.gd"
 ActionManager="*res://Scripts/managers/action_manager.gd"
 CardDB="*res://Scripts/data/card_database.gd"
 AbilityManager="*res://Scripts/managers/ability_manager.gd"
+GameManager="*res://Scripts/managers/game_manager.gd"
 
 [debug]
 

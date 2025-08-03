@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=3 uid="uid://cb6jjyl0hkn17"]
+
+[ext_resource type="Script" uid="uid://b782l0aqncqa8" path="res://Scripts/UI/home_screen.gd" id="1_dbwln"]
+[ext_resource type="Texture2D" uid="uid://c4dplw03hyvf1" path="res://Assets/landing_page.PNG" id="2_rj4an"]
+
+[node name="HomeScreen" type="CanvasLayer"]
+process_mode = 2
+script = ExtResource("1_dbwln")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_rj4an")
+expand_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(350, 300)
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -175.0
+offset_top = -360.0
+offset_right = 175.0
+offset_bottom = -60.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "GAME MODE"
+horizontal_alignment = 1
+
+[node name="LocalPlayButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Local Play"
+
+[node name="VersusCPUButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Versus CPU"

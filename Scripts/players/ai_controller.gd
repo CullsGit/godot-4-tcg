@@ -24,5 +24,5 @@ func _play_phase(player: Player) -> void:
 		if chosen_slot == null:
 			break
 		BoardManager.place_from_hand(card, chosen_slot)
-		var delay = randf_range(2, 3)
+		var delay = randf_range(1, 2)
 		await get_tree().create_timer(delay).timeout
