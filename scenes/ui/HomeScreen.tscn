@@ -1,7 +1,21 @@
-[gd_scene load_steps=3 format=3 uid="uid://cb6jjyl0hkn17"]
+[gd_scene load_steps=6 format=3 uid="uid://cb6jjyl0hkn17"]
 
 [ext_resource type="Script" uid="uid://b782l0aqncqa8" path="res://Scripts/UI/home_screen.gd" id="1_dbwln"]
 [ext_resource type="Texture2D" uid="uid://c4dplw03hyvf1" path="res://Assets/landing_page.PNG" id="2_rj4an"]
+[ext_resource type="Texture2D" uid="uid://b0xmtom7khsoc" path="res://Assets/UI/panel-transparent-border-005.png" id="3_rj4an"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dbwln"]
+texture_margin_top = 32.0
+texture_margin_bottom = 32.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rj4an"]
+texture = ExtResource("3_rj4an")
+texture_margin_left = 14.0
+texture_margin_top = 14.0
+texture_margin_right = 14.0
+texture_margin_bottom = 14.0
+region_rect = Rect2(0, 0, 48, 48)
+modulate_color = Color(0.0745098, 0.105882, 0.188235, 1)
 
 [node name="HomeScreen" type="CanvasLayer"]
 process_mode = 2
@@ -32,13 +46,27 @@ grow_vertical = 0
 
 [node name="Label" type="Label" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_dbwln")
 text = "GAME MODE"
 horizontal_alignment = 1
 
 [node name="LocalPlayButton" type="Button" parent="VBoxContainer"]
+modulate = Color(0.776471, 0.541176, 0.607843, 1)
 layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.51, 0.51, 0.51, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 25
+theme_override_styles/hover = SubResource("StyleBoxTexture_rj4an")
 text = "Local Play"
 
 [node name="VersusCPUButton" type="Button" parent="VBoxContainer"]
+modulate = Color(0.776471, 0.541176, 0.607843, 1)
 layout_mode = 2
-text = "Versus CPU"
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.51, 0.51, 0.51, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 25
+theme_override_styles/hover = SubResource("StyleBoxTexture_rj4an")
+text = "Versus CPU
+"
