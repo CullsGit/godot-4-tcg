@@ -13,6 +13,8 @@ const MAX_HAND_SIZE = 5
 
 func add_card(card: Card) -> void:
 	if cards_in_hand.size() < MAX_HAND_SIZE:
+		var base_size = card.get_minimum_size()
+		card.set_size(base_size * 1.0)
 		cards_in_hand.append(card)
 		add_child(card)
 		_update_card_fanning()
@@ -53,4 +55,3 @@ func _update_card_fanning() -> void:
 		
 		card.position = Vector2(final_x, final_y)
 		card.rotation_degrees = max_rotation_degrees * rot_multiplier
-	

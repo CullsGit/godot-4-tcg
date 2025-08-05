@@ -12,7 +12,7 @@ _data = [Vector2(0, -1), 0.0, 6.0, 0, 0, Vector2(0.5, -0.011236), 0.0, 0.0, 0, 0
 point_count = 3
 
 [node name="Hand" type="Control"]
-custom_minimum_size = Vector2(550, 172)
+custom_minimum_size = Vector2(550, 344)
 layout_mode = 3
 anchor_left = 1.13169
 anchor_top = 0.667939
