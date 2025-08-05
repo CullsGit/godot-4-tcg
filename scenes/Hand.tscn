@@ -1,12 +1,24 @@
-[gd_scene load_steps=2 format=3 uid="uid://dhwm0e6wct3dm"]
+[gd_scene load_steps=4 format=3 uid="uid://dhwm0e6wct3dm"]
 
 [ext_resource type="Script" uid="uid://dugi8w68yiesd" path="res://Scripts/components/hand.gd" id="1_0xaq6"]
 
-[node name="Hand" type="HBoxContainer"]
-anchors_preset = -1
+[sub_resource type="Curve" id="Curve_0xaq6"]
+_data = [Vector2(0, 0), 0.0, 6.0, 0, 0, Vector2(0.495935, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -6.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_q1mbt"]
+_limits = [-1.0, 1.0, 0.0, 1.0]
+_data = [Vector2(0, -1), 0.0, 6.0, 0, 0, Vector2(0.5, -0.011236), 0.0, 0.0, 0, 0, Vector2(1, 1), 6.0, 0.0, 0, 0]
+point_count = 3
+
+[node name="Hand" type="Control"]
+custom_minimum_size = Vector2(550, 172)
+layout_mode = 3
 anchor_left = 1.13169
 anchor_top = 0.667939
 anchor_right = 2.41975
 anchor_bottom = 0.996183
 script = ExtResource("1_0xaq6")
+hand_curve = SubResource("Curve_0xaq6")
+rotation_curve = SubResource("Curve_q1mbt")
 metadata/_edit_use_anchors_ = true
