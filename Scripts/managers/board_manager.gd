@@ -42,7 +42,8 @@ func place_from_hand(card: Card, slot: Slot, shroud := false) -> void:
 	slot.add_child(card)
 	card.position = Vector2.ZERO
 	card.rotation_degrees = 0
-	card.set_size(card.get_minimum_size())
+	#card.set_size(card.get_minimum_size())
+	card.card_context = Card.CardContext.BOARD
 	slot.placed_card = card
 	if shroud:
 		card.toggle_shrouded()

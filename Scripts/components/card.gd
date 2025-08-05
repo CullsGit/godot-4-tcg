@@ -5,6 +5,9 @@ class_name Card
 @export var card_id: String
 @export var card_owner: Player
 
+enum CardContext { HAND, BOARD }
+var card_context: CardContext = CardContext.HAND
+
 # Stats loaded from CardDB
 var card_name        : String
 var card_type        : String
@@ -55,13 +58,23 @@ func _on_mouse_entered() -> void:
 	if hover_tween:
 		hover_tween.kill()
 	hover_tween = create_tween().set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
-	hover_tween.tween_property(self, "scale", Vector2(1.1, 1.1), 0.4)
+	
+	match card_context:
+		CardContext.HAND:
+			hover_tween.tween_property(self, "scale", Vector2(2, 2), 0.8)
+		CardContext.BOARD:
+			hover_tween.tween_property(self, "scale", Vector2(1.1, 1.1), 0.4)
 
 func _on_mouse_exited() -> void:
 	if hover_tween:
 		hover_tween.kill()
 	hover_tween = create_tween().set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
-	hover_tween.tween_property(self, "scale", Vector2.ONE, 0.4)
+	
+	match card_context:
+		CardContext.HAND:
+			hover_tween.tween_property(self, "scale", Vector2(1.6, 1.6), 0.4)
+		CardContext.BOARD:
+			hover_tween.tween_property(self, "scale", Vector2(1.0, 1.0), 0.4)
 
 
 # === UI & Highlighting ===
