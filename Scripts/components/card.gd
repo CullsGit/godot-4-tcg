@@ -7,6 +7,7 @@ class_name Card
 
 enum CardContext { HAND, BOARD }
 var card_context: CardContext = CardContext.HAND
+var hand_card_base_position: Vector2
 
 # Stats loaded from CardDB
 var card_name        : String
@@ -57,24 +58,35 @@ func _ready() -> void:
 func _on_mouse_entered() -> void:
 	if hover_tween:
 		hover_tween.kill()
-	hover_tween = create_tween().set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 	
 	match card_context:
 		CardContext.HAND:
-			hover_tween.tween_property(self, "scale", Vector2(2, 2), 0.8)
+			move_to_front()
+			hover_tween = create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+			hover_tween.tween_property(self, "scale", Vector2(2.4, 2.4), 0.25)
+			hover_tween.parallel().tween_property(self, "position:y", hand_card_base_position.y - 100, 0.25)
+
 		CardContext.BOARD:
-			hover_tween.tween_property(self, "scale", Vector2(1.1, 1.1), 0.4)
+			hover_tween = create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+			hover_tween.tween_property(self, "scale", Vector2(1.2, 1.2), 0.2)
 
 func _on_mouse_exited() -> void:
 	if hover_tween:
 		hover_tween.kill()
-	hover_tween = create_tween().set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 	
 	match card_context:
 		CardContext.HAND:
-			hover_tween.tween_property(self, "scale", Vector2(1.6, 1.6), 0.4)
+			var index_in_hand = card_owner.hand.cards_in_hand.find(self)
+			if index_in_hand != -1:
+				card_owner.hand.move_child(self, index_in_hand)
+
+			hover_tween = create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
+			hover_tween.tween_property(self, "scale", Vector2(1.6, 1.6), 0.25)
+			hover_tween.parallel().tween_property(self, "position:y", hand_card_base_position.y, 0.25)
+
 		CardContext.BOARD:
-			hover_tween.tween_property(self, "scale", Vector2(1.0, 1.0), 0.4)
+			hover_tween = create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
+			hover_tween.tween_property(self, "scale", Vector2.ONE, 0.2)
 
 
 # === UI & Highlighting ===

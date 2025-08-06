@@ -29,7 +29,7 @@ func remove_card(card):
 func _update_card_fanning() -> void:
 	if cards_in_hand.is_empty():
 		return
-
+	
 	var single_card_width = cards_in_hand[0].size.x
 	var cards = cards_in_hand.size()
 	var all_cards_size = single_card_width * cards + x_sep * (cards - 1)
@@ -54,4 +54,5 @@ func _update_card_fanning() -> void:
 		var final_y: float = y_min + y_max * y_multiplier
 		
 		card.position = Vector2(final_x, final_y)
+		card.hand_card_base_position = Vector2(final_x, final_y) # Store for hover reset
 		card.rotation_degrees = max_rotation_degrees * rot_multiplier

@@ -34,6 +34,10 @@ func get_slots(player: Player = current_player) -> Array:
 func place_from_hand(card: Card, slot: Slot, shroud := false) -> void:
 	if card.card_owner != current_player:
 		return
+	
+	if card.hover_tween:
+		card.hover_tween.kill()
+		card.hover_tween = null
 
 
 	if not slot.is_empty():
@@ -41,8 +45,8 @@ func place_from_hand(card: Card, slot: Slot, shroud := false) -> void:
 	current_player.hand.remove_card(card)
 	slot.add_child(card)
 	card.position = Vector2.ZERO
+	card.scale = Vector2(1.0, 1.0)
 	card.rotation_degrees = 0
-	#card.set_size(card.get_minimum_size())
 	card.card_context = Card.CardContext.BOARD
 	slot.placed_card = card
 	if shroud:
