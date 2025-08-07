@@ -18,10 +18,10 @@ offset_right = 880.0
 offset_bottom = 44.0
 
 [node name="Deck" parent="." instance=ExtResource("4_52ee3")]
-offset_left = 328.0
-offset_top = -520.0
-offset_right = 450.0
-offset_bottom = -348.0
+offset_left = 342.0
+offset_top = -700.0
+offset_right = 464.0
+offset_bottom = -528.0
 
 [node name="AIController" type="Node" parent="."]
 script = ExtResource("5_5ixxa")
