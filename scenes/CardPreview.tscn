@@ -1,13 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://dgoplkvhg560w"]
+[gd_scene load_steps=2 format=3 uid="uid://b5n1uapy3440a"]
 
-[ext_resource type="Script" uid="uid://bnw8urtadxkqg" path="res://Scripts/components/card.gd" id="1_ev0x0"]
+[ext_resource type="Script" uid="uid://cu085apqc0wbv" path="res://Scripts/components/card_preview.gd" id="1_pd7hu"]
 
-[node name="Card" type="Panel"]
+[node name="CardPreview" type="Panel"]
 custom_minimum_size = Vector2(122, 172)
 offset_right = 122.0
 offset_bottom = 172.0
 pivot_offset = Vector2(61, 86)
-script = ExtResource("1_ev0x0")
+mouse_filter = 2
+script = ExtResource("1_pd7hu")
 metadata/_edit_use_anchors_ = true
 
 [node name="TextureRect" type="TextureRect" parent="."]

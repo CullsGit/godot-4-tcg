@@ -5,6 +5,8 @@ const MAX_HAND_SIZE = 5
 
 @export var hand_curve: Curve
 @export var rotation_curve: Curve
+@onready var hover_card_root: Control = $CardHoverLayer/CardHoverRoot
+
 
 @export var max_rotation_degrees := 10
 @export var x_sep := -35
@@ -14,7 +16,7 @@ const MAX_HAND_SIZE = 5
 func add_card(card: Card) -> void:
 	if cards_in_hand.size() < MAX_HAND_SIZE:
 		card.card_context = Card.CardContext.HAND
-		card.scale = Vector2(1.6, 1.6)
+		card.scale = Vector2(1.2, 1.2)
 		cards_in_hand.append(card)
 		add_child(card)
 		_update_card_fanning()

@@ -5,6 +5,9 @@ class_name Card
 @export var card_id: String
 @export var card_owner: Player
 
+var hover_preview_scene = preload("res://Scenes/CardPreview.tscn")
+var hover_preview_instance: Control
+
 enum CardContext { HAND, BOARD }
 var card_context: CardContext = CardContext.HAND
 var hand_card_base_position: Vector2
@@ -61,14 +64,28 @@ func _on_mouse_entered() -> void:
 	
 	match card_context:
 		CardContext.HAND:
-			move_to_front()
 			hover_tween = create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
-			hover_tween.tween_property(self, "scale", Vector2(2.4, 2.4), 0.25)
-			hover_tween.parallel().tween_property(self, "position:y", hand_card_base_position.y - 100, 0.25)
+			hover_tween.tween_property(self, "scale", Vector2(1.3, 1.3), 0.15)
+
+			if hover_preview_instance == null:
+				hover_preview_instance = hover_preview_scene.instantiate()
+				hover_preview_instance.setup_from_card(self, 2)
+
+				var hover_layer = card_owner.hand.hover_card_root
+				hover_layer.add_child(hover_preview_instance)
+
+				var hand_global_pos = card_owner.hand.get_global_position()
+				var hand_size = card_owner.hand.size
+
+				var x = hand_global_pos.x + hand_size.x / 2.0 - 64
+				var y = hand_global_pos.y - 300
+
+				hover_preview_instance.global_position = Vector2(x, y) - hover_preview_instance.size / 2.0
 
 		CardContext.BOARD:
 			hover_tween = create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
-			hover_tween.tween_property(self, "scale", Vector2(1.2, 1.2), 0.2)
+			hover_tween.tween_property(self, "scale", Vector2(1.1, 1.1), 0.1)
+
 
 func _on_mouse_exited() -> void:
 	if hover_tween:
@@ -76,17 +93,17 @@ func _on_mouse_exited() -> void:
 	
 	match card_context:
 		CardContext.HAND:
-			var index_in_hand = card_owner.hand.cards_in_hand.find(self)
-			if index_in_hand != -1:
-				card_owner.hand.move_child(self, index_in_hand)
-
 			hover_tween = create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
-			hover_tween.tween_property(self, "scale", Vector2(1.6, 1.6), 0.25)
-			hover_tween.parallel().tween_property(self, "position:y", hand_card_base_position.y, 0.25)
+			hover_tween.tween_property(self, "scale", Vector2(1.2, 1.2), 0.15)
+
+			if hover_preview_instance:
+				var hover_layer = card_owner.hand.hover_card_root
+				hover_layer.remove_child(hover_preview_instance)
+				hover_preview_instance = null
 
 		CardContext.BOARD:
 			hover_tween = create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
-			hover_tween.tween_property(self, "scale", Vector2.ONE, 0.2)
+			hover_tween.tween_property(self, "scale", Vector2.ONE, 0.1)
 
 
 # === UI & Highlighting ===

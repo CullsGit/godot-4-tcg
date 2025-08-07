@@ -12,10 +12,11 @@ script = ExtResource("1_dewec")
 [node name="Board" parent="." instance=ExtResource("2_5ixxa")]
 
 [node name="Hand" parent="." instance=ExtResource("3_nn08x")]
-offset_left = 330.0
-offset_top = -300.0
-offset_right = 880.0
-offset_bottom = 44.0
+custom_minimum_size = Vector2(550, 240)
+offset_left = 350.0
+offset_top = -255.0
+offset_right = 900.0
+offset_bottom = -15.0
 
 [node name="Deck" parent="." instance=ExtResource("4_52ee3")]
 offset_left = 342.0
