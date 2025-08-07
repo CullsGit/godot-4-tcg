@@ -29,6 +29,11 @@ func next_turn() -> void:
 	var new_player = players[current_player_index]
 
 	_clear_shrouded(new_player)
+	if GameManager.mode == GameManager.GameMode.LOCAL:
+		var is_player1 = current_player_index == 0
+		var table = get_tree().get_current_scene().get_node("Table")
+		table.rotation_degrees = 0 if is_player1 else 180
+	
 	start_turn()
 
 func get_current_player() -> Player:

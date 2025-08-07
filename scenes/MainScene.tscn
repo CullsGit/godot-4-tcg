@@ -12,18 +12,21 @@ position = Vector2(960, 541)
 scale = Vector2(0.25, 0.249537)
 texture = ExtResource("1_nhkr4")
 
+[node name="Table" type="Node2D" parent="."]
+position = Vector2(960, 540)
+
+[node name="Player1" parent="Table" instance=ExtResource("7_0iob3")]
+unique_name_in_owner = true
+position = Vector2(0, 540)
+
+[node name="Player2" parent="Table" instance=ExtResource("7_0iob3")]
+unique_name_in_owner = true
+position = Vector2(0, -540)
+rotation = 3.14159
+
 [node name="GameManager" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("3_wec0a")
-
-[node name="Player1" parent="." instance=ExtResource("7_0iob3")]
-unique_name_in_owner = true
-position = Vector2(960, 1080)
-
-[node name="Player2" parent="." instance=ExtResource("7_0iob3")]
-unique_name_in_owner = true
-position = Vector2(960, 0)
-rotation = 3.14159
 
 [node name="ActionsLabel" type="Label" parent="."]
 unique_name_in_owner = true

@@ -13,8 +13,8 @@ func _ready() -> void:
 
 	var main_scene = get_tree().get_current_scene()
 
-	player1 = main_scene.get_node("Player1") as Player
-	player2 = main_scene.get_node("Player2") as Player
+	player1 = main_scene.get_node("Table/Player1") as Player
+	player2 = main_scene.get_node("Table/Player2") as Player
 
 	set_mode(mode)
 
