@@ -31,7 +31,23 @@ func set_mode(new_mode: GameMode) -> void:
 			player1.controller = null
 			player2.controller = player2.get_node_or_null("AIController")
 
-	# assign into turn manager and start
 	TurnManager.players = [player1, player2]
-	await get_tree().process_frame  # let any signal hookups settle
+	await get_tree().process_frame
 	TurnManager.start_turn()
+
+func handle_turn_start(current_player: Player, opponent: Player) -> void:
+	var table = get_tree().current_scene.get_node("Table")
+	
+	match mode:
+		GameMode.LOCAL:
+			table.rotation_degrees = 0 if current_player == player1 else 180
+
+			current_player.hand.visible = true
+			current_player.deck.visible = true
+
+			opponent.hand.visible = false
+			opponent.deck.visible = false
+
+		GameMode.VS_CPU:
+			player2.hand.visible = false
+			player2.deck.visible = false

@@ -11,6 +11,11 @@ func _ready() -> void:
 
 func start_turn() -> void:
 	var player = players[current_player_index]
+	
+	if GameManager.mode in [GameManager.GameMode.LOCAL, GameManager.GameMode.VS_CPU]:
+		GameManager.handle_turn_start(player, get_current_opponent())
+
+
 
 	turn_started.emit(player)
 
@@ -29,10 +34,6 @@ func next_turn() -> void:
 	var new_player = players[current_player_index]
 
 	_clear_shrouded(new_player)
-	if GameManager.mode == GameManager.GameMode.LOCAL:
-		var is_player1 = current_player_index == 0
-		var table = get_tree().get_current_scene().get_node("Table")
-		table.rotation_degrees = 0 if is_player1 else 180
 	
 	start_turn()
 
