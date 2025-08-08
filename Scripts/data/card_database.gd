@@ -6,6 +6,8 @@ func _ready() -> void:
 	var dir = DirAccess.open("res://Resources/Cards")
 	if dir:
 		for file in dir.get_files():
+			if file.ends_with(".remap"):
+				file = file.trim_suffix(".remap")
 			if file.ends_with(".tres"):
 				var data = ResourceLoader.load("res://Resources/Cards/%s" % file)
 				cards[data.id] = data
