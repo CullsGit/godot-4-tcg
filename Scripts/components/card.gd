@@ -36,6 +36,8 @@ var shrouded_tween   : Tween
 signal card_selected(card)
 signal use_ability(card: Card, ability: String)
 
+var _is_dragging = false
+var _drop_accepted = false
 
 func _ready() -> void:
 	# 1) Fetch data from the singleton
@@ -90,6 +92,7 @@ func _on_mouse_entered() -> void:
 func _on_mouse_exited() -> void:
 	if hover_tween:
 		hover_tween.kill()
+	
 	
 	match card_context:
 		CardContext.HAND:
@@ -160,3 +163,35 @@ func toggle_shrouded() -> void:
 		shrouded_tween.tween_property(image_node, "self_modulate", Color.BLACK, 0.15).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 	else:
 		shrouded_tween.tween_property(image_node, "self_modulate", Color(1,1,1,1), 0.15).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+
+func _get_drag_data(_at_position: Vector2) -> Variant:
+	if is_locked() or card_owner != TurnManager.get_current_player():
+		return
+
+	_is_dragging = true
+
+	var data := {
+		"type": "card",
+		"card": self,
+		"context": card_context,
+		"origin_slot": null
+	}
+	
+	if card_context == CardContext.BOARD:
+		data.origin_slot = get_parent()
+
+	var preview: Control = duplicate()
+	
+	set_drag_preview(preview)
+	
+	if !is_selected:
+		card_selected.emit(self)
+
+	visible = false
+	return data
+
+func _notification(code: int) -> void:
+	if code == NOTIFICATION_DRAG_END:
+		visible = true
+		if not _drop_accepted and is_selected:
+			UIManager.deselect_all_cards()
