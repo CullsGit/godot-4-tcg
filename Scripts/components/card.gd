@@ -36,7 +36,6 @@ var shrouded_tween   : Tween
 signal card_selected(card)
 signal use_ability(card: Card, ability: String)
 
-var _is_dragging = false
 var _drop_accepted = false
 
 func _ready() -> void:
@@ -167,8 +166,7 @@ func toggle_shrouded() -> void:
 func _get_drag_data(_at_position: Vector2) -> Variant:
 	if is_locked() or card_owner != TurnManager.get_current_player():
 		return
-
-	_is_dragging = true
+	
 
 	var data := {
 		"type": "card",
@@ -181,8 +179,14 @@ func _get_drag_data(_at_position: Vector2) -> Variant:
 		data.origin_slot = get_parent()
 
 	var preview: Control = duplicate()
+	preview.rotation_degrees = 0
 	
-	set_drag_preview(preview)
+	var wrapper := Control.new()
+	preview.position = -preview.pivot_offset
+	wrapper.add_child(preview)
+	
+	
+	set_drag_preview(wrapper)
 	
 	if !is_selected:
 		card_selected.emit(self)
